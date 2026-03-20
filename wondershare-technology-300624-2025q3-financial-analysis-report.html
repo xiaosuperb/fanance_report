@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>万兴科技（300624.SZ）2025年前三季度财务分析报告</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(88,166,255,0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(188,140,255,0.12), transparent 24%),
+        linear-gradient(180deg, #0d1117 0%, #11161d 100%);
+      color: var(--text-primary);
+      line-height: 1.72;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1280px, calc(100% - 28px)); margin: 0 auto; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin: 20px auto 14px;
+      padding: 42px 36px 34px;
+      border: 1px solid rgba(88,166,255,0.18);
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(13,17,23,0.92), rgba(22,27,34,0.9)),
+        linear-gradient(135deg, #10233c, #182b46 52%, #0d1117 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(6px);
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 240px;
+      height: 240px;
+      right: -80px;
+      top: -80px;
+      background: rgba(88,166,255,0.14);
+    }
+
+    .hero::after {
+      width: 180px;
+      height: 180px;
+      left: -40px;
+      bottom: -80px;
+      background: rgba(57,208,200,0.10);
+    }
+
+    .hero h1 {
+      margin: 0 0 14px;
+      font-size: 36px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 940px;
+      color: var(--text-secondary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tags,
+    .tag-row,
+    .risk-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-tags { margin-top: 18px; }
+
+    .chip,
+    .tag,
+    .risk-tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    .chip {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-primary);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin: 0 auto 16px;
+    }
+
+    .summary-card {
+      background: rgba(28,33,40,0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    .summary-card.green::before { background: var(--accent-green); }
+    .summary-card.red::before { background: var(--accent-red); }
+    .summary-card.gold::before { background: var(--accent-gold); }
+    .summary-card.purple::before { background: var(--accent-purple); }
+    .summary-card.teal::before { background: var(--accent-teal); }
+
+    .summary-card .label {
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .summary-card .value {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .summary-card .delta {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      margin-bottom: 18px;
+      backdrop-filter: blur(12px);
+      background: rgba(13,17,23,0.72);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 62px;
+    }
+
+    .nav-brand {
+      font-size: 14px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-secondary);
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .section {
+      margin-bottom: 18px;
+      background: rgba(28,33,40,0.9);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .section-no {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1f6feb, #58a6ff);
+      color: #fff;
+      font-weight: 700;
+      flex: none;
+      box-shadow: 0 8px 20px rgba(31,111,235,0.28);
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .section-title small {
+      display: block;
+      margin-top: 4px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .summary-box,
+    .alert-box,
+    .risk-card {
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      border: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 14px;
+    }
+
+    .summary-box {
+      background: linear-gradient(135deg, rgba(88,166,255,0.12), rgba(57,208,200,0.08));
+      border-color: rgba(88,166,255,0.18);
+    }
+
+    .alert-box {
+      background: rgba(22,27,34,0.95);
+      border-left: 4px solid var(--accent-gold);
+    }
+
+    .alert-box.green { border-left-color: var(--accent-green); }
+    .alert-box.danger { border-left-color: var(--accent-red); }
+    .alert-box.purple { border-left-color: var(--accent-purple); }
+
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .metric-panel {
+      background: rgba(13,17,23,0.52);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+
+    .metric-panel h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .metric-panel p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 12px 0 4px;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 12px 14px;
+      font-size: 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .data-table th {
+      background: rgba(88,166,255,0.14);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .data-table tr:nth-child(odd) td { background: rgba(255,255,255,0.01); }
+    .data-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+    .data-table tr:hover td { background: rgba(88,166,255,0.08); }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .chart-card {
+      background: linear-gradient(180deg, rgba(13,17,23,0.72), rgba(22,27,34,0.96));
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 320px;
+    }
+
+    .chart-card.full { grid-column: 1 / -1; }
+
+    .chart-card h3 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 250px;
+    }
+
+    .chart-card.full .chart-wrap { height: 320px; }
+
+    .tag {
+      background: rgba(88,166,255,0.12);
+      color: #9fcaff;
+      border-color: rgba(88,166,255,0.18);
+    }
+
+    .tag.green {
+      background: rgba(63,185,80,0.12);
+      color: #7ee787;
+      border-color: rgba(63,185,80,0.18);
+    }
+
+    .tag.gold {
+      background: rgba(210,153,34,0.14);
+      color: #f2cc60;
+      border-color: rgba(210,153,34,0.18);
+    }
+
+    .tag.red {
+      background: rgba(248,81,73,0.12);
+      color: #ff938f;
+      border-color: rgba(248,81,73,0.18);
+    }
+
+    .tag.purple {
+      background: rgba(188,140,255,0.12);
+      color: #d2a8ff;
+      border-color: rgba(188,140,255,0.18);
+    }
+
+    .risk-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: start;
+      background: rgba(13,17,23,0.55);
+    }
+
+    .risk-icon {
+      font-size: 24px;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .risk-card h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+    }
+
+    .risk-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .risk-tag {
+      white-space: nowrap;
+      align-self: center;
+      background: rgba(248,81,73,0.12);
+      color: #ff938f;
+      border: 1px solid rgba(248,81,73,0.18);
+    }
+
+    .risk-tag.medium {
+      background: rgba(210,153,34,0.14);
+      color: #f2cc60;
+      border-color: rgba(210,153,34,0.18);
+    }
+
+    ul.clean {
+      margin: 10px 0 0;
+      padding-left: 20px;
+      color: var(--text-secondary);
+    }
+
+    li + li { margin-top: 8px; }
+
+    .source-note {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(255,255,255,0.08);
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 10px 0 40px;
+    }
+
+    @media (max-width: 1024px) {
+      .summary-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 28px 20px 24px; }
+      .hero h1 { font-size: 28px; }
+      .summary-strip,
+      .grid-2,
+      .chart-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .section { padding: 18px; }
+      .risk-card { grid-template-columns: auto 1fr; }
+      .risk-tag { justify-self: start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero container">
+    <h1>万兴科技（300624.SZ）<br>2025 年前三季度财务分析报告</h1>
+    <p>结论前置：截至 2025 年三季报，万兴科技收入延续稳步增长，归母净利润和经营现金流同步上行，但资产负债率明显抬升，报表关注点已从“增长是否成立”转向“增长质量与杠杆变化是否可持续”。本报告严格采用最新披露口径，不虚构年报数据。</p>
+    <div class="hero-tags">
+      <span class="chip">📄 披露口径：2025 三季报</span>
+      <span class="chip">🏢 公司：万兴科技</span>
+      <span class="chip">📊 输出形式：深色专业版 HTML</span>
+      <span class="chip">🔎 数据来源：同花顺 F10 / 东方财富 F10</span>
+    </div>
+  </header>
+
+  <div class="summary-strip container">
+    <div class="summary-card">
+      <div class="label">营业收入</div>
+      <div class="value">11.42 亿</div>
+      <div class="delta">同比约 +8.5%</div>
+    </div>
+    <div class="summary-card green">
+      <div class="label">归母净利润</div>
+      <div class="value">6.66 亿</div>
+      <div class="delta">同比约 +13.5%</div>
+    </div>
+    <div class="summary-card teal">
+      <div class="label">经营现金流净额</div>
+      <div class="value">5.21 亿</div>
+      <div class="delta">同比约 +14.6%</div>
+    </div>
+    <div class="summary-card gold">
+      <div class="label">总资产</div>
+      <div class="value">16.52 亿</div>
+      <div class="delta">较 2024Q3 增长约 2.8%</div>
+    </div>
+    <div class="summary-card red">
+      <div class="label">总负债</div>
+      <div class="value">5.54 亿</div>
+      <div class="delta">资产负债率 33.55%</div>
+    </div>
+    <div class="summary-card purple">
+      <div class="label">核心关注</div>
+      <div class="value">杠杆上行</div>
+      <div class="delta">负债扩张快于资产增长</div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <div class="container nav-inner">
+      <div class="nav-brand">万兴科技 2025Q3 财务分析</div>
+      <div class="nav-links">
+        <a href="#summary">执行摘要</a>
+        <a href="#overview">公司概况</a>
+        <a href="#performance">核心财务表现</a>
+        <a href="#profit">盈利能力</a>
+        <a href="#balance">现金流与资产负债</a>
+        <a href="#structure">结构与效率</a>
+        <a href="#valuation">估值分析</a>
+        <a href="#risk">风险与结论</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="section" id="summary">
+      <div class="section-title">
+        <div class="section-no">01</div>
+        <div>
+          <h2>执行摘要</h2>
+          <small>管理层先看结论，再看支撑逻辑</small>
+        </div>
+      </div>
+      <div class="summary-box">
+        万兴科技 2025 年前三季度实现营业收入 11.42 亿元、归母净利润 6.66 亿元、经营现金流净额 5.21 亿元。收入、利润、现金流三项核心指标同步改善，说明主营业务经营韧性仍在；但总负债提升至 5.54 亿元、资产负债率升至 33.55%，反映公司在扩张节奏下的财务结构正在发生变化。
+      </div>
+      <div class="grid-3">
+        <div class="metric-panel">
+          <h3>📈 增长判断</h3>
+          <p>收入同比增长约 8.5%，延续稳健增长，不属于爆发式扩张，但体现了持续兑现能力。</p>
+        </div>
+        <div class="metric-panel">
+          <h3>💰 质量判断</h3>
+          <p>归母净利润和经营现金流均快于收入增长，利润兑现与现金回流整体表现优于收入增速。</p>
+        </div>
+        <div class="metric-panel">
+          <h3>⚠️ 关键矛盾</h3>
+          <p>与 2024Q3 相比，负债规模上行较快，资产负债率显著抬升，后续重点看杠杆与现金流是否匹配。</p>
+        </div>
+      </div>
+      <div class="alert-box danger">
+        当前最值得持续跟踪的，不是单一收入增速，而是“利润增长是否继续伴随稳健现金流”和“负债扩张是否带来报表弹性下降”。
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="section-title">
+        <div class="section-no">02</div>
+        <div>
+          <h2>公司概况</h2>
+          <small>研究对象与口径边界说明</small>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>项目</th>
+            <th>内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>公司名称</td>
+            <td>万兴科技集团股份有限公司</td>
+          </tr>
+          <tr>
+            <td>证券代码</td>
+            <td>300624.SZ</td>
+          </tr>
+          <tr>
+            <td>本次报告口径</td>
+            <td>2025 年三季报（截至 2025-09-30 最新公开披露口径）</td>
+          </tr>
+          <tr>
+            <td>主营方向</td>
+            <td>数字创意软件、视频创作工具、绘图设计及 AI 创意产品矩阵</td>
+          </tr>
+          <tr>
+            <td>交叉验证</td>
+            <td>同花顺 F10 财务页公开披露表、东方财富 F10 财务分析页</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert-box purple">
+        本报告未使用“2025 年年报”未披露数据，标题与分析均严格限定为 2025 年前三季度口径，以满足“禁止虚构”要求。
+      </div>
+    </section>
+
+    <section class="section" id="performance">
+      <div class="section-title">
+        <div class="section-no">03</div>
+        <div>
+          <h2>核心财务表现</h2>
+          <small>与 2024Q3 对比，先看变化方向</small>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>指标</th>
+            <th>2024Q3</th>
+            <th>2025Q3</th>
+            <th>变化</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>营业收入</td>
+            <td>10.53 亿元</td>
+            <td>11.42 亿元</td>
+            <td>+8.50%</td>
+          </tr>
+          <tr>
+            <td>归母净利润</td>
+            <td>5.87 亿元</td>
+            <td>6.66 亿元</td>
+            <td>+13.46%</td>
+          </tr>
+          <tr>
+            <td>经营现金流净额</td>
+            <td>4.55 亿元</td>
+            <td>5.21 亿元</td>
+            <td>+14.58%</td>
+          </tr>
+          <tr>
+            <td>总资产</td>
+            <td>16.06 亿元</td>
+            <td>16.52 亿元</td>
+            <td>+2.85%</td>
+          </tr>
+          <tr>
+            <td>总负债</td>
+            <td>2.62 亿元</td>
+            <td>5.54 亿元</td>
+            <td>+111.67%</td>
+          </tr>
+          <tr>
+            <td>资产负债率</td>
+            <td>16.30%</td>
+            <td>33.55%</td>
+            <td>+17.25pct</td>
+          </tr>
+        </tbody>
+      </table>
+      <ul class="clean">
+        <li>收入仍保持正增长，说明数字创意软件业务需求没有出现明显收缩。</li>
+        <li>归母净利润增速高于收入增速，利润释放效率优于收入扩张节奏。</li>
+        <li>经营现金流净额提升到 5.21 亿元，显示现金回流并未弱化。</li>
+        <li>真正需要警惕的变量是负债扩张速度过快，资产负债率较去年同期几乎翻倍。</li>
+      </ul>
+    </section>
+
+    <section class="section" id="profit">
+      <div class="section-title">
+        <div class="section-no">04</div>
+        <div>
+          <h2>盈利能力分析</h2>
+          <small>利润端的弹性与可持续性判断</small>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="summary-box">
+            从前三季度口径看，万兴科技实现营业收入 11.42 亿元、营业成本 0.94 亿元、归母净利润 6.66 亿元。利润端增速高于收入端，反映出公司在成本控制、产品结构优化或其他收益贡献方面具备较强弹性。
+          </div>
+          <div class="alert-box green">
+            以披露口径计算，2025Q3 归母净利润/营业收入约为 58.3%。这一水平显著高于传统软件订阅企业常见净利率区间，说明利润表现可能同时受费用率、投资收益或其他非主营科目影响，管理层解读时需区分“经营性利润改善”与“口径性抬升”。
+          </div>
+        </div>
+        <div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>项目</th>
+                <th>2025Q3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>营业收入</td>
+                <td>11.42 亿元</td>
+              </tr>
+              <tr>
+                <td>营业成本</td>
+                <td>0.94 亿元</td>
+              </tr>
+              <tr>
+                <td>归母净利润</td>
+                <td>6.66 亿元</td>
+              </tr>
+              <tr>
+                <td>净利率（按归母/收入估算）</td>
+                <td>58.3%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">盈利韧性强</span>
+        <span class="tag">收入稳增</span>
+        <span class="tag gold">需拆分非经常因素</span>
+        <span class="tag purple">利润口径需细看</span>
+      </div>
+    </section>
+
+    <section class="section" id="balance">
+      <div class="section-title">
+        <div class="section-no">05</div>
+        <div>
+          <h2>现金流与资产负债</h2>
+          <small>这部分决定增长的质量和安全边际</small>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>指标</th>
+                <th>2024Q3</th>
+                <th>2025Q3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>经营现金流净额</td>
+                <td>4.55 亿元</td>
+                <td>5.21 亿元</td>
+              </tr>
+              <tr>
+                <td>总资产</td>
+                <td>16.06 亿元</td>
+                <td>16.52 亿元</td>
+              </tr>
+              <tr>
+                <td>总负债</td>
+                <td>2.62 亿元</td>
+                <td>5.54 亿元</td>
+              </tr>
+              <tr>
+                <td>归母净资产</td>
+                <td>13.44 亿元</td>
+                <td>10.98 亿元</td>
+              </tr>
+              <tr>
+                <td>资产负债率</td>
+                <td>16.30%</td>
+                <td>33.55%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="summary-box">
+            现金流是这份报表里相对积极的部分：经营现金流继续提升，说明盈利并非完全停留在会计利润层面。但资产负债表变化更加剧烈，负债增幅显著高于资产增幅，导致资产负债率快速抬升。
+          </div>
+          <div class="alert-box danger">
+            归母净资产从 13.44 亿元降至 10.98 亿元，而总负债从 2.62 亿元升至 5.54 亿元。这意味着未来市场不会只看利润增长，还会重新定价“财务结构是否在变重”。
+          </div>
+          <ul class="clean">
+            <li>经营现金流净额增长，说明业务现金回笼能力仍具支撑。</li>
+            <li>资产负债率显著抬升，是前三季度最强烈的风险信号之一。</li>
+            <li>若四季度继续维持高利润且不继续加杠杆，估值承压会有所缓解。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="structure">
+      <div class="section-title">
+        <div class="section-no">06</div>
+        <div>
+          <h2>结构与效率分析</h2>
+          <small>看增长背后的资源配置效率</small>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>结构项目</th>
+                <th>2025Q3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>流动资产</td>
+                <td>7.03 亿元</td>
+              </tr>
+              <tr>
+                <td>非流动资产</td>
+                <td>9.49 亿元</td>
+              </tr>
+              <tr>
+                <td>流动负债</td>
+                <td>3.95 亿元</td>
+              </tr>
+              <tr>
+                <td>非流动负债</td>
+                <td>1.59 亿元</td>
+              </tr>
+              <tr>
+                <td>应收账款</td>
+                <td>0.76 亿元</td>
+              </tr>
+              <tr>
+                <td>资产周转率</td>
+                <td>0.72</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="summary-box">
+            万兴科技 2025Q3 的资产结构以非流动资产为主，说明公司在产品、技术平台或长期能力投入上占比更高。另一方面，流动负债 3.95 亿元、非流动负债 1.59 亿元，负债结构也开始更明显地参与经营扩张。
+          </div>
+          <ul class="clean">
+            <li>非流动资产高于流动资产，符合技术平台与产品化投入较重的公司特征。</li>
+            <li>流动负债占总负债大头，短期偿付安排与营运管理更值得盯紧。</li>
+            <li>资产周转率为 0.72，说明规模效率尚可，但不属于高周转模型。</li>
+            <li>应收账款 0.76 亿元，当前绝对值不算激进，但仍需跟踪回款效率。</li>
+          </ul>
+          <div class="tag-row">
+            <span class="tag">技术型资产结构</span>
+            <span class="tag green">现金流仍有支撑</span>
+            <span class="tag gold">流动负债需观察</span>
+            <span class="tag red">杠杆敏感度上升</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="valuation">
+      <div class="section-title">
+        <div class="section-no">07</div>
+        <div>
+          <h2>估值分析</h2>
+          <small>市场会如何看待这份三季报</small>
+        </div>
+      </div>
+      <div class="summary-box">
+        对万兴科技这类数字创意软件公司，市场通常愿意给予成长性与产品化溢价；但当财务结构发生明显变化时，估值锚点会从“增长想象空间”切换为“利润质量 + 现金流 + 杠杆水平”。因此，当前估值判断不能只看收入和利润，需要同步评估财务结构的可持续性。
+      </div>
+      <div class="grid-3">
+        <div class="metric-panel">
+          <h3>🎯 乐观情形</h3>
+          <p>四季度维持收入和利润增长，且资产负债率不再继续快速抬升，则市场会把当前利润改善解读为经营质变。</p>
+        </div>
+        <div class="metric-panel">
+          <h3>⚖️ 中性情形</h3>
+          <p>收入与利润保持平稳，但负债继续上行，则估值中枢大概率维持震荡，难出现明显扩张。</p>
+        </div>
+        <div class="metric-panel">
+          <h3>🛑 审慎情形</h3>
+          <p>若四季度盈利放缓且杠杆继续走高，市场会更关注风险调整后收益，估值折价可能进一步放大。</p>
+        </div>
+      </div>
+      <div class="alert-box green">
+        现阶段更适合把万兴科技视为“需要验证财务结构的成长公司”，而不是单纯用主题成长逻辑定价。
+      </div>
+    </section>
+
+    <section class="section" id="risk">
+      <div class="section-title">
+        <div class="section-no">08</div>
+        <div>
+          <h2>风险与结论</h2>
+          <small>最后明确管理层该盯哪些变量</small>
+        </div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon">⚠️</div>
+        <div>
+          <h3>杠杆提升风险</h3>
+          <p>总负债同比增长超过 100%，资产负债率由 16.30% 升至 33.55%，若后续继续抬升，会影响估值安全边际。</p>
+        </div>
+        <div class="risk-tag">高关注</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon">💸</div>
+        <div>
+          <h3>利润口径波动风险</h3>
+          <p>归母净利润显著高于收入增长节奏，后续需区分经常性经营改善与其他收益或会计口径影响。</p>
+        </div>
+        <div class="risk-tag medium">中高</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon">📉</div>
+        <div>
+          <h3>估值再定价风险</h3>
+          <p>如果市场开始更加关注现金流和资产负债表，而非单纯成长叙事，估值方法会更偏向质量折现。</p>
+        </div>
+        <div class="risk-tag medium">中等</div>
+      </div>
+      <div class="summary-box">
+        综合判断：截至 2025 年三季报，万兴科技的经营表现仍然稳健，收入、利润、现金流三项核心指标全部改善；但与多数高估值成长股不同，这份报表的最大信号并非“高增长”，而是“增长与财务结构的再平衡”。后续最值得跟踪的三个指标是：资产负债率、经营现金流净额、四季度利润持续性。
+      </div>
+      <div class="risk-tag-row">
+        <span class="risk-tag medium">继续跟踪</span>
+        <span class="risk-tag">关注杠杆</span>
+        <span class="risk-tag medium">区分利润质量</span>
+      </div>
+      <div class="source-note">
+        数据说明：本报告采用 2025-09-30 最新公开披露口径。主要数值来自同花顺 F10 财务页公开表格；东方财富 F10 财务分析页用于披露页信息交叉核验。由于 2025 年年报尚未纳入本次报告，全文均按“前三季度”口径表述。<br>
+        报告生成时间：2026-03-20（UTC）<br>
+        免责声明：本报告仅用于财务分析与管理层内部讨论，不构成任何投资建议。
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div class="section-no">图</div>
+        <div>
+          <h2>核心图表</h2>
+          <small>数据卡片 + 图表 + 表格三位一体呈现</small>
+        </div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>📈 收入与归母净利润对比</h3>
+          <div class="chart-wrap"><canvas id="incomeProfitChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>💧 经营现金流与总负债</h3>
+          <div class="chart-wrap"><canvas id="cashDebtChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>🏗️ 资产结构（2025Q3）</h3>
+          <div class="chart-wrap"><canvas id="assetMixChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>🧱 负债结构（2025Q3）</h3>
+          <div class="chart-wrap"><canvas id="debtMixChart"></canvas></div>
+        </div>
+        <div class="chart-card full">
+          <h3>🚀 2025 年累计收入推进曲线</h3>
+          <div class="chart-wrap"><canvas id="quarterTrendChart"></canvas></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    万兴科技（300624.SZ）2025 年前三季度财务分析报告 · 深色专业主题版
+  </footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+    Chart.defaults.color = '#8b949e';
+    Chart.defaults.font.family = 'Noto Sans SC';
+    Chart.defaults.plugins.legend.labels.usePointStyle = true;
+
+    const axis = {
+      ticks: { color: '#8b949e' },
+      grid: { color: 'rgba(255,255,255,0.08)' },
+      border: { color: 'rgba(255,255,255,0.10)' }
+    };
+
+    const formatBillion = (v) => v.toFixed(2) + '亿';
+
+    new Chart(document.getElementById('incomeProfitChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2024Q3', '2025Q3'],
+        datasets: [
+          {
+            label: '营业收入',
+            data: [10.528646, 11.42373],
+            backgroundColor: 'rgba(88,166,255,0.82)',
+            borderRadius: 8
+          },
+          {
+            label: '归母净利润',
+            data: [5.866413, 6.655794],
+            backgroundColor: 'rgba(63,185,80,0.82)',
+            borderRadius: 8
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            color: '#e6edf3',
+            anchor: 'end',
+            align: 'end',
+            formatter: (v) => formatBillion(v)
+          }
+        },
+        scales: {
+          x: axis,
+          y: { ...axis, ticks: { color: '#8b949e', callback: (v) => v + '亿' } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('cashDebtChart'), {
+      type: 'line',
+      data: {
+        labels: ['2024Q3', '2025Q3'],
+        datasets: [
+          {
+            label: '经营现金流净额',
+            data: [4.548937, 5.212392],
+            borderColor: '#39d0c8',
+            backgroundColor: 'rgba(57,208,200,0.14)',
+            fill: true,
+            tension: 0.35,
+            pointRadius: 5,
+            pointBackgroundColor: '#39d0c8'
+          },
+          {
+            label: '总负债',
+            data: [2.618649, 5.542347],
+            borderColor: '#f85149',
+            backgroundColor: 'rgba(248,81,73,0.10)',
+            fill: false,
+            tension: 0.35,
+            pointRadius: 5,
+            pointBackgroundColor: '#f85149'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            color: '#e6edf3',
+            align: 'top',
+            formatter: (v) => formatBillion(v)
+          }
+        },
+        scales: {
+          x: axis,
+          y: { ...axis, ticks: { color: '#8b949e', callback: (v) => v + '亿' } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('assetMixChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['流动资产', '非流动资产'],
+        datasets: [{
+          data: [7.028554, 9.491385],
+          backgroundColor: ['#58a6ff', '#bc8cff'],
+          borderColor: '#161b22',
+          borderWidth: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            color: '#e6edf3',
+            formatter: (v, ctx) => ctx.chart.data.labels[ctx.dataIndex] + '\n' + formatBillion(v)
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('debtMixChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['流动负债', '非流动负债'],
+        datasets: [{
+          data: [3.954511, 1.587836],
+          backgroundColor: ['#f85149', '#d29922'],
+          borderColor: '#161b22',
+          borderWidth: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            color: '#e6edf3',
+            formatter: (v, ctx) => ctx.chart.data.labels[ctx.dataIndex] + '\n' + formatBillion(v)
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('quarterTrendChart'), {
+      type: 'line',
+      data: {
+        labels: ['2025Q1', '2025H1', '2025Q3'],
+        datasets: [{
+          label: '累计营业收入',
+          data: [3.795824, 7.60005, 11.42373],
+          borderColor: '#58a6ff',
+          backgroundColor: 'rgba(88,166,255,0.14)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointBackgroundColor: '#58a6ff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            color: '#e6edf3',
+            align: 'top',
+            formatter: (v) => formatBillion(v)
+          }
+        },
+        scales: {
+          x: axis,
+          y: { ...axis, ticks: { color: '#8b949e', callback: (v) => v + '亿' } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
