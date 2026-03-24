@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>三一重工（600031.SH）2024年度财务分析报告</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 10px 30px rgba(0,0,0,.28);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', sans-serif;
+      background: linear-gradient(180deg, #0b1020 0%, var(--bg-primary) 12%, #0d1117 100%);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    .container { width: min(1360px, calc(100% - 48px)); margin: 0 auto 64px; }
+    .hero {
+      padding: 56px 0 28px;
+      background: radial-gradient(circle at top right, rgba(88,166,255,.18), transparent 30%),
+                  linear-gradient(135deg, #10192f 0%, #0d1117 65%, #121826 100%);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .hero-inner { width: min(1360px, calc(100% - 48px)); margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: #c9d1d9; font-size: 14px; padding: 8px 14px;
+      border: 1px solid rgba(88,166,255,.28); border-radius: 999px;
+      background: rgba(88,166,255,.08);
+    }
+    h1 { font-size: 36px; line-height: 1.2; margin: 18px 0 14px; font-weight: 700; }
+    .hero-grid { display: grid; grid-template-columns: 1.45fr .9fr; gap: 24px; align-items: stretch; }
+    .hero p { margin: 0; color: var(--text-secondary); }
+    .hero-card, .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .hero-card { padding: 22px; }
+    .hero-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .mini-metric {
+      padding: 16px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.05);
+    }
+    .mini-metric .label { color: var(--text-secondary); font-size: 12px; }
+    .mini-metric .value { font-size: 24px; font-weight: 700; margin: 6px 0 3px; }
+    .mini-metric .sub { color: var(--text-muted); font-size: 12px; }
+    .summary-strip {
+      width: min(1360px, calc(100% - 48px)); margin: -18px auto 24px;
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;
+    }
+    .summary-card {
+      position: relative; overflow: hidden; padding: 18px 16px 16px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow);
+    }
+    .summary-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), rgba(255,255,255,.12));
+    }
+    .summary-card.green::before { background: linear-gradient(90deg, var(--accent-green), rgba(255,255,255,.12)); }
+    .summary-card.red::before { background: linear-gradient(90deg, var(--accent-red), rgba(255,255,255,.12)); }
+    .summary-card.gold::before { background: linear-gradient(90deg, var(--accent-gold), rgba(255,255,255,.12)); }
+    .summary-card.purple::before { background: linear-gradient(90deg, var(--accent-purple), rgba(255,255,255,.12)); }
+    .summary-card.teal::before { background: linear-gradient(90deg, var(--accent-teal), rgba(255,255,255,.12)); }
+    .summary-card .kpi { font-size: 28px; font-weight: 700; margin: 8px 0 4px; }
+    .summary-card .name { font-size: 13px; color: var(--text-secondary); }
+    .summary-card .delta { font-size: 12px; color: var(--text-muted); }
+    .nav-bar {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(12px);
+      background: rgba(13,17,23,.72); border-top: 1px solid rgba(255,255,255,.04); border-bottom: 1px solid rgba(255,255,255,.06);
+      margin-bottom: 26px;
+    }
+    .nav-inner {
+      width: min(1360px, calc(100% - 48px)); margin: 0 auto; display: flex; gap: 10px; flex-wrap: wrap; padding: 12px 0;
+    }
+    .nav-inner a {
+      padding: 10px 14px; border-radius: 999px; color: var(--text-secondary); border: 1px solid transparent; font-size: 13px;
+    }
+    .nav-inner a:hover { color: var(--text-primary); border-color: rgba(88,166,255,.25); background: rgba(88,166,255,.08); }
+    section { margin: 26px 0; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .section-no {
+      width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-weight: 700;
+      background: linear-gradient(135deg, #1f6feb 0%, #58a6ff 100%); color: white; box-shadow: 0 10px 24px rgba(31,111,235,.25);
+      flex: 0 0 40px;
+    }
+    .section-header h2 { margin: 0; font-size: 24px; }
+    .section-header p { margin: 4px 0 0; color: var(--text-secondary); font-size: 14px; }
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .card { padding: 20px; }
+    .card h3 { margin: 0 0 14px; font-size: 18px; }
+    .muted { color: var(--text-secondary); }
+    .small { font-size: 13px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    th { color: #c9d1d9; font-weight: 600; background: rgba(255,255,255,.03); }
+    tr:nth-child(even) td { background: rgba(255,255,255,.018); }
+    tr:hover td { background: rgba(88,166,255,.06); }
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    }
+    .tag.blue { background: rgba(88,166,255,.14); color: #8dc2ff; }
+    .tag.green { background: rgba(63,185,80,.14); color: #7ee787; }
+    .tag.gold { background: rgba(210,153,34,.15); color: #f2cc60; }
+    .tag.red { background: rgba(248,81,73,.14); color: #ff938a; }
+    .tag.purple { background: rgba(188,140,255,.16); color: #c9a6ff; }
+    .alert {
+      padding: 14px 16px; border-radius: 14px; background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.05); border-left: 4px solid var(--accent);
+      color: var(--text-secondary);
+    }
+    .alert.green { border-left-color: var(--accent-green); }
+    .alert.warning { border-left-color: var(--accent-gold); }
+    .alert.danger { border-left-color: var(--accent-red); }
+    .alert.purple { border-left-color: var(--accent-purple); }
+    .kpi-box {
+      padding: 18px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06);
+    }
+    .kpi-box .title { color: var(--text-secondary); font-size: 13px; }
+    .kpi-box .num { font-size: 30px; font-weight: 700; margin-top: 8px; }
+    .kpi-box .desc { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    .risk-card { display: flex; gap: 14px; padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .risk-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; flex: 0 0 42px; }
+    .risk-high .risk-icon { background: rgba(248,81,73,.14); }
+    .risk-mid .risk-icon { background: rgba(210,153,34,.14); }
+    .risk-low .risk-icon { background: rgba(63,185,80,.14); }
+    .score-ring {
+      width: 160px; height: 160px; margin: 0 auto; border-radius: 50%;
+      background: conic-gradient(var(--accent) 0 78%, rgba(255,255,255,.08) 78% 100%);
+      display: grid; place-items: center;
+    }
+    .score-ring::after {
+      content: ''; width: 122px; height: 122px; border-radius: 50%; background: var(--bg-card); box-shadow: inset 0 0 0 1px var(--border);
+    }
+    .score-value { position: relative; margin-top: -98px; text-align: center; font-size: 34px; font-weight: 700; }
+    .score-value span { display: block; font-size: 12px; color: var(--text-secondary); font-weight: 500; margin-top: 4px; }
+    canvas { width: 100% !important; height: 320px !important; }
+    .footer {
+      width: min(1360px, calc(100% - 48px)); margin: 0 auto 50px;
+      color: var(--text-muted); font-size: 12px; border-top: 1px solid rgba(255,255,255,.06); padding-top: 20px;
+    }
+    ul.compact { margin: 8px 0 0 18px; padding: 0; }
+    ul.compact li { margin: 6px 0; }
+    .sources li { margin: 8px 0; word-break: break-all; }
+    @media (max-width: 1180px) {
+      .summary-strip, .grid-4 { grid-template-columns: repeat(3, 1fr); }
+      .hero-grid, .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .summary-strip, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+      .container, .hero-inner, .summary-strip, .nav-inner, .footer { width: min(100% - 28px, 1360px); }
+      h1 { font-size: 30px; }
+    }
+    @media (max-width: 560px) {
+      .summary-strip, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      canvas { height: 280px !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">📊 2024年度财务分析报告 · 三一重工 600031.SH</span>
+      <div class="hero-grid" style="margin-top:18px;">
+        <div class="hero-card">
+          <h1>三一重工：利润修复显著，现金流强劲反弹，国际化继续成为增长主引擎</h1>
+          <p>
+            结论前置：三一重工 2024 年实现营业收入 <strong style="color:#fff;">783.83 亿元</strong>，同比增长 <strong style="color:#fff;">5.9%</strong>；
+            归母净利润 <strong style="color:#fff;">59.75 亿元</strong>，同比增长 <strong style="color:#fff;">31.98%</strong>；
+            经营活动现金流净额 <strong style="color:#fff;">148.14 亿元</strong>，同比大增 <strong style="color:#fff;">159.53%</strong>。
+            财务特征已从“国内周期承压”转向“海外增长 + 盈利改善 + 现金回款修复”的组合，2024 年是公司经营质量明显抬升的一年。
+          </p>
+          <div class="grid grid-3" style="margin-top:18px;">
+            <div class="alert green">✅ <strong>利润弹性释放</strong><br>收入低个位数增长，但净利润实现 30%+ 修复，体现费用率与产品结构改善。</div>
+            <div class="alert warning">⚠️ <strong>海外占比提升</strong><br>国际业务已贡献约 62% 收入，增长韧性更强，但汇率与地缘经营复杂度同步提升。</div>
+            <div class="alert purple">💹 <strong>现金流显著改善</strong><br>经营现金流高增，反映回款、库存与营运效率优化，是本轮修复最有含金量的指标。</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>管理层摘要</h3>
+          <div class="hero-metrics">
+            <div class="mini-metric">
+              <div class="label">综合评级</div>
+              <div class="value">A-</div>
+              <div class="sub">经营修复明确</div>
+            </div>
+            <div class="mini-metric">
+              <div class="label">综合评分</div>
+              <div class="value">78/100</div>
+              <div class="sub">盈利 + 现金 + 国际化</div>
+            </div>
+            <div class="mini-metric">
+              <div class="label">战略定位</div>
+              <div class="value">全球化</div>
+              <div class="sub">工程机械龙头</div>
+            </div>
+            <div class="mini-metric">
+              <div class="label">核心建议</div>
+              <div class="value" style="font-size:20px;">积极跟踪</div>
+              <div class="sub">关注海外持续性与国内复苏</div>
+            </div>
+          </div>
+          <div class="alert" style="margin-top:16px;">
+            对管理层的关键提示：2024 年三一重工最重要的不是单纯“营收增长”，而是盈利质量与现金流质量同步改善。若 2025 年国内需求边际回暖、海外市场维持扩张，公司业绩仍有继续抬升空间。
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="summary-card">
+      <div class="name">营业收入</div>
+      <div class="kpi">783.83 亿元</div>
+      <div class="delta">同比 +5.9%</div>
+    </div>
+    <div class="summary-card green">
+      <div class="name">归母净利润</div>
+      <div class="kpi">59.75 亿元</div>
+      <div class="delta">同比 +31.98%</div>
+    </div>
+    <div class="summary-card teal">
+      <div class="name">经营现金流</div>
+      <div class="kpi">148.14 亿元</div>
+      <div class="delta">同比 +159.53%</div>
+    </div>
+    <div class="summary-card gold">
+      <div class="name">海外收入</div>
+      <div class="kpi">485.13 亿元</div>
+      <div class="delta">收入占比约 61.9%</div>
+    </div>
+    <div class="summary-card purple">
+      <div class="name">总资产</div>
+      <div class="kpi">1,521.45 亿元</div>
+      <div class="delta">年末资产规模</div>
+    </div>
+    <div class="summary-card red">
+      <div class="name">资产负债率</div>
+      <div class="kpi">52%</div>
+      <div class="delta">杠杆整体可控</div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <a href="#section-1">1. 执行摘要</a>
+      <a href="#section-2">2. 公司概况</a>
+      <a href="#section-3">3. 核心财务表现</a>
+      <a href="#section-4">4. 盈利能力</a>
+      <a href="#section-5">5. 现金流与资产负债</a>
+      <a href="#section-6">6. 业务与区域结构</a>
+      <a href="#section-7">7. 估值分析</a>
+      <a href="#section-8">8. 风险与结论</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="section-1">
+      <div class="section-header">
+        <div class="section-no">01</div>
+        <div>
+          <h2>执行摘要</h2>
+          <p>先看结论，再看数据。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>核心观点</h3>
+          <div class="alert green">2024 年三一重工处于“收入温和恢复、利润显著修复、现金流强劲反弹”的阶段，经营质量改善程度高于收入增速本身。</div>
+          <ul class="compact muted">
+            <li>收入端：全年营收 783.83 亿元，同比增长 5.9%，说明在行业总体仍承压环境下，公司依然保持增长。</li>
+            <li>利润端：归母净利润 59.75 亿元，同比增长 31.98%，明显快于收入增速，体现毛利率改善、费用优化和海外业务贡献抬升。</li>
+            <li>现金端：经营现金流 148.14 亿元，同比增长 159.53%，修复力度远超利润增速，是本报告最值得重视的亮点。</li>
+            <li>结构端：国际业务收入约 485.13 亿元，占总收入约 61.9%，公司已从传统国内周期股逐步转向全球化制造企业。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>管理层应关注的三个问题</h3>
+          <div class="alert warning">1）海外高增能否持续；2）国内工程机械周期何时实质复苏；3）在国际扩张下，回款、汇率与费用纪律能否继续保持。</div>
+          <div class="grid grid-3" style="margin-top:16px;">
+            <div class="kpi-box">
+              <div class="title">ROE</div>
+              <div class="num">8.54%</div>
+              <div class="desc">盈利修复仍有提升空间</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">核心业务毛利率</div>
+              <div class="num">26.63%</div>
+              <div class="desc">同比提升 0.47pct</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">研发费用率</div>
+              <div class="num">6.86%</div>
+              <div class="desc">维持高研发投入</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-2">
+      <div class="section-header">
+        <div class="section-no">02</div>
+        <div>
+          <h2>公司概况</h2>
+          <p>全球化工程机械龙头，经营重心向海外转移。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>业务定位</h3>
+          <p class="muted">
+            三一重工是中国工程机械行业龙头企业，产品覆盖挖掘机械、混凝土机械、起重机械、路面机械等多个板块。
+            当前公司已经不再是单一依赖国内地产与基建周期的传统设备制造商，而是通过全球渠道、海外制造与本地化运营，构建全球工程机械平台。
+          </p>
+          <div class="tag blue">挖掘机械</div>
+          <div class="tag green">混凝土机械</div>
+          <div class="tag gold">起重机械</div>
+          <div class="tag purple">路面机械</div>
+        </div>
+        <div class="card">
+          <h3>2024 年经营画像</h3>
+          <ul class="compact muted">
+            <li>国际业务已成为最大增长来源，占比超过 60%。</li>
+            <li>核心业务毛利率提升，说明价格体系、成本管控和区域结构优化见效。</li>
+            <li>财务费用受汇兑影响波动，但总体杠杆水平仍可控。</li>
+            <li>研发维持高投入，支撑电动化、智能化和全球化产品竞争力。</li>
+          </ul>
+          <div class="alert purple" style="margin-top:14px;">判断：三一重工已进入“全球化红利兑现期”，但估值中枢仍受国内周期预期约束。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-3">
+      <div class="section-header">
+        <div class="section-no">03</div>
+        <div>
+          <h2>核心财务表现</h2>
+          <p>收入恢复不算激进，但利润与现金流修复幅度很亮眼。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>主要财务指标</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>指标</th>
+                  <th>2024A</th>
+                  <th>同比</th>
+                  <th>解读</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>营业收入</td>
+                  <td>783.83 亿元</td>
+                  <td>+5.9%</td>
+                  <td>总体温和增长，体现行业底部下的韧性</td>
+                </tr>
+                <tr>
+                  <td>归母净利润</td>
+                  <td>59.75 亿元</td>
+                  <td>+31.98%</td>
+                  <td>利润修复显著快于收入</td>
+                </tr>
+                <tr>
+                  <td>经营活动现金流净额</td>
+                  <td>148.14 亿元</td>
+                  <td>+159.53%</td>
+                  <td>回款与营运效率明显优化</td>
+                </tr>
+                <tr>
+                  <td>总资产</td>
+                  <td>1,521.45 亿元</td>
+                  <td>-</td>
+                  <td>资产规模保持稳健</td>
+                </tr>
+                <tr>
+                  <td>归母净资产</td>
+                  <td>719.53 亿元</td>
+                  <td>-</td>
+                  <td>为后续 ROE 提升奠定基础</td>
+                </tr>
+                <tr>
+                  <td>加权平均 ROE</td>
+                  <td>8.54%</td>
+                  <td>提升</td>
+                  <td>仍低于高景气年份，但修复趋势明确</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h3>收入、利润、现金流对比</h3>
+          <canvas id="growthChart"></canvas>
+          <p class="small muted">经营现金流增速远高于收入和净利润，是 2024 年最关键的质量信号。</p>
+        </div>
+      </div>
+      <div class="grid grid-3" style="margin-top:18px;">
+        <div class="alert green">利润增速高于收入增速，表明公司已摆脱单纯靠规模扩张驱动的阶段。</div>
+        <div class="alert warning">若 2025 年收入增速不能继续提升，利润修复的持续性需更多依赖海外结构改善与费用控制。</div>
+        <div class="alert purple">ROE 仍处修复中段，未来弹性取决于资产周转与净利率能否同步抬升。</div>
+      </div>
+    </section>
+
+    <section id="section-4">
+      <div class="section-header">
+        <div class="section-no">04</div>
+        <div>
+          <h2>盈利能力分析</h2>
+          <p>毛利率改善 + 费用纪律，是利润修复的主因。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>盈利质量拆解</h3>
+          <ul class="compact muted">
+            <li><strong>毛利率：</strong>核心业务毛利率 26.63%，同比提升 0.47pct，反映区域结构、产品结构与成本管理改善。</li>
+            <li><strong>国际业务毛利率：</strong>约 29.7%，高于整体水平，说明海外市场不只是“做大收入”，也在贡献更优盈利。</li>
+            <li><strong>净利润弹性：</strong>在收入仅增长 5.9% 情况下，归母净利润增长 31.98%，盈利杠杆释放明显。</li>
+            <li><strong>研发投入：</strong>研发费用率 6.86%，按收入测算研发投入约 53.77 亿元，说明公司并未因短期利润修复而削弱中长期竞争力建设。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>盈利能力核心指标</h3>
+          <canvas id="marginChart"></canvas>
+          <p class="small muted">研发费用率维持高位，说明三一仍在用技术投入换取全球化竞争优势。</p>
+        </div>
+      </div>
+      <div class="grid grid-4" style="margin-top:18px;">
+        <div class="kpi-box">
+          <div class="title">净利率（近似）</div>
+          <div class="num">7.6%</div>
+          <div class="desc">59.75 / 783.83 估算</div>
+        </div>
+        <div class="kpi-box">
+          <div class="title">ROE</div>
+          <div class="num">8.54%</div>
+          <div class="desc">仍有继续修复空间</div>
+        </div>
+        <div class="kpi-box">
+          <div class="title">海外毛利率</div>
+          <div class="num">29.7%</div>
+          <div class="desc">高于核心业务整体水平</div>
+        </div>
+        <div class="kpi-box">
+          <div class="title">研发投入估算</div>
+          <div class="num">53.8 亿元</div>
+          <div class="desc">按研发费用率倒算</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-5">
+      <div class="section-header">
+        <div class="section-no">05</div>
+        <div>
+          <h2>现金流与资产负债</h2>
+          <p>2024 年财务质量改善的核心章节。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>营运与回款情况</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>项目</th>
+                  <th>2024A</th>
+                  <th>解读</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>经营现金流净额</td>
+                  <td>148.14 亿元</td>
+                  <td>现金创造能力显著增强</td>
+                </tr>
+                <tr>
+                  <td>应收账款</td>
+                  <td>296.94 亿元</td>
+                  <td>规模仍高，需持续关注海外扩张后的信用风险</td>
+                </tr>
+                <tr>
+                  <td>坏账准备</td>
+                  <td>41.78 亿元</td>
+                  <td>说明公司对信用损失已有充分预留意识</td>
+                </tr>
+                <tr>
+                  <td>存货</td>
+                  <td>199.48 亿元</td>
+                  <td>库存绝对值不低，但整体质量被管理层描述为稳定</td>
+                </tr>
+                <tr>
+                  <td>资产负债率</td>
+                  <td>52%</td>
+                  <td>总体可控，仍属制造业中合理区间</td>
+                </tr>
+                <tr>
+                  <td>财务费用率</td>
+                  <td>0.26%</td>
+                  <td>受汇兑损益扰动上升</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h3>营运质量图谱</h3>
+          <canvas id="balanceChart"></canvas>
+          <p class="small muted">经营现金流已显著超过净利润，说明利润的现金含量改善。</p>
+        </div>
+      </div>
+      <div class="grid grid-3" style="margin-top:18px;">
+        <div class="alert green">现金流同比大幅改善，说明销售回款与渠道质量同步优化。</div>
+        <div class="alert warning">应收账款与存货规模仍大，若宏观或海外需求转弱，可能再次对现金流形成压力。</div>
+        <div class="alert danger">财务费用同比增幅较高，主要由汇兑损益驱动，国际化越深入，汇率管理能力越关键。</div>
+      </div>
+    </section>
+
+    <section id="section-6">
+      <div class="section-header">
+        <div class="section-no">06</div>
+        <div>
+          <h2>业务与区域结构</h2>
+          <p>海外贡献已决定估值逻辑，产品结构决定盈利弹性。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>区域结构：国际化已成主线</h3>
+          <canvas id="regionChart"></canvas>
+          <p class="small muted">按 2024 年披露口径，海外收入约 485.13 亿元，占总收入约 61.9%。</p>
+        </div>
+        <div class="card">
+          <h3>产品结构：核心产品仍是收入底盘</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>产品线</th>
+                  <th>2024 表现</th>
+                  <th>观察</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>土方/挖掘机械</td>
+                  <td>约 42.5 亿美元</td>
+                  <td>仍是第一大核心品类</td>
+                </tr>
+                <tr>
+                  <td>混凝土机械</td>
+                  <td>约 20.1 亿美元</td>
+                  <td>成熟业务，支撑利润稳定</td>
+                </tr>
+                <tr>
+                  <td>起重机械</td>
+                  <td>约 18.3 亿美元</td>
+                  <td>受益海外基建与能源项目</td>
+                </tr>
+                <tr>
+                  <td>路面机械</td>
+                  <td>同比 +20.8%</td>
+                  <td>细分赛道增速较强</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-3" style="margin-top:18px;">
+        <div class="alert purple">海外不再只是“补国内缺口”，而是三一未来增长和估值重估的核心变量。</div>
+        <div class="alert green">挖机、混凝土、起重三大板块合计贡献约 76% 收入，主营结构仍然清晰稳定。</div>
+        <div class="alert warning">海外收入占比提升后，公司管理难点从“销量”转向“本地化运营、汇率风险与售后网络效率”。</div>
+      </div>
+    </section>
+
+    <section id="section-7">
+      <div class="section-header">
+        <div class="section-no">07</div>
+        <div>
+          <h2>估值分析</h2>
+          <p>现阶段更适合用“经营质量修复 + 海外成长溢价”来理解估值，而非单看国内周期。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>估值框架</h3>
+          <ul class="compact muted">
+            <li><strong>传统视角：</strong>工程机械通常按国内需求周期估值，业绩高波动，估值上限受制于景气持续性。</li>
+            <li><strong>当前视角：</strong>三一重工的国际业务已占六成以上，估值应部分参考全球制造龙头的“海外份额提升 + 利润率改善”逻辑。</li>
+            <li><strong>盈利修复：</strong>2024 年利润与现金流改善，为估值中枢提升提供基本面支持。</li>
+            <li><strong>关键观察：</strong>若 2025 年海外收入继续双位数增长、国内需求企稳，则市场可能从“周期股”重新定价为“全球制造成长股”。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>综合评分</h3>
+          <div class="score-ring"></div>
+          <div class="score-value">78<span>经营质量评分</span></div>
+          <div class="grid grid-2" style="margin-top:18px;">
+            <div class="kpi-box">
+              <div class="title">增长</div>
+              <div class="num">75</div>
+              <div class="desc">海外增长支撑</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">盈利</div>
+              <div class="num">80</div>
+              <div class="desc">净利修复明确</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">现金流</div>
+              <div class="num">88</div>
+              <div class="desc">年度最大亮点</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">风险</div>
+              <div class="num">69</div>
+              <div class="desc">汇率与周期仍在</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-8">
+      <div class="section-header">
+        <div class="section-no">08</div>
+        <div>
+          <h2>风险与结论</h2>
+          <p>好的财报不等于没有风险，关键在于识别利润持续性。</p>
+        </div>
+      </div>
+      <div class="grid grid-3">
+        <div class="risk-card risk-mid">
+          <div class="risk-icon">🌍</div>
+          <div>
+            <h3>海外经营风险</h3>
+            <div class="tag gold">中等</div>
+            <p class="muted">国际业务占比已高，地缘政治、关税政策、渠道本地化与售后体系都会影响增长质量。</p>
+          </div>
+        </div>
+        <div class="risk-card risk-mid">
+          <div class="risk-icon">💱</div>
+          <div>
+            <h3>汇率波动风险</h3>
+            <div class="tag gold">中等</div>
+            <p class="muted">财务费用已受汇兑损益影响而显著波动，未来随着海外业务扩大，汇率管理的重要性进一步上升。</p>
+          </div>
+        </div>
+        <div class="risk-card risk-low">
+          <div class="risk-icon">🏗️</div>
+          <div>
+            <h3>国内周期修复不及预期</h3>
+            <div class="tag blue">可控</div>
+            <p class="muted">国内市场仍是利润底盘之一，若基建和地产相关需求恢复偏慢，将影响估值提升节奏。</p>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:18px;">
+        <h3>最终结论</h3>
+        <div class="alert green">
+          三一重工 2024 年财报的核心不是“营收增长 5.9%”，而是公司在低增长环境下，交出了一份<strong>利润显著修复、现金流强劲反弹、国际业务持续扩张</strong>的高质量答卷。
+          从财务角度看，公司已经具备从“周期修复逻辑”切换到“全球化成长逻辑”的基础。
+        </div>
+        <ul class="compact muted">
+          <li>短期看：盈利修复与现金流改善已得到验证。</li>
+          <li>中期看：海外增长持续性决定估值天花板。</li>
+          <li>长期看：若智能化、电动化、全球渠道能力持续增强，三一重工有机会进一步向全球制造龙头估值体系靠拢。</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <h3>数据来源</h3>
+        <ul class="sources muted">
+          <li>三一重工 2024 年年度报告（公开披露，发布日期约 2025-04-18/19）</li>
+          <li>上海证券交易所/上市公司公告渠道公开信息</li>
+          <li>公开财经信息汇总口径（用于交叉验证海外收入、毛利率、资产负债率、应收账款、存货等指标）</li>
+        </ul>
+        <p class="small muted">说明：由于公开信息抓取口径存在细微差异，个别指标如海外收入占比可能出现 61.9%~64% 的区间表达；本报告优先采用与年度报告一致的主口径，并对存在差异的数据作审慎说明。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>本报告由 财务万晓生 生成｜定位：管理层财务分析简报｜输出日期：2026-03-24（UTC）</div>
+    <div style="margin-top:6px;">提示：本报告仅基于公开披露信息与交叉验证结果，不构成投资建议。</div>
+  </footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+    const axisColor = '#8b949e';
+    const gridColor = 'rgba(255,255,255,0.08)';
+
+    new Chart(document.getElementById('growthChart'), {
+      type: 'bar',
+      data: {
+        labels: ['营业收入增速', '归母净利润增速', '经营现金流增速'],
+        datasets: [{
+          label: '同比增速（%）',
+          data: [5.9, 31.98, 159.53],
+          backgroundColor: ['#58a6ff', '#3fb950', '#39d0c8'],
+          borderRadius: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          datalabels: {
+            color: '#e6edf3', anchor: 'end', align: 'end', formatter: v => v + '%', font: { weight: '700' }
+          }
+        },
+        scales: {
+          x: { ticks: { color: axisColor }, grid: { display: false } },
+          y: { ticks: { color: axisColor }, grid: { color: gridColor } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('marginChart'), {
+      type: 'bar',
+      data: {
+        labels: ['核心业务毛利率', '海外业务毛利率', '净利率(估算)', '研发费用率'],
+        datasets: [{
+          label: '比例（%）',
+          data: [26.63, 29.7, 7.62, 6.86],
+          backgroundColor: ['#58a6ff', '#3fb950', '#d29922', '#bc8cff'],
+          borderRadius: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          datalabels: { color: '#e6edf3', anchor: 'end', align: 'end', formatter: v => v + '%', font: { weight: '700' } }
+        },
+        scales: {
+          x: { ticks: { color: axisColor }, grid: { display: false } },
+          y: { ticks: { color: axisColor }, grid: { color: gridColor } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('balanceChart'), {
+      type: 'bar',
+      data: {
+        labels: ['经营现金流', '应收账款', '存货'],
+        datasets: [{
+          label: '金额（亿元）',
+          data: [148.14, 296.94, 199.48],
+          backgroundColor: ['#39d0c8', '#f85149', '#d29922'],
+          borderRadius: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          datalabels: { color: '#e6edf3', anchor: 'end', align: 'end', formatter: v => v + '亿', font: { weight: '700' } }
+        },
+        scales: {
+          x: { ticks: { color: axisColor }, grid: { display: false } },
+          y: { ticks: { color: axisColor }, grid: { color: gridColor } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('regionChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['海外收入', '国内收入'],
+        datasets: [{
+          data: [485.13, 298.70],
+          backgroundColor: ['#58a6ff', '#30363d'],
+          borderColor: ['#0d1117', '#0d1117'],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { labels: { color: axisColor } },
+          datalabels: {
+            color: '#e6edf3', formatter: (v, ctx) => {
+              const total = ctx.chart.data.datasets[0].data.reduce((a,b) => a+b, 0);
+              return (v / total * 100).toFixed(1) + '%';
+            }, font: { weight: '700' }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
