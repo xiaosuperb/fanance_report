@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小米集团-W（01810.HK）2025年度财务分析报告</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #0d1117 0%, #0f141b 100%);
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    .hero {
+      background: radial-gradient(circle at top right, rgba(88,166,255,.22), transparent 28%), linear-gradient(135deg, #111827 0%, #0d1117 55%, #10233d 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 24px 36px;
+    }
+    .hero-inner, .container, .summary-strip, .nav-inner {
+      width: min(1280px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .hero-top {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .badge-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .pill {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03); border-radius:999px; color:var(--text-secondary); font-size:13px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 36px;
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--text-secondary);
+      max-width: 980px;
+      font-size: 15px;
+    }
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: -18px;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 2;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute; inset: 0 auto auto 0;
+      width: 100%; height: 3px;
+      background: var(--accent);
+    }
+    .kpi-card.green::before { background: var(--accent-green); }
+    .kpi-card.red::before { background: var(--accent-red); }
+    .kpi-card.gold::before { background: var(--accent-gold); }
+    .kpi-card.purple::before { background: var(--accent-purple); }
+    .kpi-card.teal::before { background: var(--accent-teal); }
+    .kpi-label { color: var(--text-secondary); font-size: 13px; margin-bottom: 10px; }
+    .kpi-value { font-size: 28px; font-weight: 700; line-height: 1.15; margin-bottom: 8px; }
+    .kpi-change { font-size: 13px; color: var(--text-secondary); }
+    .kpi-change strong { color: var(--text-primary); }
+    .nav-bar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(13,17,23,.78);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255,255,255,.03);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display:flex; gap:10px; flex-wrap:wrap; padding: 12px 0;
+    }
+    .nav-link {
+      color: var(--text-secondary);
+      border: 1px solid rgba(255,255,255,.06);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      background: rgba(255,255,255,.02);
+    }
+    .nav-link:hover { color: var(--text-primary); border-color: rgba(88,166,255,.35); }
+    .container { padding: 26px 0 56px; }
+    .section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .section-title {
+      display:flex; align-items:center; gap:14px; margin-bottom: 18px;
+    }
+    .section-no {
+      width: 38px; height: 38px; border-radius: 12px;
+      display:grid; place-items:center; font-weight:700;
+      background: linear-gradient(135deg, #2f81f7, #58a6ff);
+      color: #fff;
+      flex: 0 0 38px;
+    }
+    .section-title h2 { margin:0; font-size: 24px; }
+    .muted { color: var(--text-secondary); }
+    .grid-2 { display:grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
+    .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .chart-card, .text-card, .mini-card, .risk-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .card-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+    .insight-list, .bullet-list { margin: 0; padding-left: 18px; color: var(--text-secondary); }
+    .insight-list li, .bullet-list li { margin: 8px 0; }
+    .callout {
+      border-left: 4px solid var(--accent-green);
+      background: rgba(63,185,80,.08);
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin: 12px 0;
+      color: var(--text-primary);
+    }
+    .callout.warning { border-left-color: var(--accent-gold); background: rgba(210,153,34,.10); }
+    .callout.danger { border-left-color: var(--accent-red); background: rgba(248,81,73,.10); }
+    .callout.purple { border-left-color: var(--accent-purple); background: rgba(188,140,255,.10); }
+    table {
+      width: 100%; border-collapse: collapse; overflow: hidden;
+      border-radius: 14px; border: 1px solid var(--border);
+      font-size: 14px;
+    }
+    th, td { padding: 12px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    th {
+      background: rgba(88,166,255,.10);
+      color: var(--text-primary); font-weight: 600;
+    }
+    tbody tr:nth-child(odd) { background: rgba(255,255,255,.015); }
+    tbody tr:nth-child(even) { background: rgba(255,255,255,.03); }
+    tbody tr:hover { background: rgba(88,166,255,.08); }
+    .tag {
+      display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:600;
+      background: rgba(88,166,255,.12); color: #87c1ff;
+    }
+    .tag.green { background: rgba(63,185,80,.12); color: #62d37a; }
+    .tag.red { background: rgba(248,81,73,.12); color: #ff8f87; }
+    .tag.gold { background: rgba(210,153,34,.14); color: #f0c96a; }
+    .tag.purple { background: rgba(188,140,255,.14); color: #d6b7ff; }
+    .management-box {
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;
+      margin-top: 14px;
+    }
+    .management-item {
+      padding: 14px; border-radius: 14px; background: linear-gradient(180deg, rgba(88,166,255,.08), rgba(255,255,255,.02));
+      border: 1px solid rgba(88,166,255,.15);
+    }
+    .management-item h4 { margin: 0 0 8px; font-size: 15px; }
+    .risk-card {
+      display:flex; gap:14px; align-items:flex-start;
+    }
+    .risk-icon {
+      width: 42px; height: 42px; border-radius: 12px; display:grid; place-items:center; font-size: 20px; flex: 0 0 42px;
+      background: rgba(248,81,73,.12); color: #ff9b94;
+    }
+    .risk-card.gold .risk-icon { background: rgba(210,153,34,.14); color: #f0c96a; }
+    .risk-card.green .risk-icon { background: rgba(63,185,80,.14); color: #7fe59a; }
+    .risk-card.purple .risk-icon { background: rgba(188,140,255,.14); color: #d4b3ff; }
+    .risk-body h4 { margin: 0 0 8px; }
+    .risk-body p { margin: 0 0 10px; color: var(--text-secondary); }
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 22px 24px 40px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .footer .inner { width: min(1280px, calc(100% - 32px)); margin: 0 auto; }
+    canvas { width: 100% !important; height: 320px !important; }
+    .small canvas { height: 260px !important; }
+    @media (max-width: 1100px) {
+      .summary-strip { grid-template-columns: repeat(3, 1fr); }
+      .grid-2, .grid-3, .management-box { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .summary-strip { grid-template-columns: repeat(2, 1fr); }
+      h1 { font-size: 28px; }
+      .section { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <div class="badge-row">
+          <span class="pill">📊 年度财务分析</span>
+          <span class="pill">🏷️ 小米集团-W · 01810.HK</span>
+          <span class="pill">🗓️ 报告口径：2025 年报（基于截至 2024-12-31 年度披露数据）</span>
+        </div>
+      </div>
+      <h1>小米集团-W：2025 年度财务分析报告</h1>
+      <p>
+        结论前置：小米 2024 财年交出一份显著超预期的增长答卷——收入、调整后净利润均创历史新高，手机 × AIoT 主业恢复高质量增长，互联网业务维持高毛利，智能电动车业务开始形成收入规模且毛利率改善。对 2025 年而言，核心矛盾从“能否恢复增长”转向“主业高端化与汽车放量能否同时兑现利润质量”。
+      </p>
+    </div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="kpi-card">
+      <div class="kpi-label">总收入</div>
+      <div class="kpi-value">365.9 亿元</div>
+      <div class="kpi-change"><strong>+35.0%</strong> YoY</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">调整后净利润</div>
+      <div class="kpi-value">272.3 亿元</div>
+      <div class="kpi-change"><strong>+41.3%</strong> YoY</div>
+    </div>
+    <div class="kpi-card teal">
+      <div class="kpi-label">经营利润</div>
+      <div class="kpi-value">245.0 亿元</div>
+      <div class="kpi-change"><strong>+22.5%</strong> YoY</div>
+    </div>
+    <div class="kpi-card gold">
+      <div class="kpi-label">综合毛利率</div>
+      <div class="kpi-value">20.9%</div>
+      <div class="kpi-change"><strong>-0.3pct</strong> YoY</div>
+    </div>
+    <div class="kpi-card purple">
+      <div class="kpi-label">Smartphone × AIoT 收入</div>
+      <div class="kpi-value">333.2 亿元</div>
+      <div class="kpi-change"><strong>+22.9%</strong> YoY</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">智能电动车等新业务收入</div>
+      <div class="kpi-value">32.8 亿元</div>
+      <div class="kpi-change"><strong>首次形成规模</strong></div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <a class="nav-link" href="#summary">执行摘要</a>
+      <a class="nav-link" href="#overview">公司概况</a>
+      <a class="nav-link" href="#core">核心财务表现</a>
+      <a class="nav-link" href="#profit">盈利能力</a>
+      <a class="nav-link" href="#cashflow">现金流与资产负债</a>
+      <a class="nav-link" href="#business">业务结构</a>
+      <a class="nav-link" href="#valuation">估值分析</a>
+      <a class="nav-link" href="#risk">风险与结论</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="section" id="summary">
+      <div class="section-title">
+        <div class="section-no">01</div>
+        <h2>执行摘要</h2>
+      </div>
+      <div class="grid-2">
+        <div class="text-card">
+          <div class="card-title">核心判断</div>
+          <ul class="insight-list">
+            <li><strong>增长质量显著改善：</strong>2024 年收入同比增长 35.0%，调整后净利润同比增长 41.3%，利润增速快于收入增速，表明经营杠杆开始释放。</li>
+            <li><strong>主业重新进入上升周期：</strong>手机 × AIoT 收入增长 22.9%，其中手机出货量同比增长 15.7%，ASP 同比提升 5.2%，增长来自“量价齐升”。</li>
+            <li><strong>互联网业务仍是利润压舱石：</strong>广告收入 247 亿元，同比增长 20.5%；海外互联网服务收入 110 亿元，同比增长 30.0%，高毛利属性继续支撑集团利润率。</li>
+            <li><strong>汽车业务从“故事”进入“损益表”：</strong>智能电动车及其他新业务收入 328 亿元，毛利率 18.5%，但仍录得 62 亿元调整后净亏损，说明规模化尚未完全跨过费用摊薄拐点。</li>
+            <li><strong>管理层 2025 年任务明确：</strong>一边维持手机高端化与 AIoT 盈利能力，一边推动汽车交付与毛利率提升，避免新业务扩张吞噬主业利润质量。</li>
+          </ul>
+          <div class="callout">
+            <strong>管理层一句话结论：</strong> 小米当前最值得关注的不是“有没有增长”，而是“增长结构是否可持续”。2024 年答案偏正面；2025 年关键看汽车业务能否把收入增量真正转化为净利润改善。
+          </div>
+        </div>
+        <div class="chart-card small">
+          <div class="card-title">收入与调整后净利润趋势</div>
+          <canvas id="headlineChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="section-title">
+        <div class="section-no">02</div>
+        <h2>公司概况</h2>
+      </div>
+      <div class="grid-2">
+        <div class="text-card">
+          <div class="card-title">商业模式与战略定位</div>
+          <p class="muted">
+            小米已从单一手机厂商演化为“手机 × AIoT × 互联网服务 × 智能电动车”四轮驱动平台型公司。2024 年最重要的变化，不是收入绝对值创新高，而是“人车家全生态”在财务报表中开始体现协同：手机高端化带动 ASP，AIoT 放大生态黏性，互联网服务承接流量变现，汽车打开第二增长曲线。
+          </p>
+          <p class="muted">
+            从财务结构看，集团仍以 Smartphone × AIoT 为主体收入来源，但智能电动车业务已不再是边缘投入项，而是足以影响集团估值框架与利润节奏的核心变量。
+          </p>
+          <div class="callout purple">
+            <strong>经营含义：</strong> 小米正在从“硬件公司估值逻辑”切换为“消费电子 + 互联网 + 智能汽车平台”的复合估值逻辑，市场给予的估值中枢，将更多取决于汽车业务的兑现速度。
+          </div>
+        </div>
+        <div class="mini-card">
+          <div class="card-title">2024 年关键经营里程碑</div>
+          <ul class="bullet-list">
+            <li>全球 MAU 达 <strong>7.023 亿</strong>，同比 +9.5%</li>
+            <li>中国大陆 MAU 达 <strong>1.729 亿</strong>，同比 +11.1%</li>
+            <li>智能手机出货 <strong>1.685 亿台</strong>，同比 +15.7%</li>
+            <li>智能手机 ASP <strong>1,138 元/台</strong>，同比 +5.2%</li>
+            <li>海外市场收入 <strong>1,533 亿元</strong>，占总收入 <strong>41.9%</strong></li>
+            <li>线下门店接近 <strong>15,000 家</strong></li>
+            <li>已投资约 <strong>430 家</strong> 公司，账面价值 <strong>683 亿元</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="core">
+      <div class="section-title">
+        <div class="section-no">03</div>
+        <h2>核心财务表现</h2>
+      </div>
+      <div class="grid-2">
+        <div class="chart-card">
+          <div class="card-title">核心利润表指标对比（2024 vs 2023）</div>
+          <canvas id="plChart"></canvas>
+        </div>
+        <div class="text-card">
+          <div class="card-title">拆解：为什么这份年报质量高</div>
+          <ul class="insight-list">
+            <li><strong>收入扩张：</strong>总收入 3659 亿元，同比增加 35.0%，绝对增量接近 950 亿元。</li>
+            <li><strong>毛利增长：</strong>毛利 766 亿元，同比增长 33.2%，增速略低于收入，主因汽车业务毛利率仍处爬坡期。</li>
+            <li><strong>经营利润改善：</strong>经营利润 245 亿元，同比增长 22.5%，说明主业恢复和规模效应明显。</li>
+            <li><strong>净利润提升：</strong>归因于主业改善、互联网高毛利业务扩张，以及非 IFRS 调整后利润释放更清晰。</li>
+            <li><strong>调整后净利润创历史新高：</strong>272 亿元，同比增长 41.3%，是管理层汇报层面最有说服力的指标。</li>
+          </ul>
+          <div class="callout warning">
+            <strong>需要注意：</strong> GAAP 利润改善并不完全等同于可持续利润改善，部分波动仍受投资公允价值、金融负债估值、税项等影响。因此管理层更应关注经营利润与调整后净利润，而非单一法定利润数字。
+          </div>
+        </div>
+      </div>
+
+      <div class="text-card" style="margin-top:16px;">
+        <div class="card-title">核心财务表现总表</div>
+        <table>
+          <thead>
+            <tr>
+              <th>指标</th>
+              <th>2024</th>
+              <th>2023</th>
+              <th>同比</th>
+              <th>解读</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>收入</td>
+              <td>365,906 百万元</td>
+              <td>270,970 百万元</td>
+              <td><span class="tag green">+35.0%</span></td>
+              <td>全面增长，手机与汽车双轮驱动</td>
+            </tr>
+            <tr>
+              <td>毛利</td>
+              <td>76,560 百万元</td>
+              <td>57,476 百万元</td>
+              <td><span class="tag green">+33.2%</span></td>
+              <td>高于收入基数扩张，但被新业务结构稀释</td>
+            </tr>
+            <tr>
+              <td>经营利润</td>
+              <td>24,503 百万元</td>
+              <td>20,009 百万元</td>
+              <td><span class="tag green">+22.5%</span></td>
+              <td>经营效率提升但仍受新业务投入影响</td>
+            </tr>
+            <tr>
+              <td>税前利润</td>
+              <td>28,127 百万元</td>
+              <td>22,011 百万元</td>
+              <td><span class="tag green">+27.8%</span></td>
+              <td>主业改善叠加部分非经营贡献</td>
+            </tr>
+            <tr>
+              <td>年度利润</td>
+              <td>23,578 百万元</td>
+              <td>17,474 百万元</td>
+              <td><span class="tag green">+34.9%</span></td>
+              <td>法定利润修复明显</td>
+            </tr>
+            <tr>
+              <td>调整后净利润</td>
+              <td>27,235 百万元</td>
+              <td>19,273 百万元</td>
+              <td><span class="tag green">+41.3%</span></td>
+              <td>最能体现经营真实弹性</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="profit">
+      <div class="section-title">
+        <div class="section-no">04</div>
+        <h2>盈利能力分析</h2>
+      </div>
+      <div class="grid-2">
+        <div class="chart-card">
+          <div class="card-title">毛利率结构</div>
+          <canvas id="marginChart"></canvas>
+        </div>
+        <div class="text-card">
+          <div class="card-title">盈利能力结论</div>
+          <ul class="insight-list">
+            <li><strong>集团综合毛利率：</strong>2024 年为 20.9%，较 2023 年的 21.2% 轻微下降 0.3pct，原因不是主业恶化，而是新业务占比上升。</li>
+            <li><strong>手机 × AIoT 业务毛利率：</strong>21.2%，与上年持平，说明手机高端化与 AIoT 结构升级抵消了竞争压力。</li>
+            <li><strong>智能电动车等新业务毛利率：</strong>18.5%，已高于市场对初期汽车业务的一般预期，证明供应链与定价能力具备一定基础。</li>
+            <li><strong>互联网业务仍维持高毛利属性：</strong>从披露的季度数据看，互联网服务毛利率在 2024Q4 仍高达 76.5%，继续承担利润中枢角色。</li>
+          </ul>
+          <div class="callout">
+            <strong>核心判断：</strong> 小米当前的盈利能力并非“被汽车拖累”，而是“主业稳住利润底盘，汽车拉高成长上限”。只要汽车毛利率继续上行，2025 年综合毛利率有望重新改善。
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top:16px;">
+        <div class="mini-card">
+          <div class="card-title">手机业务</div>
+          <p class="muted">2024 年智能手机收入 1,918 亿元，同比增长 21.8%；出货量 1.685 亿台，同比增长 15.7%；ASP 提升至 1,138 元，反映高端机占比抬升。</p>
+          <span class="tag green">量价齐升</span>
+        </div>
+        <div class="mini-card">
+          <div class="card-title">IoT 与生活消费品</div>
+          <p class="muted">收入 1,041 亿元，同比增长 30.0%。空调、冰箱、洗衣机、平板、可穿戴等均有较强拉动，大件家电成为新增量。</p>
+          <span class="tag teal">结构升级</span>
+        </div>
+        <div class="mini-card">
+          <div class="card-title">互联网服务</div>
+          <p class="muted">广告收入 247 亿元，同比增长 20.5%；海外互联网服务收入 110 亿元，同比增长 30.0%，体现用户规模和变现效率同步提升。</p>
+          <span class="tag purple">高利润引擎</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cashflow">
+      <div class="section-title">
+        <div class="section-no">05</div>
+        <h2>现金流与资产负债</h2>
+      </div>
+      <div class="grid-2">
+        <div class="chart-card">
+          <div class="card-title">季度现金流概览（2024Q4 vs 2024Q3）</div>
+          <canvas id="cashChart"></canvas>
+        </div>
+        <div class="text-card">
+          <div class="card-title">现金流判断</div>
+          <ul class="insight-list">
+            <li><strong>2024Q4 经营现金流净额：</strong>239.1 亿元，高于 2024Q3 的 128.6 亿元，说明旺季回款能力强。</li>
+            <li><strong>投资现金流净流出：</strong>Q4 为 290.7 亿元，大幅高于 Q3，反映资本开支、投资与业务扩张同步推进。</li>
+            <li><strong>期末现金及现金等价物：</strong>Q4 末为 336.6 亿元，较 Q3 末下降，主要受投资活动与资本开支拉动。</li>
+            <li><strong>资本开支：</strong>2024 年合计 104.8 亿元，其中 Smartphone × AIoT 为 64.2 亿元，智能电动车等新业务为 40.6 亿元。</li>
+            <li><strong>总借款：</strong>截至 2024 年末约 306 亿元，整体仍处可控水平。</li>
+          </ul>
+          <div class="callout danger">
+            <strong>资产负债表观察重点：</strong> 小米当前并不缺盈利，但汽车业务与生态投入显著提升了资金消耗速度。若 2025 年资本开支与交付扩张继续加速，市场将更关注自由现金流而非单纯利润。
+          </div>
+        </div>
+      </div>
+
+      <div class="text-card" style="margin-top:16px;">
+        <div class="card-title">现金流与资本开支总表</div>
+        <table>
+          <thead>
+            <tr>
+              <th>项目</th>
+              <th>2024Q4</th>
+              <th>2024Q3</th>
+              <th>变化</th>
+              <th>经营含义</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>经营活动现金流净额</td>
+              <td>23,906.8 百万元</td>
+              <td>12,858.1 百万元</td>
+              <td><span class="tag green">明显改善</span></td>
+              <td>旺季销售与回款质量较高</td>
+            </tr>
+            <tr>
+              <td>投资活动现金流净额</td>
+              <td>-29,067.1 百万元</td>
+              <td>-9,028.4 百万元</td>
+              <td><span class="tag red">流出扩大</span></td>
+              <td>扩产、投资与资本支出同步上升</td>
+            </tr>
+            <tr>
+              <td>融资活动现金流净额</td>
+              <td>-899.9 百万元</td>
+              <td>-3,554.4 百万元</td>
+              <td><span class="tag green">改善</span></td>
+              <td>融资端压力可控</td>
+            </tr>
+            <tr>
+              <td>期末现金及现金等价物</td>
+              <td>33,661.4 百万元</td>
+              <td>39,655.4 百万元</td>
+              <td><span class="tag gold">下降</span></td>
+              <td>现金储备仍在，但消耗节奏加快</td>
+            </tr>
+            <tr>
+              <td>全年资本开支</td>
+              <td colspan="2">10,480.2 百万元</td>
+              <td><span class="tag purple">高投入</span></td>
+              <td>汽车与生态建设并进</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="business">
+      <div class="section-title">
+        <div class="section-no">06</div>
+        <h2>业务结构分析</h2>
+      </div>
+      <div class="grid-2">
+        <div class="chart-card">
+          <div class="card-title">收入结构拆分</div>
+          <canvas id="segmentChart"></canvas>
+        </div>
+        <div class="text-card">
+          <div class="card-title">结构变化的三层含义</div>
+          <ul class="insight-list">
+            <li><strong>第一层：</strong>Smartphone × AIoT 仍占 91.0% 收入，是集团现金流与规模基础。</li>
+            <li><strong>第二层：</strong>汽车新业务占比 9.0%，已经足以显著改变集团成长叙事与利润弹性。</li>
+            <li><strong>第三层：</strong>互联网服务虽然收入占比不高，但对盈利贡献远高于收入贡献，是利润结构的关键稳定器。</li>
+          </ul>
+          <div class="callout purple">
+            <strong>经营含义：</strong> 市场不会再把小米简单按“手机品牌”定价。收入结构越多元，估值分部法越重要；但同时，汽车业务的执行波动也会更快传导到集团股价。
+          </div>
+        </div>
+      </div>
+
+      <div class="text-card" style="margin-top:16px;">
+        <div class="card-title">业务分部数据</div>
+        <table>
+          <thead>
+            <tr>
+              <th>分部</th>
+              <th>2024 收入</th>
+              <th>收入占比</th>
+              <th>同比</th>
+              <th>关键观察</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Smartphone × AIoT</td>
+              <td>333,152.8 百万元</td>
+              <td>91.0%</td>
+              <td><span class="tag green">+22.9%</span></td>
+              <td>手机修复 + AIoT 扩张，主业重回增长通道</td>
+            </tr>
+            <tr>
+              <td>智能电动车及其他新业务</td>
+              <td>32,753.6 百万元</td>
+              <td>9.0%</td>
+              <td><span class="tag purple">新增长极</span></td>
+              <td>收入开始成形，但利润尚未释放</td>
+            </tr>
+            <tr>
+              <td>海外市场收入</td>
+              <td>153.3 亿元</td>
+              <td>41.9%（集团）</td>
+              <td><span class="tag green">提升</span></td>
+              <td>全球渠道与品牌韧性仍强</td>
+            </tr>
+            <tr>
+              <td>广告收入</td>
+              <td>24.7 亿元</td>
+              <td>—</td>
+              <td><span class="tag green">+20.5%</span></td>
+              <td>互联网变现能力稳定增强</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="valuation">
+      <div class="section-title">
+        <div class="section-no">07</div>
+        <h2>估值分析</h2>
+      </div>
+      <div class="grid-2">
+        <div class="text-card">
+          <div class="card-title">估值框架建议</div>
+          <p class="muted">
+            对小米的估值不宜再单纯采用消费电子公司单一 PE。更合理的方式是采用<strong>分部估值（SOTP）</strong>：
+          </p>
+          <ul class="bullet-list">
+            <li><strong>手机 × AIoT：</strong>参考成熟消费电子/硬件龙头，给予相对稳健的利润倍数。</li>
+            <li><strong>互联网服务：</strong>由于高毛利、高现金回报，可给予高于硬件业务的盈利倍数。</li>
+            <li><strong>智能电动车：</strong>当前更接近收入倍数 / 远期毛利率兑现框架，而非当前利润法。</li>
+            <li><strong>投资资产：</strong>账面价值 683 亿元，可作为资产价值补充，但波动性高、折价处理更合理。</li>
+          </ul>
+          <div class="callout warning">
+            <strong>估值结论：</strong> 如果仅按 2024 年利润看，小米已经不便宜；但若市场认可其汽车业务在 2025-2026 年的放量与亏损收窄路径，估值溢价仍有基础。决定估值中枢的，不是历史利润，而是汽车业务的兑现斜率。
+          </div>
+        </div>
+        <div class="mini-card">
+          <div class="card-title">管理层汇报口径</div>
+          <div class="management-box">
+            <div class="management-item">
+              <h4>① 主业定价</h4>
+              <p class="muted">手机 × AIoT 已重新证明增长韧性，利润底盘稳定。</p>
+            </div>
+            <div class="management-item">
+              <h4>② 互联网溢价</h4>
+              <p class="muted">互联网业务继续贡献高质量利润，是估值安全垫。</p>
+            </div>
+            <div class="management-item">
+              <h4>③ 汽车期权</h4>
+              <p class="muted">汽车业务决定上行空间，但也决定短期波动幅度。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="risk">
+      <div class="section-title">
+        <div class="section-no">08</div>
+        <h2>风险与结论</h2>
+      </div>
+      <div class="grid-3">
+        <div class="risk-card gold">
+          <div class="risk-icon">⚠️</div>
+          <div class="risk-body">
+            <h4>汽车业务亏损收窄不及预期</h4>
+            <p>虽然 2024 年汽车业务毛利率达到 18.5%，但调整后净亏损仍有 62 亿元。若 2025 年交付增长未能覆盖研发、销售与渠道投入，利润端压力将持续。</p>
+            <span class="tag gold">中高</span>
+          </div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-icon">📉</div>
+          <div class="risk-body">
+            <h4>手机高端化节奏受竞争扰动</h4>
+            <p>手机收入恢复很大程度依赖 ASP 提升与高端产品成功。若中国高端机市场竞争加剧，高端化节奏可能放缓。</p>
+            <span class="tag red">中高</span>
+          </div>
+        </div>
+        <div class="risk-card purple">
+          <div class="risk-icon">💱</div>
+          <div class="risk-body">
+            <h4>海外与汇率波动</h4>
+            <p>海外收入占比已超四成，汇率、区域政策、渠道环境变化会更明显影响收入与利润表现。</p>
+            <span class="tag purple">中</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-card" style="margin-top:16px;">
+        <div class="card-title">最终结论</div>
+        <div class="callout">
+          <strong>结论前置：</strong> 小米 2024 年报是一份“主业修复确认 + 新业务开始兑现”的高质量答卷。主业层面，手机 × AIoT 已恢复量价齐升，互联网业务继续稳住利润率；新业务层面，汽车收入和毛利率证明模式可行，但净利润兑现仍需时间。
+        </div>
+        <p class="muted">
+          对管理层而言，2025 年最重要的不是继续讲增长故事，而是回答两个更具体的问题：第一，手机高端化能否继续支撑 ASP 和主业毛利率；第二，汽车业务能否在放量同时缩窄亏损。若两者同时兑现，小米的估值逻辑将进一步上移；若汽车拖累现金流与利润节奏，则市场会重新回到对执行风险的审视。
+        </p>
+        <div class="callout warning">
+          <strong>一句话投资判断：</strong> 小米已经从“复苏股”转向“平台成长股”，但真正决定 2025 年股价弹性的，仍是汽车业务利润模型能否被验证。
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div class="section-no">附</div>
+        <h2>数据来源与口径说明</h2>
+      </div>
+      <div class="text-card">
+        <ul class="bullet-list">
+          <li><strong>来源 1：</strong> 小米投资者关系官网《Xiaomi Corporation 2025 Annual Results Announcement》（2025-03-18 发布，披露截至 2024-12-31 年度数据）。</li>
+          <li><strong>来源 2：</strong> 小米投资者关系官网《Xiaomi Corp 24Q4 ER ENG vF》（2024 年全年及 2024Q4 业绩演示材料）。</li>
+          <li><strong>来源 3：</strong> 年报/业绩公告中的 Canalys、公司披露运营数据（全球 MAU、出货量、ASP、海外收入等）。</li>
+        </ul>
+        <div class="callout purple">
+          <strong>重要说明：</strong> 用户指定“2025 年报”，但当前可获取的官方披露文件实为 2025 年发布、对应 <strong>截至 2024 年 12 月 31 日财政年度</strong> 的年度业绩公告与演示材料。因此本报告按资本市场常用口径，定义为“2025 年报（披露时点）/ 2024 财年（财务口径）”。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="inner">
+      本报告由财务万晓生生成，采用公开披露资料整理与分析，仅供管理参考，不构成投资建议。<br/>
+      数据单位说明：除特别注明外，文中“亿元”默认指人民币亿元；表格中的原始数据多采用公告披露的“百万元人民币”口径。
+    </div>
+  </footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+    const commonOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: '#8b949e', font: { family: 'Noto Sans SC' } } },
+        tooltip: {
+          backgroundColor: 'rgba(22,27,34,.96)',
+          borderColor: '#30363d',
+          borderWidth: 1,
+          titleColor: '#e6edf3',
+          bodyColor: '#c9d1d9',
+          padding: 12
+        },
+        datalabels: {
+          color: '#e6edf3',
+          font: { weight: '600' },
+          formatter: (v) => v
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8b949e', font: { family: 'Noto Sans SC' } },
+          grid: { color: 'rgba(255,255,255,.05)' }
+        },
+        y: {
+          ticks: { color: '#8b949e', font: { family: 'Noto Sans SC' } },
+          grid: { color: 'rgba(255,255,255,.06)' }
+        }
+      }
+    };
+
+    new Chart(document.getElementById('headlineChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2023', '2024'],
+        datasets: [
+          { label: '收入（亿元）', data: [2709.7, 3659.1], backgroundColor: '#58a6ff', borderRadius: 10 },
+          { label: '调整后净利润（亿元）', data: [192.7, 272.3], backgroundColor: '#3fb950', borderRadius: 10 }
+        ]
+      },
+      options: commonOptions
+    });
+
+    new Chart(document.getElementById('plChart'), {
+      type: 'bar',
+      data: {
+        labels: ['收入', '毛利', '经营利润', '税前利润', '年度利润', '调整后净利润'],
+        datasets: [
+          { label: '2023（亿元）', data: [2709.7, 574.8, 200.1, 220.1, 174.7, 192.7], backgroundColor: 'rgba(88,166,255,.55)', borderRadius: 8 },
+          { label: '2024（亿元）', data: [3659.1, 765.6, 245.0, 281.3, 235.8, 272.3], backgroundColor: '#58a6ff', borderRadius: 8 }
+        ]
+      },
+      options: commonOptions
+    });
+
+    new Chart(document.getElementById('marginChart'), {
+      type: 'bar',
+      data: {
+        labels: ['集团综合', '手机×AIoT', '智能电动车等新业务', '互联网服务(Q4)'],
+        datasets: [
+          {
+            label: '毛利率 / 利润率',
+            data: [20.9, 21.2, 18.5, 76.5],
+            backgroundColor: ['#58a6ff', '#39d0c8', '#d29922', '#bc8cff'],
+            borderRadius: 10
+          }
+        ]
+      },
+      options: {
+        ...commonOptions,
+        plugins: {
+          ...commonOptions.plugins,
+          datalabels: { color: '#e6edf3', formatter: (v) => v + '%' }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('cashChart'), {
+      type: 'bar',
+      data: {
+        labels: ['经营现金流', '投资现金流', '融资现金流', '期末现金'],
+        datasets: [
+          { label: '2024Q3（亿元）', data: [128.6, -90.3, -35.5, 396.6], backgroundColor: 'rgba(188,140,255,.55)', borderRadius: 8 },
+          { label: '2024Q4（亿元）', data: [239.1, -290.7, -9.0, 336.6], backgroundColor: '#bc8cff', borderRadius: 8 }
+        ]
+      },
+      options: commonOptions
+    });
+
+    new Chart(document.getElementById('segmentChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Smartphone × AIoT', '智能电动车等新业务'],
+        datasets: [{ data: [3331.5, 327.5], backgroundColor: ['#58a6ff', '#f85149'], borderColor: '#0d1117', borderWidth: 4 }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#8b949e', font: { family: 'Noto Sans SC' } } },
+          tooltip: {
+            backgroundColor: 'rgba(22,27,34,.96)',
+            borderColor: '#30363d',
+            borderWidth: 1,
+            titleColor: '#e6edf3',
+            bodyColor: '#c9d1d9'
+          },
+          datalabels: {
+            color: '#fff',
+            formatter: (value, ctx) => {
+              const total = ctx.chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+              return (value / total * 100).toFixed(1) + '%';
+            },
+            font: { weight: '700' }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
