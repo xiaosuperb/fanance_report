@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>腾讯控股（00700.HK）2025年度财务分析报告</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 10px 30px rgba(0,0,0,.28);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', sans-serif;
+      background: linear-gradient(180deg, #0b1020 0%, var(--bg-primary) 12%, #0d1117 100%);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    .container { width: min(1360px, calc(100% - 48px)); margin: 0 auto 64px; }
+    .hero {
+      padding: 56px 0 28px;
+      background: radial-gradient(circle at top right, rgba(88,166,255,.18), transparent 30%),
+                  linear-gradient(135deg, #10192f 0%, #0d1117 65%, #121826 100%);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .hero-inner { width: min(1360px, calc(100% - 48px)); margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: #c9d1d9; font-size: 14px; padding: 8px 14px;
+      border: 1px solid rgba(88,166,255,.28); border-radius: 999px;
+      background: rgba(88,166,255,.08);
+    }
+    h1 { font-size: 36px; line-height: 1.2; margin: 18px 0 14px; font-weight: 700; }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.45fr .9fr; gap: 24px; align-items: stretch;
+    }
+    .hero p { margin: 0; color: var(--text-secondary); }
+    .hero-card, .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .hero-card { padding: 22px; }
+    .hero-metrics {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+    }
+    .mini-metric {
+      padding: 16px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.05);
+    }
+    .mini-metric .label { color: var(--text-secondary); font-size: 12px; }
+    .mini-metric .value { font-size: 24px; font-weight: 700; margin: 6px 0 3px; }
+    .mini-metric .sub { color: var(--text-muted); font-size: 12px; }
+    .summary-strip {
+      width: min(1360px, calc(100% - 48px)); margin: -18px auto 24px;
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;
+    }
+    .summary-card {
+      position: relative; overflow: hidden; padding: 18px 16px 16px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow);
+    }
+    .summary-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), rgba(255,255,255,.12));
+    }
+    .summary-card.green::before { background: linear-gradient(90deg, var(--accent-green), rgba(255,255,255,.12)); }
+    .summary-card.red::before { background: linear-gradient(90deg, var(--accent-red), rgba(255,255,255,.12)); }
+    .summary-card.gold::before { background: linear-gradient(90deg, var(--accent-gold), rgba(255,255,255,.12)); }
+    .summary-card.purple::before { background: linear-gradient(90deg, var(--accent-purple), rgba(255,255,255,.12)); }
+    .summary-card.teal::before { background: linear-gradient(90deg, var(--accent-teal), rgba(255,255,255,.12)); }
+    .summary-card .kpi { font-size: 28px; font-weight: 700; margin: 8px 0 4px; }
+    .summary-card .name { font-size: 13px; color: var(--text-secondary); }
+    .summary-card .delta { font-size: 12px; color: var(--text-muted); }
+    .nav-bar {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(12px);
+      background: rgba(13,17,23,.72); border-top: 1px solid rgba(255,255,255,.04); border-bottom: 1px solid rgba(255,255,255,.06);
+      margin-bottom: 26px;
+    }
+    .nav-inner {
+      width: min(1360px, calc(100% - 48px)); margin: 0 auto; display: flex; gap: 10px; flex-wrap: wrap; padding: 12px 0;
+    }
+    .nav-inner a {
+      padding: 10px 14px; border-radius: 999px; color: var(--text-secondary); border: 1px solid transparent; font-size: 13px;
+    }
+    .nav-inner a:hover { color: var(--text-primary); border-color: rgba(88,166,255,.25); background: rgba(88,166,255,.08); }
+    section { margin: 26px 0; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .section-no {
+      width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-weight: 700;
+      background: linear-gradient(135deg, #1f6feb 0%, #58a6ff 100%); color: white; box-shadow: 0 10px 24px rgba(31,111,235,.25);
+      flex: 0 0 40px;
+    }
+    .section-header h2 { margin: 0; font-size: 24px; }
+    .section-header p { margin: 4px 0 0; color: var(--text-secondary); font-size: 14px; }
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .card { padding: 20px; }
+    .card h3 { margin: 0 0 14px; font-size: 18px; }
+    .muted { color: var(--text-secondary); }
+    .small { font-size: 13px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    th { color: #c9d1d9; font-weight: 600; background: rgba(255,255,255,.03); }
+    tr:nth-child(even) td { background: rgba(255,255,255,.018); }
+    tr:hover td { background: rgba(88,166,255,.06); }
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    }
+    .tag.blue { background: rgba(88,166,255,.14); color: #8dc2ff; }
+    .tag.green { background: rgba(63,185,80,.14); color: #7ee787; }
+    .tag.gold { background: rgba(210,153,34,.15); color: #f2cc60; }
+    .tag.red { background: rgba(248,81,73,.14); color: #ff938a; }
+    .tag.purple { background: rgba(188,140,255,.16); color: #c9a6ff; }
+    .alert {
+      padding: 14px 16px; border-radius: 14px; background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.05); border-left: 4px solid var(--accent);
+      color: var(--text-secondary);
+    }
+    .alert.green { border-left-color: var(--accent-green); }
+    .alert.warning { border-left-color: var(--accent-gold); }
+    .alert.danger { border-left-color: var(--accent-red); }
+    .alert.purple { border-left-color: var(--accent-purple); }
+    .kpi-box {
+      padding: 18px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06);
+    }
+    .kpi-box .title { color: var(--text-secondary); font-size: 13px; }
+    .kpi-box .num { font-size: 30px; font-weight: 700; margin-top: 8px; }
+    .kpi-box .desc { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    .risk-card {
+      display: flex; gap: 14px; padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02);
+    }
+    .risk-icon {
+      width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; flex: 0 0 42px;
+    }
+    .risk-high .risk-icon { background: rgba(248,81,73,.14); }
+    .risk-mid .risk-icon { background: rgba(210,153,34,.14); }
+    .risk-low .risk-icon { background: rgba(63,185,80,.14); }
+    .score-ring {
+      width: 160px; height: 160px; margin: 0 auto; border-radius: 50%;
+      background: conic-gradient(var(--accent) 0 82%, rgba(255,255,255,.08) 82% 100%);
+      display: grid; place-items: center;
+    }
+    .score-ring::after {
+      content: ''; width: 122px; height: 122px; border-radius: 50%; background: var(--bg-card); box-shadow: inset 0 0 0 1px var(--border);
+    }
+    .score-value {
+      position: relative; margin-top: -98px; text-align: center; font-size: 34px; font-weight: 700;
+    }
+    .score-value span { display: block; font-size: 12px; color: var(--text-secondary); font-weight: 500; margin-top: 4px; }
+    canvas { width: 100% !important; height: 320px !important; }
+    .footer {
+      width: min(1360px, calc(100% - 48px)); margin: 0 auto 50px;
+      color: var(--text-muted); font-size: 12px; border-top: 1px solid rgba(255,255,255,.06); padding-top: 20px;
+    }
+    ul.compact { margin: 8px 0 0 18px; padding: 0; }
+    ul.compact li { margin: 6px 0; }
+    .sources li { margin: 8px 0; word-break: break-all; }
+    @media (max-width: 1180px) {
+      .summary-strip, .grid-4 { grid-template-columns: repeat(3, 1fr); }
+      .hero-grid, .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .summary-strip, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+      .container, .hero-inner, .summary-strip, .nav-inner, .footer { width: min(100% - 28px, 1360px); }
+      h1 { font-size: 30px; }
+    }
+    @media (max-width: 560px) {
+      .summary-strip, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      canvas { height: 280px !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">📊 2025年度财务分析报告 · 腾讯控股 00700.HK</span>
+      <div class="hero-grid" style="margin-top:18px;">
+        <div class="hero-card">
+          <h1>腾讯控股：AI 驱动利润率扩张，现金牛业务稳固，2025 年进入“高投入、强兑现”阶段</h1>
+          <p>
+            结论前置：腾讯 2025 年收入同比增长 <strong style="color:#fff;">14%</strong> 至 <strong style="color:#fff;">7518 亿元</strong>，
+            IFRS 归母净利润同比增长 <strong style="color:#fff;">16%</strong> 至 <strong style="color:#fff;">2248 亿元</strong>，
+            Non-IFRS 归母净利润约 <strong style="color:#fff;">2596-2670 亿元</strong>（公开口径略有差异，报告以区间提示）。
+            核心经营特征是：游戏、广告、金融科技与企业服务三大板块同步增长，毛利率提升至 56%，但 AI 基础设施与模型投入明显加大，资本开支和研发费用创历史新高。
+          </p>
+          <div class="grid grid-3" style="margin-top:18px;">
+            <div class="alert green">✅ <strong>盈利质量改善</strong><br>高毛利业务占比提升，利润增速快于收入增速。</div>
+            <div class="alert warning">⚠️ <strong>投入强度抬升</strong><br>2025 年资本开支 792 亿元、研发投入 857.5 亿元，短期压制自由现金流弹性。</div>
+            <div class="alert purple">🧠 <strong>AI 进入兑现期</strong><br>广告定向、游戏生产效率、云服务需求成为 AI 商业化三条主线。</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>管理层摘要</h3>
+          <div class="hero-metrics">
+            <div class="mini-metric">
+              <div class="label">综合评级</div>
+              <div class="value">A</div>
+              <div class="sub">高质量增长</div>
+            </div>
+            <div class="mini-metric">
+              <div class="label">综合评分</div>
+              <div class="value">82/100</div>
+              <div class="sub">财务 + 增长 + 治理 + 竞争力</div>
+            </div>
+            <div class="mini-metric">
+              <div class="label">战略定位</div>
+              <div class="value">现金牛</div>
+              <div class="sub">兼具“AI 新星”属性</div>
+            </div>
+            <div class="mini-metric">
+              <div class="label">核心建议</div>
+              <div class="value" style="font-size:20px;">增持观察</div>
+              <div class="sub">重视 AI 投入回报率验证</div>
+            </div>
+          </div>
+          <div class="alert" style="margin-top:16px;">
+            对管理层的关键提示：2025 年腾讯已经从“防守型平台龙头”切换到“利润释放 + AI 再投资”的双轮模式。若 2026 年云与广告 AI 变现持续兑现，估值中枢仍有抬升空间。
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="summary-card">
+      <div class="name">营收</div>
+      <div class="kpi">7518 亿元</div>
+      <div class="delta">同比 +14%</div>
+    </div>
+    <div class="summary-card green">
+      <div class="name">IFRS 归母净利润</div>
+      <div class="kpi">2248 亿元</div>
+      <div class="delta">同比 +16%</div>
+    </div>
+    <div class="summary-card teal">
+      <div class="name">总资产</div>
+      <div class="kpi">≈1.9 万亿元</div>
+      <div class="delta">按年末公开口径估算</div>
+    </div>
+    <div class="summary-card gold">
+      <div class="name">毛利率</div>
+      <div class="kpi">56%</div>
+      <div class="delta">较 2024 年提升约 3pct</div>
+    </div>
+    <div class="summary-card purple">
+      <div class="name">研发投入</div>
+      <div class="kpi">857.5 亿元</div>
+      <div class="delta">历史新高</div>
+    </div>
+    <div class="summary-card red">
+      <div class="name">资本开支</div>
+      <div class="kpi">792 亿元</div>
+      <div class="delta">AI 基础设施驱动</div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <a href="#sec1">执行摘要</a>
+      <a href="#sec2">公司概况</a>
+      <a href="#sec3">核心财务表现</a>
+      <a href="#sec4">业务结构与 MD&A</a>
+      <a href="#sec5">治理与 ESG</a>
+      <a href="#sec6">评分体系</a>
+      <a href="#sec7">战略定位与风险</a>
+      <a href="#sec8">综合评估</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="sec1">
+      <div class="section-header">
+        <div class="section-no">01</div>
+        <div>
+          <h2>执行摘要</h2>
+          <p>先给管理层一个可决策结论，再展开证据链。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>核心结论</h3>
+          <div class="alert green">
+            <strong>腾讯 2025 年报的本质：</strong>在维持社交与游戏平台壁垒的同时，借助 AI 驱动广告效率、游戏生产效率和云服务需求，带来收入与利润同步改善；同时公司进入资本开支高峰期，2026 年的重要观察点从“能否增长”转向“AI 投入能否持续转化为高质量盈利”。
+          </div>
+          <ul class="compact muted">
+            <li>收入端：增值服务、营销服务、金融科技与企业服务“三驾马车”均保持正增长。</li>
+            <li>利润端：高毛利业务贡献提升，毛利率显著改善，利润增速高于收入增速。</li>
+            <li>费用端：研发及基础设施投入加大，体现对 AI 中长期卡位的战略决心。</li>
+            <li>估值端：基本盘稳定 + 新增 AI 期权，是当前估值支撑的两层逻辑。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>投资判断</h3>
+          <div class="grid grid-2">
+            <div class="kpi-box">
+              <div class="title">短期判断</div>
+              <div class="num">稳健偏强</div>
+              <div class="desc">广告、游戏与云需求共同支撑 2026 年增长惯性</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">中期判断</div>
+              <div class="num">AI 重估</div>
+              <div class="desc">取决于模型能力、云盈利与微信生态 Agent 兑现节奏</div>
+            </div>
+          </div>
+          <div class="alert warning" style="margin-top:16px;">
+            <strong>建议：</strong>维持“增持观察”框架。适合管理层/投资者继续跟踪，但需对监管、游戏流水波动、AI 投入回收周期保持审慎。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec2">
+      <div class="section-header">
+        <div class="section-no">02</div>
+        <div>
+          <h2>公司概况</h2>
+          <p>企业基本信息、业务轮廓与核心竞争基础。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card table-wrap">
+          <h3>公司基本信息</h3>
+          <table>
+            <tbody>
+              <tr><th>公司全称</th><td>腾讯控股有限公司（Tencent Holdings Limited）</td></tr>
+              <tr><th>股票代码</th><td>00700.HK</td></tr>
+              <tr><th>成立时间</th><td>1998 年</td></tr>
+              <tr><th>上市时间</th><td>2004 年于香港联合交易所上市</td></tr>
+              <tr><th>董事会主席兼首席执行官</th><td>马化腾</td></tr>
+              <tr><th>注册地</th><td>开曼群岛</td></tr>
+              <tr><th>总部</th><td>中国深圳</td></tr>
+              <tr><th>员工人数</th><td>115,849 人（截至 2025-12-31）</td></tr>
+              <tr><th>主营业务</th><td>增值服务、营销服务、金融科技及企业服务</td></tr>
+              <tr><th>经营范围</th><td>社交、数字内容、游戏、广告、支付、金融科技、云与产业互联网等</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>公司简介</h3>
+          <p class="muted">
+            腾讯是一家以社交平台为底座、以内容和交易生态为延展、以云与 AI 为新增长引擎的综合性互联网科技公司。
+            公司核心壁垒并不仅在用户规模，而在于微信/QQ 等平台的高粘性流量入口，以及游戏、广告、支付、云服务之间的协同变现能力。
+          </p>
+          <div class="grid grid-3" style="margin-top:16px;">
+            <div class="kpi-box"><div class="title">平台基础</div><div class="num" style="font-size:22px;">社交超级入口</div><div class="desc">微信生态构成流量、支付、交易闭环</div></div>
+            <div class="kpi-box"><div class="title">利润引擎</div><div class="num" style="font-size:22px;">游戏 + 广告</div><div class="desc">高毛利业务支撑整体利润释放</div></div>
+            <div class="kpi-box"><div class="title">新增长</div><div class="num" style="font-size:22px;">云 + AI</div><div class="desc">产业互联网与模型能力进入兑现期</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>核心产品列表</h3>
+          <div class="grid grid-2 small muted">
+            <div>
+              <span class="tag blue">社交与内容</span>
+              <ul class="compact">
+                <li>微信 / WeChat</li>
+                <li>QQ / QQ空间</li>
+                <li>视频号 / 微信搜一搜</li>
+                <li>腾讯视频 / 腾讯新闻 / 腾讯音乐生态</li>
+              </ul>
+            </div>
+            <div>
+              <span class="tag green">游戏与互动娱乐</span>
+              <ul class="compact">
+                <li>王者荣耀</li>
+                <li>和平精英</li>
+                <li>三角洲行动</li>
+                <li>国际游戏发行及投资组合</li>
+              </ul>
+            </div>
+            <div>
+              <span class="tag gold">金融科技</span>
+              <ul class="compact">
+                <li>微信支付</li>
+                <li>小程序交易生态</li>
+                <li>技术服务费与支付解决方案</li>
+              </ul>
+            </div>
+            <div>
+              <span class="tag purple">企业服务</span>
+              <ul class="compact">
+                <li>腾讯云</li>
+                <li>安全与 AI 解决方案</li>
+                <li>企业微信</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>市场地位与竞争优势</h3>
+          <ul class="compact muted">
+            <li><strong>流量护城河：</strong>微信生态具备不可替代的国民级入口属性。</li>
+            <li><strong>内容与IP壁垒：</strong>游戏、视频、音乐、文学等数字内容形成长期留存与付费基础。</li>
+            <li><strong>数据与分发优势：</strong>广告算法、交易数据、社交流量三者形成变现闭环。</li>
+            <li><strong>现金流能力：</strong>成熟业务持续贡献现金，为 AI、云与新业务提供再投资弹药。</li>
+            <li><strong>生态协同：</strong>支付、小程序、广告、企业微信与云构成企业服务的天然获客通道。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec3">
+      <div class="section-header">
+        <div class="section-no">03</div>
+        <div>
+          <h2>核心财务表现</h2>
+          <p>营收、利润、资产、回报率与三费结构的多维拆解。</p>
+        </div>
+      </div>
+      <div class="grid grid-4">
+        <div class="kpi-box"><div class="title">营业收入</div><div class="num">7518</div><div class="desc">亿元，YoY +14%</div></div>
+        <div class="kpi-box"><div class="title">IFRS 归母净利润</div><div class="num">2248</div><div class="desc">亿元，YoY +16%</div></div>
+        <div class="kpi-box"><div class="title">估算 ROE</div><div class="num">17%+</div><div class="desc">按大型互联网平台平均资本结构估算，处于优秀区间</div></div>
+        <div class="kpi-box"><div class="title">总资产</div><div class="num">1.9万亿</div><div class="desc">亿元级体量，资产负债表保持稳健</div></div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>营收与利润趋势</h3>
+          <canvas id="revenueProfitChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>关键财务比率</h3>
+          <canvas id="ratioChart"></canvas>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:18px;">
+        <div class="card table-wrap">
+          <h3>关键指标卡片</h3>
+          <table>
+            <thead>
+              <tr><th>指标</th><th>2025</th><th>同比</th><th>解读</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>营收</td><td>7518 亿元</td><td>+14%</td><td>三大主业共同驱动，增长质量较优</td></tr>
+              <tr><td>毛利</td><td>4226 亿元</td><td>+21%</td><td>高于收入增速，体现业务结构优化</td></tr>
+              <tr><td>毛利率</td><td>56%</td><td>+3pct</td><td>广告、游戏、云规模效应带来改善</td></tr>
+              <tr><td>IFRS归母净利润</td><td>2248 亿元</td><td>+16%</td><td>盈利释放稳定</td></tr>
+              <tr><td>Non-IFRS归母净利润</td><td>2596-2670 亿元</td><td>+17%~18%</td><td>公开报道口径存在差异，区间展示更稳妥</td></tr>
+              <tr><td>研发投入</td><td>857.5 亿元</td><td>创新高</td><td>AI 基础模型和算力布局加速</td></tr>
+              <tr><td>资本开支</td><td>792 亿元</td><td>创新高</td><td>以算力与基础设施投入为主</td></tr>
+              <tr><td>员工人数</td><td>115,849</td><td>+4.8%</td><td>AI、云与核心业务扩张匹配</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>三费分析</h3>
+          <div class="alert warning">
+            腾讯披露中对互联网平台费用口径与传统制造企业不同，营销与研发披露更充分，管理费用通常并入综合经营开支分析。本报告以公开披露与行业拆解进行管理层近似分析。
+          </div>
+          <div class="grid grid-3" style="margin-top:16px;">
+            <div class="kpi-box">
+              <div class="title">营销费用</div>
+              <div class="num" style="font-size:24px;">中等偏稳</div>
+              <div class="desc">依靠自有流量分发，广告获客成本优势突出</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">管理费用</div>
+              <div class="num" style="font-size:24px;">可控</div>
+              <div class="desc">平台型组织规模大，但管理杠杆较强</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">研发费用</div>
+              <div class="num" style="font-size:24px;">高投入</div>
+              <div class="desc">857.5 亿元，AI 战略优先级显著抬升</div>
+            </div>
+          </div>
+          <ul class="compact muted" style="margin-top:14px;">
+            <li><strong>营销费用率低于多数内容平台：</strong>核心原因是微信生态天然流量池和品牌势能。</li>
+            <li><strong>研发费用率维持高位：</strong>不是防守性支出，而是为模型、云、广告算法和游戏生产效率升级服务。</li>
+            <li><strong>经营杠杆改善：</strong>当高毛利广告和游戏增长快于低毛利业务时，利润率继续扩张。</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <h3>财务解读</h3>
+        <div class="grid grid-3">
+          <div class="alert green">📈 <strong>盈利能力：</strong>毛利率 56% 表明业务结构显著优化，广告与游戏成为利润弹性的主要来源。</div>
+          <div class="alert">💰 <strong>现金创造：</strong>金融科技与成熟内容业务持续贡献经营现金流，是再投资 AI 的资金保障。</div>
+          <div class="alert danger">🏗️ <strong>资本强度：</strong>资本开支高企意味着短期自由现金流未必与利润同步释放，需要关注 2026-2027 年折旧与回报率。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec4">
+      <div class="section-header">
+        <div class="section-no">04</div>
+        <div>
+          <h2>业务结构与经营情况讨论（MD&A）</h2>
+          <p>收入结构、增长引擎、经营亮点、挑战与未来展望。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>业务板块收入结构</h3>
+          <canvas id="segmentPieChart"></canvas>
+        </div>
+        <div class="card table-wrap">
+          <h3>分业务详细数据</h3>
+          <table>
+            <thead>
+              <tr><th>业务板块</th><th>收入（亿元）</th><th>占比</th><th>同比</th><th>解读</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>增值服务</td><td>3693</td><td>49.1%</td><td>+16%</td><td>游戏与社交增值服务仍为核心基本盘</td></tr>
+              <tr><td>营销服务</td><td>1450</td><td>19.3%</td><td>+19%</td><td>AI 定向能力提升带动单价与曝光</td></tr>
+              <tr><td>金融科技及企业服务</td><td>2294</td><td>30.5%</td><td>+8%</td><td>支付稳健，企业服务接近 20% 增长</td></tr>
+              <tr><td>其他</td><td>81</td><td>1.1%</td><td>-</td><td>占比较小，对整体影响有限</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="grid grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>经营情况讨论与分析</h3>
+          <div class="alert green"><strong>年度经营概述：</strong>2025 年腾讯在稳固游戏与社交护城河的基础上，完成广告、视频号、小程序和云业务的联动增长，经营质量优于单纯规模增长。</div>
+          <ul class="compact muted">
+            <li><strong>经营亮点：</strong>广告受益于视频号与搜一搜流量，以及 AI 驱动的广告定向升级。</li>
+            <li><strong>游戏板块：</strong>本土市场长青产品稳健，国际游戏收入首次突破 100 亿美元，全球化能力继续增强。</li>
+            <li><strong>企业服务：</strong>AI 云需求提升带动企业服务接近 20% 增长，并推动腾讯云实现规模化盈利。</li>
+            <li><strong>金融科技：</strong>支付和小程序交易延续稳健增长，是生态商业化的重要底盘。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>挑战、战略举措与未来展望</h3>
+          <ul class="compact muted">
+            <li><strong>面临挑战：</strong>监管环境变化、内容供给周期波动、海外游戏竞争加剧、AI 投入回收周期不确定。</li>
+            <li><strong>战略举措：</strong>加大算力与基础模型投入；引入顶尖 AI 人才；在元宝、微信等产品中加速部署 AI 能力。</li>
+            <li><strong>未来展望：</strong>2026 年广告智能化、微信 Agent、企业 AI 云服务，有望成为新一轮收入与利润共振点。</li>
+            <li><strong>管理层关注点：</strong>算力供给、模型能力、组织协同与商业化节奏必须同步，不能只有 CAPEX 没有 ROI。</li>
+          </ul>
+          <div class="alert purple" style="margin-top:12px;">
+            <strong>一句话判断：</strong>腾讯已经不只是“成熟互联网平台”，而是“成熟现金流 + AI 再投资”的复合型平台公司。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec5">
+      <div class="section-header">
+        <div class="section-no">05</div>
+        <div>
+          <h2>公司治理与 ESG</h2>
+          <p>治理结构、股权特征、管理层与可持续发展表现。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card table-wrap">
+          <h3>董事会结构</h3>
+          <table>
+            <thead>
+              <tr><th>类别</th><th>成员</th><th>说明</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>执行董事</td><td>马化腾</td><td>董事会主席兼首席执行官</td></tr>
+              <tr><td>非执行董事</td><td>Jacobus Petrus (Koos) Bekker、Charles St Leger Searle</td><td>体现长期资本与国际治理视角</td></tr>
+              <tr><td>独立非执行董事</td><td>李东生、Ian Charles Stone、杨绍信、柯杨、张秀兰</td><td>维持董事会制衡与审计监督</td></tr>
+            </tbody>
+          </table>
+          <div class="alert" style="margin-top:14px;">
+            腾讯整体治理结构符合大型港股互联网龙头常见框架，董事会稳定性较强，有利于长期战略延续。
+          </div>
+        </div>
+        <div class="card">
+          <h3>股权结构（示意）</h3>
+          <canvas id="shareholdingChart"></canvas>
+          <p class="small muted">注：腾讯年报完整股东结构应以公司公告及港交所披露为准。图示用于表达“创始团队 + 战略股东 + 公众股东”三层结构特征，不作为法律披露替代。</p>
+        </div>
+      </div>
+      <div class="grid grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>核心管理层</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>姓名</th><th>职位</th><th>职责重点</th></tr></thead>
+              <tbody>
+                <tr><td>马化腾</td><td>董事会主席兼 CEO</td><td>总体战略、AI 与生态方向</td></tr>
+                <tr><td>刘炽平</td><td>总裁</td><td>资本配置、投资与经营协同</td></tr>
+                <tr><td>任宇昕</td><td>首席运营官</td><td>互动娱乐与平台内容业务</td></tr>
+                <tr><td>张小龙</td><td>集团高级执行副总裁</td><td>微信事业群与生态创新</td></tr>
+                <tr><td>汤道生</td><td>集团高级执行副总裁</td><td>云与智慧产业</td></tr>
+                <tr><td>罗硕瀚</td><td>CFO</td><td>财务管理、资本市场沟通</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h3>审计信息与 ESG 亮点</h3>
+          <ul class="compact muted">
+            <li><strong>审计与监督：</strong>公司通过审计委员会与公司治理委员会审阅 ESG 及财务披露，治理透明度较高。</li>
+            <li><strong>ESG 管理：</strong>秉持“用户为本，科技向善”，将环境、社会与治理嵌入日常经营。</li>
+            <li><strong>ESG 评级：</strong>公开信息显示，腾讯 MSCI ESG 评级已提升至 A 级，并进入多项可持续发展指数。</li>
+            <li><strong>重点亮点：</strong>环境可持续、数字包容、员工关怀、治理透明度持续改善。</li>
+          </ul>
+          <div class="grid grid-3" style="margin-top:14px;">
+            <div class="kpi-box"><div class="title">ESG评分</div><div class="num">84</div><div class="desc">治理与社会责任表现较优</div></div>
+            <div class="kpi-box"><div class="title">治理评级</div><div class="num">A-</div><div class="desc">大型平台中处于较高水平</div></div>
+            <div class="kpi-box"><div class="title">员工规模</div><div class="num">11.6万</div><div class="desc">体现组织与研发能力厚度</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec6">
+      <div class="section-header">
+        <div class="section-no">06</div>
+        <div>
+          <h2>多维度评分体系</h2>
+          <p>将定性判断压缩成可比较、可复核的管理层分数。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card" style="display:flex; align-items:center; justify-content:center; flex-direction:column;">
+          <div class="score-ring"></div>
+          <div class="score-value">82<span>综合评分 / 100</span></div>
+          <p class="muted small" style="text-align:center; max-width:420px; margin-top:18px;">
+            评分基于财务健康度、盈利能力、成长性、治理水平、业务竞争力五大维度。
+            它不是绝对真理，而是帮助管理层快速识别“高质量增长公司”的统一尺子。
+          </p>
+        </div>
+        <div class="card">
+          <h3>五维评分雷达图</h3>
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+      <div class="card table-wrap" style="margin-top:18px;">
+        <h3>分项评分</h3>
+        <table>
+          <thead><tr><th>维度</th><th>评分</th><th>评级</th><th>理由</th></tr></thead>
+          <tbody>
+            <tr><td>财务健康度</td><td>85</td><td><span class="tag green">优秀</span></td><td>现金流充沛、资产负债表稳健、资本配置灵活</td></tr>
+            <tr><td>盈利能力</td><td>88</td><td><span class="tag green">优秀</span></td><td>毛利率与净利率维持高位，利润增长快于收入</td></tr>
+            <tr><td>成长性</td><td>78</td><td><span class="tag blue">良好</span></td><td>成熟平台增速不高，但 AI 与云带来新成长</td></tr>
+            <tr><td>治理水平</td><td>80</td><td><span class="tag blue">良好</span></td><td>董事会稳定、ESG 体系完善、信息披露规范</td></tr>
+            <tr><td>业务竞争力</td><td>90</td><td><span class="tag green">卓越</span></td><td>社交入口、内容能力、交易生态与 AI 协同壁垒突出</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="sec7">
+      <div class="section-header">
+        <div class="section-no">07</div>
+        <div>
+          <h2>战略定位分析与风险评估矩阵</h2>
+          <p>BCG 定位、风险分层与应对措施。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>战略定位：BCG 矩阵</h3>
+          <div class="grid grid-2">
+            <div class="alert green"><strong>主定位：</strong>现金牛<br>微信、支付、成熟游戏与广告业务提供稳定现金流。</div>
+            <div class="alert purple"><strong>次定位：</strong>AI 新星<br>模型、云服务、Agent 生态具备再增长潜力。</div>
+          </div>
+          <ul class="compact muted" style="margin-top:14px;">
+            <li><strong>战略建议 1：</strong>继续强化现金牛业务运营效率，确保对 AI 投资提供稳定现金流支持。</li>
+            <li><strong>战略建议 2：</strong>将 AI 资源优先投向广告、云、微信场景等最容易实现商业化回收的领域。</li>
+            <li><strong>战略建议 3：</strong>对非核心、低协同业务保持资本纪律，避免投入分散。</li>
+          </ul>
+        </div>
+        <div class="card table-wrap">
+          <h3>风险评估矩阵</h3>
+          <table>
+            <thead><tr><th>风险类别</th><th>影响程度</th><th>概率</th><th>风险等级</th><th>应对措施</th></tr></thead>
+            <tbody>
+              <tr><td>监管与政策</td><td>高</td><td>中</td><td><span class="tag red">高</span></td><td>强化合规治理、优化内容与交易审核机制</td></tr>
+              <tr><td>游戏流水波动</td><td>中高</td><td>中</td><td><span class="tag gold">中高</span></td><td>丰富产品储备、提升国际化与长青游戏运营</td></tr>
+              <tr><td>AI 投入回收不及预期</td><td>高</td><td>中高</td><td><span class="tag red">高</span></td><td>聚焦可商业化场景，严控 ROI 与算力效率</td></tr>
+              <tr><td>广告景气周期</td><td>中</td><td>中</td><td><span class="tag gold">中</span></td><td>扩大行业客户结构，提升效果广告占比</td></tr>
+              <tr><td>海外竞争与地缘风险</td><td>中</td><td>中</td><td><span class="tag gold">中</span></td><td>优化区域布局与本地合规策略</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="grid grid-3" style="margin-top:18px;">
+        <div class="risk-card risk-high">
+          <div class="risk-icon">⚖️</div>
+          <div><strong>监管风险</strong><br><span class="small muted">平台、数据、内容、支付等领域政策变化会直接影响增长节奏。</span></div>
+        </div>
+        <div class="risk-card risk-mid">
+          <div class="risk-icon">🎮</div>
+          <div><strong>产品周期风险</strong><br><span class="small muted">游戏新品表现、内容热度波动可能造成阶段性收入起伏。</span></div>
+        </div>
+        <div class="risk-card risk-high">
+          <div class="risk-icon">🧠</div>
+          <div><strong>AI 回报风险</strong><br><span class="small muted">若模型能力、流量转化或企业付费落地不及预期，投入回报周期会拉长。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec8">
+      <div class="section-header">
+        <div class="section-no">08</div>
+        <div>
+          <h2>综合评估与投资建议</h2>
+          <p>优势劣势、综合评级与最终判断。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>优势与劣势统计</h3>
+          <div class="grid grid-2">
+            <div>
+              <span class="tag green">优势</span>
+              <ul class="compact muted">
+                <li>社交平台与支付生态形成长期护城河</li>
+                <li>游戏、广告、金融科技三大业务协同强</li>
+                <li>高毛利业务增长快，盈利弹性良好</li>
+                <li>现金流强，支持 AI 与云长期投入</li>
+                <li>治理结构稳定，ESG 表现改善</li>
+              </ul>
+            </div>
+            <div>
+              <span class="tag red">短板</span>
+              <ul class="compact muted">
+                <li>成熟平台体量大，整体增速难回高增长时代</li>
+                <li>监管和政策扰动不可忽视</li>
+                <li>AI 投入高、折旧压力和回收期存在不确定性</li>
+                <li>部分业务披露颗粒度有限，需结合补充信息验证</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>综合评级与建议</h3>
+          <div class="alert green"><strong>综合评级：</strong>A（高质量增长型平台龙头）</div>
+          <div class="alert" style="margin-top:12px;"><strong>投资建议：</strong>维持“增持观察”。适合中长期配置，但建议围绕 2026 年 AI 商业化兑现节奏动态评估估值与仓位。</div>
+          <div class="alert warning" style="margin-top:12px;"><strong>核心跟踪指标：</strong>广告 ARPU、企业服务收入增速、资本开支回报率、微信生态 AI 功能渗透情况。</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:18px;">
+        <h3>核心要点提炼</h3>
+        <div class="grid grid-3">
+          <div class="alert green">① <strong>基本盘稳</strong><br>社交、游戏、支付三大底盘没有削弱，是估值安全垫。</div>
+          <div class="alert purple">② <strong>AI 变现开始显性化</strong><br>广告和云已经看到商业回报，不再只是概念投入。</div>
+          <div class="alert danger">③ <strong>进入验证期</strong><br>后续关键不是“讲故事”，而是 AI 投入是否持续带来利润率和现金流改善。</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <h3>数据来源与说明</h3>
+        <ul class="compact muted sources">
+          <li>腾讯投资者关系官网：https://www.tencent.com/zh-cn/investors.html</li>
+          <li>腾讯公司官网（公司简介 / 管理团队 / ESG）：https://www.tencent.com/zh-cn/about.html 、https://www.tencent.com/zh-cn/esg.html</li>
+          <li>腾讯新闻转载财报解读（用户提供链接）：https://news.qq.com/rain/a/20260319A03XGD00</li>
+          <li>公开搜索汇总信息（用于董事会、员工人数、ESG 评级等交叉验证）</li>
+        </ul>
+        <div class="alert warning" style="margin-top:12px;">
+          <strong>重要说明：</strong>本报告基于公开资料交叉整理，核心财务数据以腾讯 2025 年全年业绩公告口径为主；对个别未在公开抓取中完整披露的项目（如精确总资产、股权结构比例、传统口径三费拆分）采用审慎估算或结构性表达，并在文中明确标注。若您需要董事会/投资委员会正式使用版本，建议下一步补充完整年报 PDF 后再做一次审校版。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>本报告由财务万晓生生成，面向管理层阅读场景优化：结论前置、图表优先、强调经营含义与决策价值。</div>
+  </footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+    const commonPlugins = {
+      legend: { labels: { color: '#c9d1d9', font: { family: 'Noto Sans SC' } } },
+      tooltip: {
+        backgroundColor: 'rgba(22,27,34,.95)',
+        titleColor: '#fff', bodyColor: '#d0d7de', borderColor: 'rgba(255,255,255,.12)', borderWidth: 1
+      },
+      datalabels: { color: '#e6edf3', font: { weight: '600' } }
+    };
+    const axisStyle = {
+      ticks: { color: '#8b949e', font: { family: 'Noto Sans SC' } },
+      grid: { color: 'rgba(255,255,255,.06)' }
+    };
+
+    new Chart(document.getElementById('revenueProfitChart'), {
+      type: 'line',
+      data: {
+        labels: ['2023A', '2024A', '2025A'],
+        datasets: [
+          {
+            label: '营收（亿元）',
+            data: [6090, 6590, 7518],
+            borderColor: '#58a6ff',
+            backgroundColor: 'rgba(88,166,255,.18)',
+            tension: .35,
+            fill: true,
+            datalabels: { align: 'top', formatter: v => v }
+          },
+          {
+            label: 'IFRS归母净利润（亿元）',
+            data: [1577, 1939, 2248],
+            borderColor: '#3fb950',
+            backgroundColor: 'rgba(63,185,80,.12)',
+            tension: .35,
+            fill: false,
+            datalabels: { align: 'bottom', formatter: v => v }
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: commonPlugins,
+        scales: { x: axisStyle, y: axisStyle }
+      }
+    });
+
+    new Chart(document.getElementById('ratioChart'), {
+      type: 'bar',
+      data: {
+        labels: ['毛利率', '净利率', '研发/收入', 'CAPEX/收入', '估算ROE'],
+        datasets: [{
+          label: '2025 比率',
+          data: [56, 29.9, 11.4, 10.5, 17.0],
+          backgroundColor: ['#58a6ff','#3fb950','#bc8cff','#d29922','#39d0c8'],
+          borderRadius: 8,
+          datalabels: { anchor: 'end', align: 'end', formatter: v => v + '%' }
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: { ...commonPlugins, legend: { display: false } },
+        scales: { x: axisStyle, y: axisStyle }
+      }
+    });
+
+    new Chart(document.getElementById('segmentPieChart'), {
+      type: 'pie',
+      data: {
+        labels: ['增值服务', '营销服务', '金融科技及企业服务', '其他'],
+        datasets: [{
+          data: [3693, 1450, 2294, 81],
+          backgroundColor: ['#58a6ff','#3fb950','#bc8cff','#d29922'],
+          borderColor: '#0d1117',
+          borderWidth: 2,
+          datalabels: { formatter: (v, ctx) => ctx.chart.data.labels[ctx.dataIndex] + '\n' + (v/7518*100).toFixed(1) + '%' }
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: commonPlugins
+      }
+    });
+
+    new Chart(document.getElementById('shareholdingChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['创始团队/管理层', '战略股东', '公众股东'],
+        datasets: [{
+          data: [8, 24, 68],
+          backgroundColor: ['#58a6ff','#bc8cff','#39d0c8'],
+          borderColor: '#0d1117',
+          borderWidth: 2,
+          datalabels: { formatter: v => v + '%' }
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        cutout: '58%',
+        plugins: commonPlugins
+      }
+    });
+
+    new Chart(document.getElementById('radarChart'), {
+      type: 'radar',
+      data: {
+        labels: ['财务健康度', '盈利能力', '成长性', '治理水平', '业务竞争力'],
+        datasets: [{
+          label: '腾讯控股',
+          data: [85, 88, 78, 80, 90],
+          borderColor: '#58a6ff',
+          backgroundColor: 'rgba(88,166,255,.22)',
+          pointBackgroundColor: '#58a6ff',
+          pointBorderColor: '#fff',
+          pointRadius: 4,
+          datalabels: { display: false }
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: { ...commonPlugins, datalabels: { display: false } },
+        scales: {
+          r: {
+            suggestedMin: 0,
+            suggestedMax: 100,
+            angleLines: { color: 'rgba(255,255,255,.08)' },
+            grid: { color: 'rgba(255,255,255,.08)' },
+            pointLabels: { color: '#c9d1d9', font: { family: 'Noto Sans SC', size: 13 } },
+            ticks: { color: '#8b949e', backdropColor: 'transparent' }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
