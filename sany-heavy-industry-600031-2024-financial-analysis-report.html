@@ -718,7 +718,47 @@
   </footer>
 
   <script>
-    Chart.register(ChartDataLabels);
+    const region3DPlugin = {
+      id: 'region3DPlugin',
+      beforeDatasetDraw(chart, args) {
+        if (chart.canvas.id !== 'regionChart' || args.index !== 0) return;
+        const meta = chart.getDatasetMeta(0);
+        const ctx = chart.ctx;
+        ctx.save();
+        meta.data.forEach((arc, i) => {
+          const props = arc.getProps(['x', 'y', 'startAngle', 'endAngle', 'outerRadius', 'innerRadius'], true);
+          const depth = 16;
+          const baseColors = ['rgba(37, 99, 235, 0.88)', 'rgba(22, 27, 34, 0.96)'];
+          ctx.beginPath();
+          ctx.arc(props.x, props.y + depth, props.outerRadius, props.startAngle, props.endAngle);
+          ctx.arc(props.x, props.y + depth, props.innerRadius, props.endAngle, props.startAngle, true);
+          ctx.closePath();
+          ctx.fillStyle = baseColors[i] || 'rgba(48,54,61,0.92)';
+          ctx.shadowColor = i === 0 ? 'rgba(88,166,255,0.22)' : 'rgba(0,0,0,0.26)';
+          ctx.shadowBlur = 18;
+          ctx.shadowOffsetY = 10;
+          ctx.fill();
+        });
+        ctx.restore();
+      },
+      afterDatasetDraw(chart, args) {
+        if (chart.canvas.id !== 'regionChart' || args.index !== 0) return;
+        const meta = chart.getDatasetMeta(0);
+        const ctx = chart.ctx;
+        ctx.save();
+        meta.data.forEach((arc) => {
+          const props = arc.getProps(['x', 'y', 'startAngle', 'endAngle', 'outerRadius'], true);
+          ctx.beginPath();
+          ctx.arc(props.x, props.y - 2, props.outerRadius - 2, props.startAngle, props.endAngle);
+          ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        });
+        ctx.restore();
+      }
+    };
+
+    Chart.register(ChartDataLabels, region3DPlugin);
     const axisColor = '#8b949e';
     const gridColor = 'rgba(255,255,255,0.08)';
 
@@ -802,13 +842,38 @@
         labels: ['海外收入', '国内收入'],
         datasets: [{
           data: [485.13, 298.70],
-          backgroundColor: ['#58a6ff', '#30363d'],
-          borderColor: ['#0d1117', '#0d1117'],
-          borderWidth: 2
+          backgroundColor: [
+            (() => {
+              const c = document.getElementById('regionChart');
+              const ctx = c.getContext('2d');
+              const g = ctx.createLinearGradient(0, 0, 0, c.height || 320);
+              g.addColorStop(0, '#8fd0ff');
+              g.addColorStop(0.35, '#58a6ff');
+              g.addColorStop(1, '#1f6feb');
+              return g;
+            })(),
+            (() => {
+              const c = document.getElementById('regionChart');
+              const ctx = c.getContext('2d');
+              const g = ctx.createLinearGradient(0, 0, 0, c.height || 320);
+              g.addColorStop(0, '#4b5563');
+              g.addColorStop(0.45, '#30363d');
+              g.addColorStop(1, '#1c2128');
+              return g;
+            })()
+          ],
+          borderColor: ['rgba(255,255,255,0.08)', '#0d1117'],
+          borderWidth: 2,
+          hoverOffset: 10,
+          spacing: 3
         }]
       },
       options: {
         responsive: true,
+        layout: { padding: { top: 8, bottom: 20 } },
+        cutout: '52%',
+        radius: '88%',
+        rotation: -100,
         plugins: {
           legend: { labels: { color: axisColor } },
           datalabels: {
