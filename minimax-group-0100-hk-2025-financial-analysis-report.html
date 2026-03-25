@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniMax稀宇科技（0100.HK）2025年度财务分析报告</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 10px 30px rgba(0,0,0,.28);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', sans-serif;
+      background: linear-gradient(180deg, #0b1020 0%, var(--bg-primary) 12%, #0d1117 100%);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    .container { width: min(1360px, calc(100% - 48px)); margin: 0 auto 64px; }
+    .hero {
+      padding: 56px 0 28px;
+      background: radial-gradient(circle at top right, rgba(88,166,255,.18), transparent 30%),
+                  linear-gradient(135deg, #10192f 0%, #0d1117 65%, #121826 100%);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .hero-inner { width: min(1360px, calc(100% - 48px)); margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: #c9d1d9; font-size: 14px; padding: 8px 14px;
+      border: 1px solid rgba(88,166,255,.28); border-radius: 999px;
+      background: rgba(88,166,255,.08);
+    }
+    h1 { font-size: 36px; line-height: 1.2; margin: 18px 0 14px; font-weight: 700; }
+    .hero-grid { display: grid; grid-template-columns: 1.45fr .9fr; gap: 24px; align-items: stretch; }
+    .hero p { margin: 0; color: var(--text-secondary); }
+    .hero-card, .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .hero-card { padding: 22px; }
+    .hero-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .mini-metric { padding: 16px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.05); }
+    .mini-metric .label { color: var(--text-secondary); font-size: 12px; }
+    .mini-metric .value { font-size: 24px; font-weight: 700; margin: 6px 0 3px; }
+    .mini-metric .sub { color: var(--text-muted); font-size: 12px; }
+    .summary-strip {
+      width: min(1360px, calc(100% - 48px)); margin: -18px auto 24px;
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;
+    }
+    .summary-card {
+      position: relative; overflow: hidden; padding: 18px 16px 16px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow);
+    }
+    .summary-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), rgba(255,255,255,.12));
+    }
+    .summary-card.green::before { background: linear-gradient(90deg, var(--accent-green), rgba(255,255,255,.12)); }
+    .summary-card.red::before { background: linear-gradient(90deg, var(--accent-red), rgba(255,255,255,.12)); }
+    .summary-card.gold::before { background: linear-gradient(90deg, var(--accent-gold), rgba(255,255,255,.12)); }
+    .summary-card.purple::before { background: linear-gradient(90deg, var(--accent-purple), rgba(255,255,255,.12)); }
+    .summary-card.teal::before { background: linear-gradient(90deg, var(--accent-teal), rgba(255,255,255,.12)); }
+    .summary-card .kpi { font-size: 28px; font-weight: 700; margin: 8px 0 4px; }
+    .summary-card .name { font-size: 13px; color: var(--text-secondary); }
+    .summary-card .delta { font-size: 12px; color: var(--text-muted); }
+    .nav-bar {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(12px);
+      background: rgba(13,17,23,.72); border-top: 1px solid rgba(255,255,255,.04); border-bottom: 1px solid rgba(255,255,255,.06);
+      margin-bottom: 26px;
+    }
+    .nav-inner {
+      width: min(1360px, calc(100% - 48px)); margin: 0 auto; display: flex; gap: 10px; flex-wrap: wrap; padding: 12px 0;
+    }
+    .nav-inner a {
+      padding: 10px 14px; border-radius: 999px; color: var(--text-secondary); border: 1px solid transparent; font-size: 13px;
+    }
+    .nav-inner a:hover { color: var(--text-primary); border-color: rgba(88,166,255,.25); background: rgba(88,166,255,.08); }
+    section { margin: 26px 0; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .section-no {
+      width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-weight: 700;
+      background: linear-gradient(135deg, #1f6feb 0%, #58a6ff 100%); color: white; box-shadow: 0 10px 24px rgba(31,111,235,.25);
+      flex: 0 0 40px;
+    }
+    .section-header h2 { margin: 0; font-size: 24px; }
+    .section-header p { margin: 4px 0 0; color: var(--text-secondary); font-size: 14px; }
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .card { padding: 20px; }
+    .card h3 { margin: 0 0 14px; font-size: 18px; }
+    .muted { color: var(--text-secondary); }
+    .small { font-size: 13px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    th { color: #c9d1d9; font-weight: 600; background: rgba(255,255,255,.03); }
+    tr:nth-child(even) td { background: rgba(255,255,255,.018); }
+    tr:hover td { background: rgba(88,166,255,.06); }
+    .tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .tag.blue { background: rgba(88,166,255,.14); color: #8dc2ff; }
+    .tag.green { background: rgba(63,185,80,.14); color: #7ee787; }
+    .tag.gold { background: rgba(210,153,34,.15); color: #f2cc60; }
+    .tag.red { background: rgba(248,81,73,.14); color: #ff938a; }
+    .tag.purple { background: rgba(188,140,255,.16); color: #c9a6ff; }
+    .alert {
+      padding: 14px 16px; border-radius: 14px; background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.05); border-left: 4px solid var(--accent);
+      color: var(--text-secondary);
+    }
+    .alert.green { border-left-color: var(--accent-green); }
+    .alert.warning { border-left-color: var(--accent-gold); }
+    .alert.danger { border-left-color: var(--accent-red); }
+    .alert.purple { border-left-color: var(--accent-purple); }
+    .kpi-box { padding: 18px; border-radius: 16px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); }
+    .kpi-box .title { color: var(--text-secondary); font-size: 13px; }
+    .kpi-box .num { font-size: 30px; font-weight: 700; margin-top: 8px; }
+    .kpi-box .desc { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    .risk-card { display: flex; gap: 14px; padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
+    .risk-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; flex: 0 0 42px; }
+    .risk-high .risk-icon { background: rgba(248,81,73,.14); }
+    .risk-mid .risk-icon { background: rgba(210,153,34,.14); }
+    .risk-low .risk-icon { background: rgba(63,185,80,.14); }
+    .score-ring {
+      width: 160px; height: 160px; margin: 0 auto; border-radius: 50%;
+      background: conic-gradient(var(--accent) 0 76%, rgba(255,255,255,.08) 76% 100%);
+      display: grid; place-items: center;
+    }
+    .score-ring::after {
+      content: ''; width: 122px; height: 122px; border-radius: 50%; background: var(--bg-card); box-shadow: inset 0 0 0 1px var(--border);
+    }
+    .score-value { position: relative; margin-top: -98px; text-align: center; font-size: 34px; font-weight: 700; }
+    .score-value span { display: block; font-size: 12px; color: var(--text-secondary); font-weight: 500; margin-top: 4px; }
+    canvas { width: 100% !important; height: 320px !important; }
+    .footer {
+      width: min(1360px, calc(100% - 48px)); margin: 0 auto 50px;
+      color: var(--text-muted); font-size: 12px; border-top: 1px solid rgba(255,255,255,.06); padding-top: 20px;
+    }
+    ul.compact { margin: 8px 0 0 18px; padding: 0; }
+    ul.compact li { margin: 6px 0; }
+    .sources li { margin: 8px 0; word-break: break-all; }
+    @media (max-width: 1180px) {
+      .summary-strip, .grid-4 { grid-template-columns: repeat(3, 1fr); }
+      .hero-grid, .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .summary-strip, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+      .container, .hero-inner, .summary-strip, .nav-inner, .footer { width: min(100% - 28px, 1360px); }
+      h1 { font-size: 30px; }
+    }
+    @media (max-width: 560px) {
+      .summary-strip, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      canvas { height: 280px !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">📊 2025年度财务分析报告 · MiniMax 稀宇科技 0100.HK</span>
+      <div class="hero-grid" style="margin-top:18px;">
+        <div class="hero-card">
+          <h1>MiniMax：收入高增、毛利率改善，迈向平台化 AI 公司，但盈利拐点尚未到来</h1>
+          <p>
+            结论前置：MiniMax 稀宇科技 2025 年实现收入 <strong style="color:#fff;">7,903.8 万美元</strong>，同比增长 <strong style="color:#fff;">158.9%</strong>；
+            毛利率升至 <strong style="color:#fff;">25.4%</strong>，较 2024 年提升 <strong style="color:#fff;">13.2pct</strong>；
+            但公司仍处于重投入阶段，研发费用达 <strong style="color:#fff;">2.53 亿美元</strong>，法定净亏损约 <strong style="color:#fff;">18.72 亿美元</strong>。
+            若从经调整口径观察，2025 年经调整净亏损约 <strong style="color:#fff;">2.509 亿美元</strong>，与 2024 年相比仅小幅扩大，显示经营质量在改善，但尚未进入盈利兑现期。
+          </p>
+          <div class="grid grid-3" style="margin-top:18px;">
+            <div class="alert green">✅ <strong>商业化提速</strong><br>收入增长显著快于研发投入增长，平台化收入结构开始形成。</div>
+            <div class="alert warning">⚠️ <strong>盈利压力仍大</strong><br>研发与模型投入远高于当前收入规模，短期难以转正。</div>
+            <div class="alert purple">🌍 <strong>全球化验证</strong><br>超过 70% 收入来自海外，说明国际化变现能力初步建立。</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>管理层摘要</h3>
+          <div class="hero-metrics">
+            <div class="mini-metric">
+              <div class="label">综合评级</div>
+              <div class="value">B+</div>
+              <div class="sub">高增长 / 高投入</div>
+            </div>
+            <div class="mini-metric">
+              <div class="label">综合评分</div>
+              <div class="value">76/100</div>
+              <div class="sub">增长强，利润弱</div>
+            </div>
+            <div class="mini-metric">
+              <div class="label">战略定位</div>
+              <div class="value">平台化</div>
+              <div class="sub">AI 全球化扩张期</div>
+            </div>
+            <div class="mini-metric">
+              <div class="label">核心建议</div>
+              <div class="value" style="font-size:20px;">跟踪经营杠杆</div>
+              <div class="sub">重点看 2026 亏损收窄速度</div>
+            </div>
+          </div>
+          <div class="alert" style="margin-top:16px;">
+            对管理层的关键提示：2025 年 MiniMax 证明了“能增长、能变现、毛利率能提升”，下一阶段真正要验证的是经调整亏损能否显著收窄，以及研发投入能否持续转化为高质量收入。
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="summary-card">
+      <div class="name">营收</div>
+      <div class="kpi">7,903.8 万美元</div>
+      <div class="delta">同比 +158.9%</div>
+    </div>
+    <div class="summary-card green">
+      <div class="name">毛利率</div>
+      <div class="kpi">25.4%</div>
+      <div class="delta">同比 +13.2pct</div>
+    </div>
+    <div class="summary-card red">
+      <div class="name">法定净亏损</div>
+      <div class="kpi">18.72 亿美元</div>
+      <div class="delta">同比扩大</div>
+    </div>
+    <div class="summary-card purple">
+      <div class="name">经调整净亏损</div>
+      <div class="kpi">2.509 亿美元</div>
+      <div class="delta">较 2024 年小幅扩大</div>
+    </div>
+    <div class="summary-card gold">
+      <div class="name">研发费用</div>
+      <div class="kpi">2.53 亿美元</div>
+      <div class="delta">同比 +33.8%</div>
+    </div>
+    <div class="summary-card teal">
+      <div class="name">期末现金</div>
+      <div class="kpi">10.5 亿美元</div>
+      <div class="delta">同比 +19.3%</div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <a href="#summary">执行摘要</a>
+      <a href="#overview">公司概况</a>
+      <a href="#strategy">战略分析</a>
+      <a href="#accounting">会计分析</a>
+      <a href="#financial">财务分析</a>
+      <a href="#outlook">前景分析</a>
+      <a href="#risk">风险与结论</a>
+      <a href="#sources">数据来源</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="summary">
+      <div class="section-header">
+        <div class="section-no">1</div>
+        <div>
+          <h2>执行摘要</h2>
+          <p>先回答管理层最关心的问题：2025 年的 MiniMax，到底是更好了，还是只是更贵了？</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>核心判断</h3>
+          <div class="alert green">2025 年 MiniMax 的财务报表呈现出典型的 <strong>“收入增长成立、毛利率改善成立、但利润逻辑尚未成立”</strong> 的 AI 平台公司特征。</div>
+          <ul class="compact muted">
+            <li>收入高增说明商业化开始跑通，不再只是技术展示阶段。</li>
+            <li>毛利率从 12.2% 提升到 25.4%，说明产品结构和成本效率同步改善。</li>
+            <li>研发费用增速明显低于收入增速，经营杠杆出现雏形。</li>
+            <li>经调整净亏损依然超过 2.5 亿美元，意味着公司距离盈利仍有显著距离。</li>
+            <li>账上现金 10.5 亿美元，为未来 1-2 年继续投入提供了安全垫。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>管理层决策要点</h3>
+          <div class="grid grid-2">
+            <div class="kpi-box">
+              <div class="title">最强亮点</div>
+              <div class="num">毛利率改善</div>
+              <div class="desc">体现商业模式质量提升</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">最大压力</div>
+              <div class="num">持续亏损</div>
+              <div class="desc">AI 重投入仍在压制利润</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">最重要看点</div>
+              <div class="num">2026经营杠杆</div>
+              <div class="desc">亏损是否明显收窄</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">战略标签</div>
+              <div class="num">全球化AI平台</div>
+              <div class="desc">海外收入验证能力</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview">
+      <div class="section-header">
+        <div class="section-no">2</div>
+        <div>
+          <h2>公司概况</h2>
+          <p>MiniMax 是一家以多模态大模型、AI 原生应用、企业和开发者服务为核心的通用人工智能公司。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>公司画像</h3>
+          <table>
+            <tr><th>项目</th><th>内容</th></tr>
+            <tr><td>公司名称</td><td>MiniMax Group Inc. / 稀宇科技</td></tr>
+            <tr><td>股票代码</td><td>0100.HK</td></tr>
+            <tr><td>业务定位</td><td>通用人工智能平台公司</td></tr>
+            <tr><td>产品矩阵</td><td>文本、语音、图像、视频、音乐、多智能体应用</td></tr>
+            <tr><td>收入结构特征</td><td>海外收入占比超 70%</td></tr>
+            <tr><td>客户覆盖</td><td>全球个人用户、企业客户及开发者</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3>经营规模概览</h3>
+          <div class="grid grid-3">
+            <div class="kpi-box">
+              <div class="title">累计个人用户</div>
+              <div class="num">2.36 亿</div>
+              <div class="desc">覆盖 200+ 国家及地区</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">企业客户/开发者</div>
+              <div class="num">21.4 万</div>
+              <div class="desc">覆盖 100+ 国家及地区</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">平台阶段</div>
+              <div class="num">扩张期</div>
+              <div class="desc">尚未进入利润收获期</div>
+            </div>
+          </div>
+          <div class="alert warning" style="margin-top:18px;">
+            由于公司于 2026 年初在港股挂牌，2025 年数据更适合按“招股书历史财务 + 全年业绩摘要”框架理解，而不是按成熟港股公司年报口径简单比较。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="strategy">
+      <div class="section-header">
+        <div class="section-no">3</div>
+        <div>
+          <h2>战略分析模块</h2>
+          <p>核心问题：MiniMax 所处的赛道是否足够大？公司在其中处于什么位置？</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>行业与赛道判断</h3>
+          <ul class="compact muted">
+            <li><strong>行业空间：</strong>生成式 AI 仍处于高景气扩张期，全球市场从模型能力竞争逐步转向平台与场景落地竞争。</li>
+            <li><strong>细分方向：</strong>MiniMax 同时布局基础模型、多模态能力、AI Agent 与企业开发平台，覆盖面广。</li>
+            <li><strong>竞争格局：</strong>公司面临基础模型厂商、云平台、应用层 AI 创业公司三重竞争。</li>
+            <li><strong>所处阶段：</strong>从技术产品验证阶段进入平台化扩张阶段，商业化仍在提速中。</li>
+          </ul>
+          <div class="alert purple">MiniMax 的核心优势不是单点应用，而是“模型能力 + 产品矩阵 + 开发者平台 + 海外市场”的复合叙事。</div>
+        </div>
+        <div class="card">
+          <h3>竞争策略判断</h3>
+          <table>
+            <tr><th>维度</th><th>判断</th><th>含义</th></tr>
+            <tr><td>毛利率提升</td><td><span class="tag green">正向</span></td><td>产品结构和推理效率改善</td></tr>
+            <tr><td>研发费用率高</td><td><span class="tag gold">高投入</span></td><td>技术驱动型平台公司特征明显</td></tr>
+            <tr><td>海外收入占比高</td><td><span class="tag blue">全球化</span></td><td>变现能力不局限于单一市场</td></tr>
+            <tr><td>利润尚未转正</td><td><span class="tag red">承压</span></td><td>竞争和投入仍在前期</td></tr>
+          </table>
+          <div class="alert green" style="margin-top:16px;">综合判断：MiniMax 更偏向 <strong>技术驱动型 + 平台扩张型</strong> 公司，而非单纯流量驱动型应用公司。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="accounting">
+      <div class="section-header">
+        <div class="section-no">4</div>
+        <div>
+          <h2>会计分析模块</h2>
+          <p>核心问题：报表里哪些数字是经营真实表现，哪些数字需要谨慎看待？</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>关键会计观察</h3>
+          <ul class="compact muted">
+            <li><strong>法定净亏损与经调整净亏损差距巨大：</strong>2025 年法定净亏损约 18.72 亿美元，而经调整净亏损约 2.509 亿美元。</li>
+            <li><strong>会计含义：</strong>表明法定利润受一次性或非经营性项目显著影响，例如股权激励、优先股公允价值变动、上市相关会计处理等。</li>
+            <li><strong>经营分析口径：</strong>在判断经营改善时，应优先看收入、毛利率、研发费用、经调整亏损和现金变化。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>会计风险提示</h3>
+          <div class="alert danger">若投资者只看法定亏损，容易误判公司“经营恶化”；但若只看经调整亏损，也可能低估股权激励和资本结构变化带来的摊薄风险。</div>
+          <div class="alert warning" style="margin-top:16px;">由于公开可获取的完整年报 PDF 尚不充分，本报告基于公司全年业绩摘要与招股书历史财务数据整理，后续应以正式年报审计附注为最终准绳。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="financial">
+      <div class="section-header">
+        <div class="section-no">5</div>
+        <div>
+          <h2>财务分析模块</h2>
+          <p>从盈利、成长、现金流与经营效率四个层面拆解 2025 年财务表现。</p>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>收入、毛利润与研发投入趋势</h3>
+          <canvas id="revenueChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>毛利率与亏损率变化</h3>
+          <canvas id="marginChart"></canvas>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>关键财务指标对比</h3>
+          <div class="table-wrap">
+            <table>
+              <tr>
+                <th>指标</th>
+                <th>2024</th>
+                <th>2025</th>
+                <th>变化</th>
+              </tr>
+              <tr>
+                <td>收入（百万美元）</td>
+                <td>30.5</td>
+                <td>79.0</td>
+                <td><span class="tag green">+158.9%</span></td>
+              </tr>
+              <tr>
+                <td>毛利率</td>
+                <td>12.2%</td>
+                <td>25.4%</td>
+                <td><span class="tag green">+13.2pct</span></td>
+              </tr>
+              <tr>
+                <td>毛利润（百万美元）</td>
+                <td>3.7</td>
+                <td>20.1</td>
+                <td><span class="tag green">大幅增长</span></td>
+              </tr>
+              <tr>
+                <td>研发费用（百万美元）</td>
+                <td>189.0</td>
+                <td>253.0</td>
+                <td><span class="tag gold">+33.8%</span></td>
+              </tr>
+              <tr>
+                <td>法定净亏损（百万美元）</td>
+                <td>465.2</td>
+                <td>1,872.0</td>
+                <td><span class="tag red">显著扩大</span></td>
+              </tr>
+              <tr>
+                <td>经调整净亏损（百万美元）</td>
+                <td>244.2</td>
+                <td>250.9</td>
+                <td><span class="tag gold">小幅扩大</span></td>
+              </tr>
+              <tr>
+                <td>期末现金（百万美元）</td>
+                <td>880.0</td>
+                <td>1,050.0</td>
+                <td><span class="tag blue">+19.3%</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h3>经营解读</h3>
+          <div class="alert green">收入增速大幅高于研发费用增速，意味着公司开始出现经营杠杆，这是一家 AI 平台公司跨过“只烧钱不增长”阶段的关键信号。</div>
+          <div class="alert warning" style="margin-top:16px;">但以经调整亏损 / 收入测算，2025 年经调整亏损率仍高达约 317%，说明公司离自我造血还有显著距离。</div>
+          <div class="alert purple" style="margin-top:16px;">现金余额提升至 10.5 亿美元，说明公司具备继续加大模型和生态投入的资本基础，短期生存安全性较高。</div>
+        </div>
+      </div>
+
+      <div class="grid grid-3" style="margin-top:18px;">
+        <div class="card">
+          <h3>盈利能力</h3>
+          <ul class="compact muted">
+            <li>毛利率改善显著，是 2025 年最积极的财务变化。</li>
+            <li>但由于收入规模仍小，无法覆盖高额研发和组织成本。</li>
+            <li>当前公司估值逻辑应更接近“增长 + 平台价值”，而非传统利润估值。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>成长能力</h3>
+          <ul class="compact muted">
+            <li>收入高增验证了商业模式与全球市场接受度。</li>
+            <li>用户基础与开发者生态为后续收入增长提供支撑。</li>
+            <li>海外收入高占比是增长质量优于一般 AI 创业公司的关键点。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>现金流与效率</h3>
+          <ul class="compact muted">
+            <li>账上现金较充足，短期无显著流动性压力。</li>
+            <li>研发投入重，意味着经营现金流压力大概率仍然存在。</li>
+            <li>未来重点关注“单位新增收入对应的现金消耗是否下降”。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="outlook">
+      <div class="section-header">
+        <div class="section-no">6</div>
+        <div>
+          <h2>前景分析模块</h2>
+          <p>2026 年以后，MiniMax 能否真正从“高增长 AI 公司”走向“高质量平台公司”？</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>业绩展望与观察指标</h3>
+          <div class="grid grid-2">
+            <div class="kpi-box">
+              <div class="title">第一观察点</div>
+              <div class="num">收入延续高增</div>
+              <div class="desc">重点看企业服务与海外市场</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">第二观察点</div>
+              <div class="num">毛利率继续提升</div>
+              <div class="desc">验证商业模式质量</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">第三观察点</div>
+              <div class="num">亏损显著收窄</div>
+              <div class="desc">验证经营杠杆兑现</div>
+            </div>
+            <div class="kpi-box">
+              <div class="title">第四观察点</div>
+              <div class="num">现金消耗下降</div>
+              <div class="desc">验证资金使用效率</div>
+            </div>
+          </div>
+          <div class="alert green" style="margin-top:16px;">如果 2026 年收入继续维持高增、毛利率进一步抬升，而经调整亏损开始明显收窄，则 MiniMax 的资本市场叙事会从“高增长”升级为“高增长 + 盈利路径清晰”。</div>
+        </div>
+        <div class="card">
+          <h3>估值与战略建议</h3>
+          <ul class="compact muted">
+            <li><strong>估值框架：</strong>当前更适合用 PS（市销率）+ 平台价值 + 技术期权溢价，而非 PE。</li>
+            <li><strong>战略建议 1：</strong>继续扩大高毛利企业/API 收入占比，提升收入质量。</li>
+            <li><strong>战略建议 2：</strong>在保证模型竞争力的前提下，控制研发投入增速。</li>
+            <li><strong>战略建议 3：</strong>强化开发者生态，形成更稳定的经常性收入。</li>
+            <li><strong>战略建议 4：</strong>提升报表透明度，缩小法定与经调整利润口径差异带来的估值折扣。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="risk">
+      <div class="section-header">
+        <div class="section-no">7</div>
+        <div>
+          <h2>风险与结论</h2>
+          <p>增长成立，不代表风险消失；平台成型，不代表盈利已经到来。</p>
+        </div>
+      </div>
+      <div class="grid grid-4">
+        <div class="risk-card risk-high">
+          <div class="risk-icon">🔥</div>
+          <div>
+            <h3>盈利风险</h3>
+            <div class="tag red">高</div>
+            <p class="muted small">收入规模仍显著低于研发投入，盈利转正时间存在不确定性。</p>
+          </div>
+        </div>
+        <div class="risk-card risk-high">
+          <div class="risk-icon">⚔️</div>
+          <div>
+            <h3>竞争风险</h3>
+            <div class="tag red">高</div>
+            <p class="muted small">面临基础模型厂商、云平台与应用层公司的多重挤压。</p>
+          </div>
+        </div>
+        <div class="risk-card risk-mid">
+          <div class="risk-icon">📘</div>
+          <div>
+            <h3>口径风险</h3>
+            <div class="tag gold">中</div>
+            <p class="muted small">法定与经调整利润差异大，容易带来估值理解偏差。</p>
+          </div>
+        </div>
+        <div class="risk-card risk-low">
+          <div class="risk-icon">💰</div>
+          <div>
+            <h3>流动性风险</h3>
+            <div class="tag green">低-中</div>
+            <p class="muted small">当前现金储备相对充足，短期资金压力可控。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:18px; align-items:center;">
+        <div class="card">
+          <h3>综合评分</h3>
+          <div class="score-ring"></div>
+          <div class="score-value">76<span>高增长 / 高投入 / 盈利待验证</span></div>
+        </div>
+        <div class="card">
+          <h3>最终结论</h3>
+          <div class="alert green">MiniMax 2025 年财务报表最大的意义，在于证明了其商业化逻辑与全球化逻辑已经开始成立。</div>
+          <div class="alert warning" style="margin-top:16px;">但公司仍处于 AI 行业典型的“收入增长快、投入也很重”的阶段，经调整亏损依然很高，尚未形成清晰的利润拐点。</div>
+          <div class="alert purple" style="margin-top:16px;">因此，对管理层和投资者而言，下一阶段最关键的不是再证明“能不能增长”，而是证明“增长能否带来经营杠杆与亏损收窄”。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="section-header">
+        <div class="section-no">8</div>
+        <div>
+          <h2>数据来源与说明</h2>
+          <p>以下数据来自公开可获取资料的交叉整理；由于正式完整年报 PDF 当前未完整抓取，最终请以公司正式披露文件为准。</p>
+        </div>
+      </div>
+      <div class="card">
+        <ul class="sources muted">
+          <li>MiniMax 官网首页公开披露的 2025 全年业绩摘要与经营规模信息（含用户、企业客户及开发者覆盖数据）。</li>
+          <li>公开搜索可得的 MiniMax 2025 全年业绩摘要：收入 7,903.8 万美元、毛利润 2,007.9 万美元、毛利率 25.4%、研发费用 2.53 亿美元、法定净亏损 18.72 亿美元、经调整净亏损 2.509 亿美元、现金余额 10.5 亿美元。</li>
+          <li>公开搜索可得的招股书/历史财务摘要：2024 年收入 3,052.3 万美元、毛利率 12.2%、净亏损 4.652 亿美元、经调整净亏损 2.442 亿美元、现金余额 8.8 亿美元。</li>
+          <li>说明：本报告用于管理层分析与投资框架研究，不构成投资建议。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>本报告由 财务万晓生 生成｜文件名：minimax-group-0100-hk-2025-financial-analysis-report.html</div>
+    <div style="margin-top:6px;">说明：基于公开信息整理，后续若正式年报披露更完整附注数据，建议再做一次精修版更新。</div>
+  </footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+
+    const axisColor = '#8b949e';
+    const gridColor = 'rgba(255,255,255,0.08)';
+
+    const commonPlugins = {
+      legend: {
+        labels: {
+          color: '#e6edf3',
+          usePointStyle: true,
+          boxWidth: 8,
+          boxHeight: 8,
+          padding: 16,
+          font: { size: 12, family: 'Noto Sans SC' }
+        }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(22,27,34,0.96)',
+        borderColor: 'rgba(255,255,255,0.08)',
+        borderWidth: 1,
+        titleColor: '#fff',
+        bodyColor: '#c9d1d9',
+        padding: 12,
+        displayColors: true
+      },
+      datalabels: {
+        color: '#e6edf3',
+        font: { weight: '600', size: 11 },
+        formatter: (value) => value,
+        anchor: 'end',
+        align: 'top',
+        offset: 4,
+        clamp: true
+      }
+    };
+
+    new Chart(document.getElementById('revenueChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2025'],
+        datasets: [
+          {
+            label: '收入（百万美元）',
+            data: [30.5, 79.0],
+            backgroundColor: ['rgba(88,166,255,0.78)', 'rgba(63,185,80,0.82)'],
+            borderRadius: 10,
+            maxBarThickness: 52
+          },
+          {
+            label: '研发费用（百万美元）',
+            data: [189.0, 253.0],
+            backgroundColor: ['rgba(210,153,34,0.75)', 'rgba(188,140,255,0.82)'],
+            borderRadius: 10,
+            maxBarThickness: 52
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        layout: { padding: { top: 28 } },
+        plugins: commonPlugins,
+        scales: {
+          x: { ticks: { color: axisColor }, grid: { display: false } },
+          y: {
+            ticks: { color: axisColor },
+            grid: { color: gridColor },
+            grace: '12%'
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('marginChart'), {
+      type: 'line',
+      data: {
+        labels: ['2024', '2025'],
+        datasets: [
+          {
+            label: '毛利率',
+            data: [12.2, 25.4],
+            borderColor: '#39d0c8',
+            backgroundColor: 'rgba(57,208,200,0.18)',
+            tension: 0.35,
+            fill: true,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            datalabels: { formatter: (v) => v + '%' }
+          },
+          {
+            label: '经调整亏损率',
+            data: [800.1, 317.4],
+            borderColor: '#f85149',
+            backgroundColor: 'rgba(248,81,73,0.12)',
+            tension: 0.35,
+            fill: false,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            datalabels: { formatter: (v) => v + '%' }
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        layout: { padding: { top: 28 } },
+        plugins: commonPlugins,
+        scales: {
+          x: { ticks: { color: axisColor }, grid: { display: false } },
+          y: {
+            ticks: { color: axisColor, callback: (v) => v + '%' },
+            grid: { color: gridColor },
+            grace: '10%'
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
