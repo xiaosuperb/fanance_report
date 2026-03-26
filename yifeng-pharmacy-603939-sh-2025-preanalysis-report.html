@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>益丰药房（603939.SH）2025预分析财务报告</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
+      background: linear-gradient(180deg, #0b0f14 0%, #0d1117 100%);
+      color: var(--text-primary);
+      line-height: 1.72;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    .hero, .summary-strip, .nav-inner, .container, .footer {
+      width: min(1280px, calc(100% - 32px));
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero {
+      margin-top: 24px;
+      padding: 34px;
+      border-radius: 24px;
+      background: radial-gradient(circle at top right, rgba(88,166,255,.22), transparent 26%), linear-gradient(135deg, #0f172a 0%, #0d1117 55%, #111827 100%);
+      border: 1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow);
+    }
+    .eyebrow {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(88,166,255,.12);
+      color: #9ecbff;
+      font-size: 13px;
+    }
+    h1 { margin: 14px 0 10px; font-size: 36px; line-height: 1.2; }
+    .subtitle { margin: 0; color: var(--text-secondary); }
+    .hero-meta {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      color: var(--text-secondary);
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .summary-card, .section, .card, .chart-card, .table-card, .risk-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+    .summary-card { padding: 16px; position: relative; overflow: hidden; }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--card-accent, var(--accent));
+    }
+    .summary-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+    .summary-value { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    .summary-change { font-size: 12px; color: var(--text-secondary); }
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 12;
+      backdrop-filter: blur(12px);
+      background: rgba(13,17,23,.76);
+      margin-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.03);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner { display: flex; gap: 10px; overflow: auto; padding: 12px 0; }
+    .nav-link {
+      white-space: nowrap;
+      color: var(--text-secondary);
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+    }
+    .nav-link:hover { color: var(--text-primary); background: rgba(88,166,255,.08); }
+    .container { margin-top: 24px; margin-bottom: 48px; }
+    .section {
+      padding: 24px;
+      margin-bottom: 20px;
+      background: rgba(22,27,34,.76);
+    }
+    .section-header { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
+    .section-badge {
+      width: 38px; height: 38px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #58a6ff 0%, #1f6feb 100%);
+      font-weight: 700;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 6px 18px rgba(31,111,235,.25);
+    }
+    .section-title { margin: 0; font-size: 24px; }
+    .section-desc { margin: 4px 0 0; color: var(--text-secondary); font-size: 14px; }
+    .grid-2, .grid-3 { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card, .chart-card, .table-card { padding: 18px; }
+    .card h3, .chart-card h3, .table-card h3 { margin: 0 0 12px; font-size: 18px; }
+    .alert {
+      border-left: 4px solid var(--accent);
+      background: rgba(255,255,255,.03);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+    .green { border-color: var(--accent-green); }
+    .warning { border-color: var(--accent-gold); }
+    .danger { border-color: var(--accent-red); }
+    .purple { border-color: var(--accent-purple); }
+    .teal { border-color: var(--accent-teal); }
+    .table-wrap { overflow: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th { background: rgba(255,255,255,.03); }
+    tbody tr:nth-child(odd) { background: rgba(255,255,255,.015); }
+    tbody tr:hover { background: rgba(88,166,255,.05); }
+    .chart-box { height: 320px; position: relative; }
+    .risk-list { display: grid; gap: 12px; }
+    .risk-card {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 14px;
+      padding: 16px;
+      align-items: start;
+    }
+    .risk-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      background: rgba(88,166,255,.12);
+    }
+    .tag {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(88,166,255,.12);
+      color: #a7d0ff;
+      border: 1px solid rgba(88,166,255,.22);
+      margin-right: 8px;
+      margin-top: 8px;
+    }
+    .tag.green { background: rgba(63,185,80,.12); color: #8ddb9a; border-color: rgba(63,185,80,.22); }
+    .tag.gold { background: rgba(210,153,34,.12); color: #f2cf7b; border-color: rgba(210,153,34,.22); }
+    .tag.red { background: rgba(248,81,73,.12); color: #ffaba8; border-color: rgba(248,81,73,.22); }
+    .tag.purple { background: rgba(188,140,255,.12); color: #d8b8ff; border-color: rgba(188,140,255,.22); }
+    .footnote {
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    .footer {
+      padding: 12px 0 48px;
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 13px;
+    }
+    @media (max-width: 1080px) {
+      .summary-strip, .grid-3 { grid-template-columns: 1fr 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 780px) {
+      .summary-strip, .grid-3 { grid-template-columns: 1fr; }
+      h1 { font-size: 28px; }
+      .risk-card { grid-template-columns: 48px 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="eyebrow">📊 2025预分析版 · 基于已披露三季报 + 市场一致预期</div>
+    <h1>益丰药房（603939.SH）2025预分析财务报告</h1>
+    <p class="subtitle">结论前置：益丰药房2025年大概率呈现“收入弱弹性、利润稳改善、现金流偏稳健”的经营特征。公司仍具备龙头韧性，但行业竞争与同店增长压力意味着估值驱动将从扩张故事转向经营质量验证。</p>
+    <div class="hero-meta">
+      <span class="pill">行业：医药零售连锁</span>
+      <span class="pill">市场：A股</span>
+      <span class="pill">报告口径：2025预分析</span>
+      <span class="pill">单位：人民币亿元</span>
+      <span class="pill">正式年报：截至本报告生成时尚未披露</span>
+    </div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="summary-card" style="--card-accent: var(--accent)"><div class="summary-label">2025前三季度营收</div><div class="summary-value">172.86</div><div class="summary-change">同比 +0.39%</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-green)"><div class="summary-label">2025前三季度归母净利</div><div class="summary-value">12.25</div><div class="summary-change">同比 +10.27%</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-gold)"><div class="summary-label">2025H1经营现金流</div><div class="summary-value">15.70</div><div class="summary-change">同比 -13.8%</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-teal)"><div class="summary-label">2025E营收</div><div class="summary-value">245-246</div><div class="summary-change">市场一致预期区间</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-purple)"><div class="summary-label">2025E归母净利</div><div class="summary-value">16.9-17.7</div><div class="summary-change">市场一致预期区间</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-red)"><div class="summary-label">核心风险等级</div><div class="summary-value">中等</div><div class="summary-change">同店增长压力 + 行业竞争</div></div>
+  </div>
+
+  <nav class="nav-bar"><div class="nav-inner">
+    <a class="nav-link" href="#summary">执行摘要</a>
+    <a class="nav-link" href="#overview">公司概况</a>
+    <a class="nav-link" href="#strategy">战略分析</a>
+    <a class="nav-link" href="#accounting">会计分析</a>
+    <a class="nav-link" href="#financials">财务分析</a>
+    <a class="nav-link" href="#outlook">前景分析</a>
+    <a class="nav-link" href="#risks">风险与结论</a>
+    <a class="nav-link" href="#sources">数据来源</a>
+  </div></nav>
+
+  <main class="container">
+    <section id="summary" class="section">
+      <div class="section-header"><div class="section-badge">01</div><div><h2 class="section-title">执行摘要</h2><p class="section-desc">这不是正式年报解读，而是基于已披露数据和一致预期形成的管理层预判。</p></div></div>
+      <div class="card">
+        <p>截至本报告生成时，益丰药房2025年年度报告尚未正式披露，因此本报告采用“已披露经营结果 + 市场一致预期”双层口径。已披露部分显示，公司2025年前三季度实现营业收入172.86亿元，同比增长0.39%，归母净利润12.25亿元，同比增长10.27%；2025年上半年经营活动现金流净额15.70亿元，同比下降13.8%。从这一组数据可以看出，益丰药房当前最鲜明的特征不是收入高增长，而是利润韧性仍强于收入弹性，说明公司在费用控制、品类结构、直营网点精细化经营和加盟体系协同上仍具备较强管理能力。</p>
+        <p>市场一致预期认为，公司2025年全年营收约245-246亿元，归母净利润约16.9-17.7亿元，意味着全年大概率延续“低个位数收入增长、双位数利润增长”的结构。这种结构对于医药零售龙头而言并不差，但它也提示经营逻辑正在切换：过去市场更关注门店扩张和规模优势，未来更应关注同店恢复、处方外流承接效率、加盟质量、医保控费环境下的毛利韧性以及经营现金流与利润的一致性。</p>
+        <div class="alert green"><strong>核心判断：</strong>益丰药房2025年最重要的经营信号不是“继续快速做大”，而是“在行业放缓背景下仍守住利润质量”。</div>
+        <div class="alert warning"><strong>持续性观察：</strong>若2026年同店增速和客流修复仍偏弱，利润改善将更多依赖费用率压降与结构优化，持续性需审慎评估。</div>
+        <div class="alert danger"><strong>关键风险：</strong>行业竞争加剧、医保和集采政策压缩部分品类毛利、加盟扩张质量分化，均可能影响中期估值中枢。</div>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="section-header"><div class="section-badge">02</div><div><h2 class="section-title">公司概况</h2><p class="section-desc">龙头地位仍在，但行业已经进入比拼组织效率和精细化运营的新阶段。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>公司定位与当前阶段</h3>
+          <p>益丰药房是A股医药零售连锁龙头之一，核心竞争力来自区域密集布局、供应链能力、专业药房经营能力以及直营网点和加盟体系的双轮拓展。截至2024年末，公司门店总数为14,684家，其中加盟店3,812家；截至2025年9月末，门店总数为14,666家，其中加盟店4,097家。这个变化说明公司正在从单纯追求总门店扩张，转向更强调加盟体系扩容与存量门店质量管理的阶段。</p>
+          <div class="alert teal"><strong>管理层含义：</strong>门店总量短期未继续明显抬升，但加盟占比提升，反映公司正通过更轻资产、更平台化的方式扩大网络触达。</div>
+          <span class="tag">区域聚焦</span><span class="tag green">直营网点精细化</span><span class="tag purple">加盟体系扩张</span>
+        </div>
+        <div class="chart-card">
+          <h3>门店结构变化</h3>
+          <div class="chart-box"><canvas id="storeChart"></canvas></div>
+          <div class="footnote">注：2025年数据截至三季报口径。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="strategy" class="section">
+      <div class="section-header"><div class="section-badge">03</div><div><h2 class="section-title">战略分析模块</h2><p class="section-desc">决定估值的，不只是规模，更是龙头能否在弱增长期保持份额和利润质量。</p></div></div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>行业分析</h3>
+          <p>医药零售行业已经从“跑马圈地”进入“结构分化”阶段。短期看，院外处方流转、慢病管理、DTP药房等仍提供长期空间；但现实中，同店增长受居民消费偏弱、客流分流、即时零售竞争和医保控费影响，行业收入弹性普遍承压。龙头优势不再只是开店速度，而是供应链效率、专业服务和区域密度所形成的运营壁垒。</p>
+        </div>
+        <div class="card">
+          <h3>竞争格局</h3>
+          <p>益丰药房仍处于全国医药零售第一梯队。与中小连锁相比，其更有能力承接处方外流与医保外流量，也更有资源通过直营网点、加盟输出和数字化运营降低单店波动。从前三季度收入弱增长但利润仍增长的结果看，公司份额防守能力强于行业平均。</p>
+        </div>
+        <div class="card">
+          <h3>竞争策略</h3>
+          <p>公司的核心策略已由“高强度开店驱动”逐步转向“存量提效 + 加盟拓展 + 品类优化”。这是一种更偏运营驱动的策略：在收入增速放缓时，通过费用率管理、毛利结构优化和门店质量筛选来维持利润增长。对资本市场而言，这有助于提升盈利确定性，但也意味着估值叙事不再依赖高增长，而依赖经营质量。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="accounting" class="section">
+      <div class="section-header"><div class="section-badge">04</div><div><h2 class="section-title">会计分析模块</h2><p class="section-desc">利润质量的关键，在于应收、存货和现金流是否同步可解释。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>会计质量判断</h3>
+          <p>医药零售企业通常不依赖研发资本化，因此会计分析重点应放在收入确认质量、应收账款扩张、存货管理以及经营现金流含金量。根据2024年年报口径，益丰药房应收账款约21.24亿元，对应2024年营收240.62亿元，应收/收入比例约8.8%，整体仍处在可控区间，说明销售回款质量总体稳定。同期存货约49.25亿元，匹配其大规模门店网络和药品备货需求，重点不在“高不高”，而在周转是否被竞争和需求疲弱拖慢。</p>
+          <div class="alert green"><strong>收入确认质量：</strong>应收账款占收入比例不高，表明主营收入并未明显依赖信用扩张来支撑。</div>
+          <div class="alert warning"><strong>库存风险观察：</strong>药品零售天然需要较高存货保障供给，但若同店恢复慢于预期，存货周转与减值压力需持续关注。</div>
+        </div>
+        <div class="table-card">
+          <h3>关键会计指标检查表</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>项目</th><th>指标</th><th>判断</th><th>备注</th></tr></thead>
+              <tbody>
+                <tr><td>研发资本化</td><td>不构成核心变量</td><td>低风险</td><td>医药零售模式下，会计风险重点不在开发支出资本化</td></tr>
+                <tr><td>应收账款/营业收入</td><td>约8.8%（2024A）</td><td>可控</td><td>回款质量整体稳定，未见明显以赊销换增长</td></tr>
+                <tr><td>存货余额</td><td>49.25亿元（2024A）</td><td>中性偏关注</td><td>需结合周转效率而非绝对金额判断</td></tr>
+                <tr><td>经营现金流</td><td>42.21亿元（2024A）</td><td>较强</td><td>与利润匹配度较好，现金创造能力仍是龙头优势</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="financials" class="section">
+      <div class="section-header"><div class="section-badge">05</div><div><h2 class="section-title">财务分析模块</h2><p class="section-desc">看益丰药房，核心是“收入增速放缓是否会破坏利润和现金流质量”。</p></div></div>
+      <div class="grid-2">
+        <div class="chart-card">
+          <h3>收入与利润趋势</h3>
+          <div class="chart-box"><canvas id="trendChart"></canvas></div>
+          <div class="footnote">2025E为市场一致预期中值；2025Q1-Q3为已披露数据。</div>
+        </div>
+        <div class="chart-card">
+          <h3>关键财务指标对比</h3>
+          <div class="chart-box"><canvas id="metricChart"></canvas></div>
+          <div class="footnote">经营现金流仅展示2024A和2025H1口径，不构成全年可比。</div>
+        </div>
+      </div>
+      <div class="table-card" style="margin-top: 18px;">
+        <h3>核心财务指标总览</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>维度</th><th>指标</th><th>2024A</th><th>2025已披露/预估</th><th>变化特征</th><th>经营解读</th></tr></thead>
+            <tbody>
+              <tr><td>收入</td><td>营业收入</td><td>240.62</td><td>245-246（E）</td><td>弱增长</td><td>行业需求偏弱、同店承压，龙头规模扩张进入放缓期</td></tr>
+              <tr><td>利润</td><td>归母净利润</td><td>15.29</td><td>16.9-17.7（E）</td><td>好于收入</td><td>费用控制和结构优化支撑利润韧性</td></tr>
+              <tr><td>盈利质量</td><td>销售毛利率</td><td>40.12%</td><td>待年报确认</td><td>需跟踪</td><td>核心关注医保控费、品类结构变化对毛利率的影响</td></tr>
+              <tr><td>现金流</td><td>经营现金流</td><td>42.21</td><td>15.70（2025H1）</td><td>阶段性承压</td><td>上半年现金流同比下滑，但不改龙头整体现金创造基础</td></tr>
+              <tr><td>经营效率</td><td>门店总数</td><td>14,684</td><td>14,666（2025Q3）</td><td>总量平稳</td><td>扩张重心转向加盟体系和单店质量，而非一味堆门店</td></tr>
+              <tr><td>结构</td><td>加盟店数量</td><td>3,812</td><td>4,097（2025Q3）</td><td>提升</td><td>更轻资产、更平台化的网络拓展思路在加强</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="card">
+          <h3>盈利能力</h3>
+          <p>2025年前三季度利润增速明显高于收入增速，这意味着公司并未因行业放缓而牺牲利润去抢规模，反而更强调经营质量。对管理层而言，这是一种健康信号：公司仍具备费用收缩与结构调优能力。但反过来说，若收入端长期缺乏恢复，利润改善最终会受到上限约束，因为单纯靠费用率优化无法长期替代同店与客流增长。</p>
+        </div>
+        <div class="card">
+          <h3>现金流与营运效率</h3>
+          <p>2024年经营现金流42.21亿元，体现出益丰药房作为零售龙头的现金回笼能力；2025年上半年经营现金流15.70亿元，同比下滑13.8%，说明行业竞争、备货结构、结算节奏或门店经营环境对短期现金流造成一定扰动。判断现金流是否恶化，不能只看单期下滑，而要看全年现金流是否仍显著高于净利润、以及库存和应收是否同步失控。目前看，公司仍处于“可跟踪、未失真”的区间。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="outlook" class="section">
+      <div class="section-header"><div class="section-badge">06</div><div><h2 class="section-title">前景分析模块</h2><p class="section-desc">2026年的关键不是还能不能增长，而是增长能否重新带动估值抬升。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>风险扫描</h3>
+          <p>第一，同店恢复若持续乏力，公司将更依赖新店和加盟体系托底，而这种增长的利润质量通常不如成熟直营网点。第二，医保控费、统筹政策及药品结构变化可能压缩部分高毛利品类空间。第三，即时零售平台与区域连锁价格竞争可能削弱坪效和客单价表现。第四，若加盟扩张快于组织赋能能力，门店网络扩大不一定等于盈利质量提升。</p>
+          <span class="tag gold">同店修复不确定</span><span class="tag red">行业竞争</span><span class="tag purple">加盟质量分化</span>
+        </div>
+        <div class="card">
+          <h3>业绩预测与估值锚</h3>
+          <p>基于市场一致预期，2025年全年营收约245-246亿元、归母净利润约16.9-17.7亿元。若2026年公司能够恢复更明确的同店正增长，并保持利润增速不低于收入增速，则估值逻辑有望从“防御型龙头”重新切换至“稳健增长龙头”；若收入端继续横盘，资本市场会更强调估值安全边际，而不是给予成长溢价。益丰药房当前更像一只质量优于行业、但增速低于历史高点的龙头资产。</p>
+          <div class="alert green"><strong>战略建议：</strong>管理层后续应把资源集中在提升成熟门店坪效、强化处方外流承接和加盟赋能，而不是回到粗放式开店节奏。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="risks" class="section">
+      <div class="section-header"><div class="section-badge">07</div><div><h2 class="section-title">风险与结论</h2><p class="section-desc">对益丰药房的判断，核心不在“好不好”，而在“好到什么程度还能支撑溢价”。</p></div></div>
+      <div class="risk-list">
+        <div class="risk-card"><div class="risk-icon">🏪</div><div><h3 style="margin:0 0 6px;">同店增长低迷</h3><p style="margin:0; color: var(--text-secondary);">若客流和客单价恢复持续偏弱，收入端将长期缺乏弹性，利润改善也会逐步逼近上限。</p></div><div class="tag gold">中等</div></div>
+        <div class="risk-card"><div class="risk-icon">💊</div><div><h3 style="margin:0 0 6px;">政策与品类毛利压力</h3><p style="margin:0; color: var(--text-secondary);">医保控费、统筹政策和集采环境可能影响部分品类毛利水平，使盈利改善难以完全延续。</p></div><div class="tag red">中高</div></div>
+        <div class="risk-card"><div class="risk-icon">🤝</div><div><h3 style="margin:0 0 6px;">加盟扩张质量波动</h3><p style="margin:0; color: var(--text-secondary);">加盟数量提升有利于轻资产扩网，但若组织赋能和品控不够同步，品牌与盈利质量都可能受影响。</p></div><div class="tag gold">中等</div></div>
+      </div>
+      <div class="card" style="margin-top: 18px;">
+        <h3>最终结论</h3>
+        <p>益丰药房2025年的经营图景大概率是：收入增长显著降速，但利润依旧保持韧性，现金流短期有波动但龙头基础尚未被破坏。这意味着公司已经从“高成长连锁药房”逐步切换到“高质量防御型龙头”的定价框架。对管理层或投资视角而言，当前最值得跟踪的变量并非总门店数，而是同店恢复、加盟质量、毛利稳定性和经营现金流含金量。若这些变量在2026年改善，益丰药房仍有重新获得成长溢价的条件；若仅维持利润稳、收入弱，则更适合以稳健资产而非高弹性资产来定价。</p>
+      </div>
+    </section>
+
+    <section id="sources" class="section">
+      <div class="section-header"><div class="section-badge">08</div><div><h2 class="section-title">数据来源</h2><p class="section-desc">本报告严格区分官方已披露数据与市场一致预期，避免将预估值误写为正式年报数据。</p></div></div>
+      <div class="table-card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>来源类型</th><th>来源</th><th>用途</th></tr></thead>
+            <tbody>
+              <tr><td>Primary</td><td>益丰药房2024年年度报告（2025-04-29披露）</td><td>2024A营业收入、归母净利润、毛利率、经营现金流、应收账款、存货、门店数</td></tr>
+              <tr><td>Primary</td><td>益丰药房2025年半年度报告</td><td>2025H1营业收入、归母净利润、经营现金流</td></tr>
+              <tr><td>Primary</td><td>益丰药房2025年第三季度报告</td><td>2025Q1-Q3营业收入、归母净利润、门店数</td></tr>
+              <tr><td>Secondary</td><td>东方财富 / 东财资讯（dfcfw）市场一致预期整理</td><td>2025全年营收、净利润区间预估，用于预分析而非正式年报结论</td></tr>
+              <tr><td>Cross-check</td><td>公司官网IR / 上交所披露索引 / 财经媒体摘要交叉核验</td><td>用于校验披露时点、门店结构及关键指标一致性</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="footnote">重要说明：本报告不是2025正式年报解读。凡涉及2025E字样，均表示市场一致预期或基于已披露数据的预判，不代表公司已公告最终数据。</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">财务万晓生 · 基于已披露定期报告与市场一致预期生成的管理层预分析版本</footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+
+    const labelStyle = {
+      color: '#e6edf3',
+      font: { weight: '600', size: 11 },
+      clamp: true
+    };
+
+    const barCommon = {
+      maintainAspectRatio: false,
+      layout: { padding: { top: 26 } },
+      scales: {
+        x: {
+          ticks: { color: '#8b949e' },
+          grid: { color: 'rgba(255,255,255,0.04)' }
+        },
+        y: {
+          ticks: { color: '#8b949e' },
+          grid: { color: 'rgba(255,255,255,0.06)' },
+          grace: '12%'
+        }
+      },
+      plugins: {
+        legend: { labels: { color: '#e6edf3' } },
+        datalabels: {
+          ...labelStyle,
+          anchor: 'end',
+          align: 'top',
+          offset: 4,
+          clamp: true,
+          formatter: (v) => v
+        }
+      }
+    };
+
+    new Chart(document.getElementById('storeChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2024A', '2025Q3'],
+        datasets: [
+          { label: '总门店数', data: [14684, 14666], backgroundColor: '#58a6ff' },
+          { label: '加盟店数', data: [3812, 4097], backgroundColor: '#39d0c8' }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('trendChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2024A', '2025Q1-Q3', '2025E中值'],
+        datasets: [
+          { label: '营业收入', data: [240.62, 172.86, 245.73], backgroundColor: '#58a6ff' },
+          { label: '归母净利润', data: [15.29, 12.25, 17.30], backgroundColor: '#39d0c8' }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('metricChart'), {
+      type: 'bar',
+      data: {
+        labels: ['毛利率(2024A)', '应收/收入(2024A)', '经营现金流(2024A)', '经营现金流(2025H1)'],
+        datasets: [{
+          label: '关键指标',
+          data: [40.12, 8.8, 42.21, 15.70],
+          backgroundColor: ['#d29922', '#bc8cff', '#39d0c8', '#f85149']
+        }]
+      },
+      options: {
+        ...barCommon,
+        plugins: {
+          legend: { display: false },
+          datalabels: {
+            ...labelStyle,
+            anchor: 'end',
+            align: 'top',
+            offset: 4,
+            clamp: true,
+            formatter: (v, ctx) => ctx.dataIndex < 2 ? v + '%' : v
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
