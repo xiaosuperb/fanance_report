@@ -237,6 +237,7 @@
   <nav class="nav-bar"><div class="nav-inner">
     <a class="nav-link" href="#summary">执行摘要</a>
     <a class="nav-link" href="#overview">公司概况</a>
+    <a class="nav-link" href="#peer-comparison">同行业对比</a>
     <a class="nav-link" href="#strategy">战略分析</a>
     <a class="nav-link" href="#accounting">会计分析</a>
     <a class="nav-link" href="#financials">财务分析</a>
@@ -274,8 +275,57 @@
       </div>
     </section>
 
+    <section id="peer-comparison" class="section">
+      <div class="section-header"><div class="section-badge">03</div><div><h2 class="section-title">同行业对比</h2><p class="section-desc">先看行业站位，再看公司自身，管理层更容易判断益丰的优势到底来自规模、效率还是质量。</p></div></div>
+      <div class="card">
+        <p>本节选取A股头部连锁药房作为对标样本：益丰药房、老百姓、大参林、一心堂、健之佳。对比结果显示，益丰药房并非门店数绝对最多的企业，但在收入规模、利润体量和毛利率质量上保持第一梯队优势，呈现出“规模领先 + 质量更优”的组合特征。与之相比，大参林的网络规模更大，但2024年利润承压明显；老百姓门店数高于益丰，但盈利能力和毛利率低于益丰；一心堂收入规模仍大，但利润端明显承压；健之佳体量最小，更偏区域型优质玩家。</p>
+        <div class="alert green"><strong>核心结论：</strong>益丰药房在同行中的最强标签不是“门店最多”，而是“在接近头部规模下仍保持更优利润质量和毛利水平”。</div>
+        <div class="alert warning"><strong>估值含义：</strong>如果行业继续弱增长，市场更愿意给“质量型龙头”估值溢价，益丰相对同行仍具备溢价基础，但前提是同店与现金流不能继续走弱。</div>
+      </div>
+      <div class="table-card" style="margin-top: 18px;">
+        <h3>头部连锁药房横向对比（2024A）</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>公司</th><th>代码</th><th>营收（亿元）</th><th>归母净利润（亿元）</th><th>门店数</th><th>毛利率</th><th>ROE</th><th>定位判断</th></tr></thead>
+            <tbody>
+              <tr><td>益丰药房</td><td>603939.SH</td><td>240.62</td><td>15.29</td><td>14,684</td><td>40.12%</td><td>—</td><td>质量型龙头，利润韧性突出</td></tr>
+              <tr><td>老百姓</td><td>603883.SH</td><td>223.58</td><td>5.19</td><td>15,277</td><td>33.17%</td><td>6.6%</td><td>门店网络大，但盈利效率偏弱</td></tr>
+              <tr><td>大参林</td><td>603233.SH</td><td>264.97</td><td>9.15</td><td>16,553</td><td>34.33%</td><td>13.26%</td><td>规模最大，但利润承压明显</td></tr>
+              <tr><td>一心堂</td><td>002727.SZ</td><td>180.00</td><td>1.14</td><td>11,498</td><td>约31%</td><td>—</td><td>收入体量仍在，但利润端承压最重</td></tr>
+              <tr><td>健之佳</td><td>605266.SH</td><td>92.83</td><td>1.28</td><td>5,486</td><td>35.80%</td><td>4.53%</td><td>区域优质玩家，体量较小</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="footnote">注：一心堂毛利率采用2024年中期及阶段性披露近似区间；ROE若缺少一致可比口径，则不强行填充，避免误导。</div>
+      </div>
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="chart-card">
+          <h3>营收与净利润对比</h3>
+          <div class="chart-box"><canvas id="peerRevenueProfitChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>门店规模与毛利率对比</h3>
+          <div class="chart-box"><canvas id="peerStoreMarginChart"></canvas></div>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-top: 18px;">
+        <div class="card">
+          <h3>规模维度</h3>
+          <p>若只看营收和门店数，益丰并非绝对第一：大参林和老百姓在门店网络上更大，大参林的收入规模也更高。但益丰处于第一梯队中靠前位置，且规模并未以牺牲利润质量为代价换取。</p>
+        </div>
+        <div class="card">
+          <h3>盈利维度</h3>
+          <p>益丰药房2024年归母净利润15.29亿元，显著高于同行，且毛利率达到40.12%，在可比样本中明显领先。这意味着益丰的产品结构、供应链效率和终端运营质量更优，盈利不是单纯靠门店堆出来的。</p>
+        </div>
+        <div class="card">
+          <h3>经营含义</h3>
+          <p>对管理层和投资人而言，益丰药房更接近“高质量龙头”而非“纯扩张型龙头”。在行业进入弱增长阶段后，这种定位比单纯追求门店数量更有价值，因为市场会把溢价给利润质量更稳定、毛利更强、现金流更稳的玩家。</p>
+        </div>
+      </div>
+    </section>
+
     <section id="strategy" class="section">
-      <div class="section-header"><div class="section-badge">03</div><div><h2 class="section-title">战略分析模块</h2><p class="section-desc">决定估值的，不只是规模，更是龙头能否在弱增长期保持份额和利润质量。</p></div></div>
+      <div class="section-header"><div class="section-badge">04</div><div><h2 class="section-title">战略分析模块</h2><p class="section-desc">决定估值的，不只是规模，更是龙头能否在弱增长期保持份额和利润质量。</p></div></div>
       <div class="grid-3">
         <div class="card">
           <h3>行业分析</h3>
@@ -293,7 +343,7 @@
     </section>
 
     <section id="accounting" class="section">
-      <div class="section-header"><div class="section-badge">04</div><div><h2 class="section-title">会计分析模块</h2><p class="section-desc">利润质量的关键，在于应收、存货和现金流是否同步可解释。</p></div></div>
+      <div class="section-header"><div class="section-badge">05</div><div><h2 class="section-title">会计分析模块</h2><p class="section-desc">利润质量的关键，在于应收、存货和现金流是否同步可解释。</p></div></div>
       <div class="grid-2">
         <div class="card">
           <h3>会计质量判断</h3>
@@ -361,7 +411,7 @@
     </section>
 
     <section id="outlook" class="section">
-      <div class="section-header"><div class="section-badge">06</div><div><h2 class="section-title">前景分析模块</h2><p class="section-desc">2026年的关键不是还能不能增长，而是增长能否重新带动估值抬升。</p></div></div>
+      <div class="section-header"><div class="section-badge">07</div><div><h2 class="section-title">前景分析模块</h2><p class="section-desc">2026年的关键不是还能不能增长，而是增长能否重新带动估值抬升。</p></div></div>
       <div class="grid-2">
         <div class="card">
           <h3>风险扫描</h3>
@@ -401,6 +451,7 @@
               <tr><td>Primary</td><td>益丰药房2025年第三季度报告</td><td>2025Q1-Q3营业收入、归母净利润、门店数</td></tr>
               <tr><td>Secondary</td><td>东方财富 / 东财资讯（dfcfw）市场一致预期整理</td><td>2025全年营收、净利润区间预估，用于预分析而非正式年报结论</td></tr>
               <tr><td>Cross-check</td><td>公司官网IR / 上交所披露索引 / 财经媒体摘要交叉核验</td><td>用于校验披露时点、门店结构及关键指标一致性</td></tr>
+              <tr><td>Peer set</td><td>老百姓、大参林、一心堂、健之佳2024年年报及公开财务摘要</td><td>用于横向对比营收、利润、门店数、毛利率、ROE与行业定位</td></tr>
             </tbody>
           </table>
         </div>
@@ -466,6 +517,30 @@
         datasets: [
           { label: '营业收入', data: [240.62, 172.86, 245.73], backgroundColor: '#58a6ff' },
           { label: '归母净利润', data: [15.29, 12.25, 17.30], backgroundColor: '#39d0c8' }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('peerRevenueProfitChart'), {
+      type: 'bar',
+      data: {
+        labels: ['益丰药房', '老百姓', '大参林', '一心堂', '健之佳'],
+        datasets: [
+          { label: '营业收入', data: [240.62, 223.58, 264.97, 180.00, 92.83], backgroundColor: '#58a6ff' },
+          { label: '归母净利润', data: [15.29, 5.19, 9.15, 1.14, 1.28], backgroundColor: '#39d0c8' }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('peerStoreMarginChart'), {
+      type: 'bar',
+      data: {
+        labels: ['益丰药房', '老百姓', '大参林', '一心堂', '健之佳'],
+        datasets: [
+          { label: '门店数', data: [14684, 15277, 16553, 11498, 5486], backgroundColor: '#bc8cff' },
+          { label: '毛利率', data: [40.12, 33.17, 34.33, 31.00, 35.80], backgroundColor: '#d29922' }
         ]
       },
       options: barCommon
