@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>万兴科技（300624）2025Q3财务分析报告</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top right, rgba(88,166,255,.12), transparent 22%), var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.68;
+    }
+    a { color: var(--accent); }
+    .hero, .summary-strip, .nav-bar, .container, .footer {
+      width: min(1320px, calc(100% - 32px));
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero {
+      margin-top: 24px;
+      padding: 36px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #0f172a 0%, #111827 45%, #0d1117 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(88,166,255,.18), transparent 70%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: #bfd7ff;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.18;
+      letter-spacing: .2px;
+    }
+    .hero p {
+      margin: 14px 0 0;
+      max-width: 980px;
+      color: #c9d1d9;
+      font-size: 16px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap: 20px;
+      align-items: end;
+    }
+    .hero-side {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-side .metric-label { color: var(--text-secondary); font-size: 13px; }
+    .hero-side .metric-value { font-size: 28px; font-weight: 800; margin-top: 6px; }
+    .hero-side .metric-sub { font-size: 13px; color: #ffb4b4; }
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .summary-card, .section, .card, .chart-card, .table-card, .risk-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .summary-card {
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 118px;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: var(--card-accent, var(--accent));
+    }
+    .summary-card .label { color: var(--text-secondary); font-size: 13px; }
+    .summary-card .value { margin-top: 10px; font-size: 28px; font-weight: 800; }
+    .summary-card .sub { margin-top: 8px; color: var(--text-muted); font-size: 13px; }
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(13,17,23,.8);
+      padding: 12px 0;
+      margin-top: 18px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-links { display: flex; gap: 10px; overflow: auto; padding-bottom: 2px; }
+    .nav-links a {
+      white-space: nowrap;
+      color: var(--text-secondary);
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav-links a:hover { color: var(--text-primary); background: rgba(88,166,255,.14); }
+    .container { margin-top: 24px; margin-bottom: 48px; }
+    .section { padding: 24px; margin-bottom: 20px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .section-badge {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #58a6ff 0%, #1f6feb 100%);
+      color: white;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+    .section-header h2 { margin: 0; font-size: 24px; }
+    .section-desc { color: var(--text-secondary); font-size: 14px; margin-top: 2px; }
+    .grid-2, .grid-3, .grid-4 { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card, .chart-card, .table-card { padding: 18px; }
+    .card h3, .chart-card h3, .table-card h3 { margin: 0 0 10px; font-size: 18px; }
+    .muted { color: var(--text-secondary); }
+    .small { font-size: 13px; }
+    .lead {
+      font-size: 17px;
+      color: #dbe7f3;
+      margin-top: 0;
+    }
+    .bullet-list { margin: 0; padding-left: 18px; }
+    .bullet-list li { margin-bottom: 10px; }
+    .alert {
+      border-left: 4px solid var(--accent);
+      background: rgba(255,255,255,.03);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+    .alert.green { border-color: var(--accent-green); }
+    .alert.warning { border-color: var(--accent-gold); }
+    .alert.danger { border-color: var(--accent-red); }
+    .alert.purple { border-color: var(--accent-purple); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .chip {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      color: #c8d5e3;
+      border: 1px solid rgba(255,255,255,.06);
+      font-size: 13px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th {
+      color: #c4d2de;
+      font-size: 13px;
+      background: rgba(255,255,255,.03);
+    }
+    tbody tr:nth-child(odd) { background: rgba(255,255,255,.015); }
+    tbody tr:hover { background: rgba(88,166,255,.06); }
+    .number-pos { color: #7ee787; }
+    .number-neg { color: #ff7b72; }
+    .chart-box { height: 330px; position: relative; }
+    .chart-box.tall { height: 380px; }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .metric-tile {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .metric-tile .k { color: var(--text-secondary); font-size: 13px; }
+    .metric-tile .v { margin-top: 8px; font-size: 22px; font-weight: 800; }
+    .risk-wrap { display: grid; gap: 14px; }
+    .risk-card {
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      gap: 16px;
+      padding: 18px;
+      align-items: start;
+    }
+    .risk-color { border-radius: 999px; min-height: 100%; }
+    .risk-tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      align-self: start;
+    }
+    .risk-high { background: rgba(248,81,73,.12); color: #ffb3ad; }
+    .risk-mid { background: rgba(210,153,34,.14); color: #f6d58d; }
+    .risk-low { background: rgba(63,185,80,.14); color: #9ee3a9; }
+    .footer {
+      padding: 8px 0 46px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    @media (max-width: 1160px) {
+      .summary-strip, .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-grid, .grid-3, .grid-2, .metric-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .summary-strip { grid-template-columns: 1fr; }
+      .hero, .section { padding: 20px; }
+      .hero-side .metric-value, .summary-card .value { font-size: 24px; }
+      table { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">📊 财务万晓生 · 管理层财务分析仪表盘</div>
+        <h1>万兴科技（300624）2025Q3财务分析报告</h1>
+        <p>结论前置：<strong>万兴科技当前的核心问题不是收入增长乏力，而是高毛利未能转化为利润与现金流。</strong>截至 2025Q3，公司营业收入继续增长，但销售、管理与研发费用维持高位，归母净利润重新扩大为亏损，经营现金流同步转负，经营质量较 2024Q3 明显承压。</p>
+      </div>
+      <div class="hero-side">
+        <div class="metric-label">阶段性判断</div>
+        <div class="metric-value">中高风险</div>
+        <div class="metric-sub">增长仍在，但利润兑现与现金流质量偏弱</div>
+        <div class="chip-row">
+          <span class="chip">口径：截至 2025Q3</span>
+          <span class="chip">行业：数字创意软件 / 办公与工具软件</span>
+          <span class="chip">结论：偏谨慎</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="summary-card" style="--card-accent: var(--accent)">
+      <div class="label">营业收入</div>
+      <div class="value">11.42 亿元</div>
+      <div class="sub">同比 +8.5%，收入端保持增长</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-red)">
+      <div class="label">归母净利润</div>
+      <div class="value">-6159 万元</div>
+      <div class="sub">同比明显恶化，盈利修复失败</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-gold)">
+      <div class="label">毛利率</div>
+      <div class="value">91.8%</div>
+      <div class="sub">高毛利属性仍强，但未转化为利润</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-teal)">
+      <div class="label">经营现金流净额</div>
+      <div class="value">-3754 万元</div>
+      <div class="sub">上年同期为 +722 万元，现金质量转弱</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-purple)">
+      <div class="label">ROE（加权）</div>
+      <div class="value">-5.6%</div>
+      <div class="sub">资本回报重新回落为负值</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-green)">
+      <div class="label">账上货币资金</div>
+      <div class="value">5.21 亿元</div>
+      <div class="sub">短期流动性尚可，但消耗速度需盯紧</div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <div class="nav-links">
+      <a href="#summary">执行摘要</a>
+      <a href="#overview">公司概况</a>
+      <a href="#peer-comparison">同行业对比</a>
+      <a href="#strategy">战略分析</a>
+      <a href="#accounting">会计分析</a>
+      <a href="#financials">财务分析</a>
+      <a href="#outlook">前景分析</a>
+      <a href="#risks">风险与结论</a>
+      <a href="#sources">数据来源</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="summary" class="section">
+      <div class="section-header">
+        <div class="section-badge">01</div>
+        <div>
+          <h2>执行摘要</h2>
+          <div class="section-desc">管理层先看这部分，即可把握报告核心结论</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <p class="lead">截至 2025Q3，万兴科技处于“收入恢复增长、利润与现金流承压”的过渡阶段。公司高毛利软件模式未发生破坏，但经营杠杆尚未释放，导致收入增长未能带来利润改善，反而在高费用投放下重新放大亏损。</p>
+          <div class="alert green"><strong>核心判断：</strong>公司产品力与品牌力仍在，但现阶段更像“投入期的软件平台”，而非已经进入收获期的成熟 SaaS/工具龙头。</div>
+          <div class="alert warning"><strong>可持续性判断：</strong>若后续 2-4 个季度销售费用率不能回落、AI 投入不能提高付费效率，利润修复的时间将继续延后。</div>
+          <div class="alert danger"><strong>最大风险：</strong>市场继续为增长付费的前提，是看到利润和经营现金流的同步改善；若只见投入不见回报，估值弹性将明显收缩。</div>
+        </div>
+        <div class="card">
+          <h3>3分钟结论提炼</h3>
+          <ul class="bullet-list">
+            <li><strong>收入没问题：</strong>2025Q3 累计营收 11.42 亿元，同比增长 8.5%，说明需求端并未失速。</li>
+            <li><strong>利润出了问题：</strong>归母净利润 -6159 万元，较 2024Q3 的 -550 万元显著恶化。</li>
+            <li><strong>商业模式本身仍优：</strong>毛利率 91.8%，说明软件工具属性和定价能力仍强。</li>
+            <li><strong>费用压制利润：</strong>销售、管理、研发费用合计约 11.36 亿元，基本吃掉全部毛利。</li>
+            <li><strong>现金流同步转弱：</strong>经营现金流净额转为 -3754 万元，经营质量弱于 2024Q3。</li>
+            <li><strong>结论偏谨慎：</strong>短期更应验证“降费增效”和 AI 商业化，而不是继续单纯讲增长故事。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="section-header">
+        <div class="section-badge">02</div>
+        <div>
+          <h2>公司概况</h2>
+          <div class="section-desc">业务定位、商业模式与公司基本盘</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <p>万兴科技定位于全球数字创意软件与视频创作工具赛道，核心产品覆盖视频剪辑、图像创意、文档与绘图等场景，商业模式本质上属于<strong>高毛利的软件订阅/授权 + 全球线上获客</strong>模式。根据公司官网披露，其业务覆盖 200+ 国家和地区，累计活跃用户超过 20 亿，具备较强的全球化分发和品牌基础。</p>
+          <p>从财务结构看，万兴具有典型软件公司的特征：<strong>极高毛利率、轻存货、应收占比不高</strong>。但与成熟软件公司不同的是，公司仍依赖较高的销售与研发投入维持增长，因此利润表现对费用率非常敏感。</p>
+          <div class="chip-row">
+            <span class="chip">创意软件</span>
+            <span class="chip">全球化分发</span>
+            <span class="chip">高毛利</span>
+            <span class="chip">重营销投放</span>
+            <span class="chip">AI 升级驱动</span>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>经营画像</h3>
+          <div class="chart-box"><canvas id="businessModelChart"></canvas></div>
+          <div class="small muted">注：该图用于反映万兴科技作为软件工具平台的经营特征权重，而非严格会计分部口径。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="peer-comparison" class="section">
+      <div class="section-header">
+        <div class="section-badge">03</div>
+        <div>
+          <h2>同行业对比模块</h2>
+          <div class="section-desc">与同赛道软件/工具公司做横向比较，明确行业位置</div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="lead">对标组选择金山办公、福昕软件、昆仑万维、彩讯股份，分别代表国内办公软件平台、PDF/文档工具、泛 AI/流量平台与企业级软件服务。尽管商业模式并非完全同质，但在“软件工具、高研发、高毛利、平台化能力”层面具备比较价值。</p>
+        <div class="alert green"><strong>行业位置结论：</strong>万兴科技在<strong>毛利率</strong>上处于行业较高水平，说明产品属性与定价力不弱；但在<strong>利润兑现、ROE 与现金流质量</strong>上明显落后于已经跑通经营杠杆的优质软件公司，当前更接近“高投入转型期玩家”，而非利润收获期龙头。</div>
+      </div>
+      <div class="table-card" style="margin-top:16px;">
+        <h3>核心横向对比表</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>公司</th>
+              <th>代码</th>
+              <th>最新披露口径</th>
+              <th>营收</th>
+              <th>归母净利润</th>
+              <th>总市值</th>
+              <th>毛利率/核心利润率</th>
+              <th>ROE</th>
+              <th>定位判断</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>万兴科技</td>
+              <td>300624</td>
+              <td>2025Q3</td>
+              <td>11.42 亿元</td>
+              <td class="number-neg">-0.62 亿元</td>
+              <td>131.80 亿元</td>
+              <td>毛利率 91.8%</td>
+              <td class="number-neg">-5.6%</td>
+              <td>高毛利，但费用压制利润</td>
+            </tr>
+            <tr>
+              <td>金山办公</td>
+              <td>688111</td>
+              <td>2025年报</td>
+              <td>59.29 亿元</td>
+              <td class="number-pos">18.36 亿元</td>
+              <td>1112.09 亿元</td>
+              <td>毛利率 85.9%</td>
+              <td class="number-pos">15.2%</td>
+              <td>规模、盈利、平台力全面领先</td>
+            </tr>
+            <tr>
+              <td>福昕软件</td>
+              <td>688095</td>
+              <td>2025Q3</td>
+              <td>6.76 亿元</td>
+              <td>0.01 亿元</td>
+              <td>63.77 亿元</td>
+              <td>毛利率 89.8%</td>
+              <td>0.06%</td>
+              <td>利润薄但已接近盈亏平衡</td>
+            </tr>
+            <tr>
+              <td>昆仑万维</td>
+              <td>300418</td>
+              <td>2025Q3</td>
+              <td>58.05 亿元</td>
+              <td class="number-neg">-6.65 亿元</td>
+              <td>636.47 亿元</td>
+              <td>毛利率 69.9%</td>
+              <td class="number-neg">-4.75%</td>
+              <td>流量与 AI 故事强，但利润波动大</td>
+            </tr>
+            <tr>
+              <td>彩讯股份</td>
+              <td>300634</td>
+              <td>2025Q3</td>
+              <td>13.41 亿元</td>
+              <td class="number-pos">1.96 亿元</td>
+              <td>105.22 亿元</td>
+              <td>毛利率 35.4%</td>
+              <td class="number-pos">6.98%</td>
+              <td>规模接近，盈利兑现明显更强</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="chart-card">
+          <h3>规模对比：营收 vs 归母净利润</h3>
+          <div class="chart-box"><canvas id="peerScaleChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>质量对比：毛利率 vs ROE</h3>
+          <div class="chart-box"><canvas id="peerQualityChart"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>同行对比结论</h3>
+        <ul class="bullet-list">
+          <li><strong>相对金山办公：</strong>万兴在高毛利上接近，但规模、盈利性与资本回报差距非常明显，说明平台能力尚未转化为稳态财务优势。</li>
+          <li><strong>相对福昕软件：</strong>两者均为高毛利工具软件，但福昕已更接近盈亏平衡，万兴在市场投入换增长的压力更大。</li>
+          <li><strong>相对彩讯股份：</strong>营收体量接近，但彩讯利润兑现更强，意味着万兴的问题更多在费用效率而非单纯规模不足。</li>
+          <li><strong>相对昆仑万维：</strong>两者均有 AI 概念与全球化叙事，但万兴市值显著更小、业务更聚焦，若要支撑估值，必须更快证明商业化效率。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="strategy" class="section">
+      <div class="section-header">
+        <div class="section-badge">04</div>
+        <div>
+          <h2>战略分析模块</h2>
+          <div class="section-desc">行业空间、竞争格局与经营策略判断</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>行业分析</h3>
+          <p>数字创意工具与办公软件行业正处在“传统功能软件 → AI 生产力平台”的升级周期中。行业核心竞争点已从单点功能扩展为：内容生成能力、跨端分发、全球化获客效率与付费转化率。万兴所处赛道仍具备增长空间，但竞争也在加剧，头部平台与新兴 AI 工具正同时挤压中部厂商的定价与流量成本。</p>
+        </div>
+        <div class="card">
+          <h3>竞争格局</h3>
+          <p>万兴在品牌认知、全球化布局和视频创意工具矩阵上具备一定护城河，但在行业梯队中更偏“特色平台型公司”，而非压倒性龙头。相较金山办公这类成熟平台，其收入规模和利润厚度偏弱；相较纯工具厂商，其品牌和用户基础更强，但尚未充分体现平台化经营杠杆。</p>
+        </div>
+        <div class="card">
+          <h3>竞争策略判断</h3>
+          <p>结合 2025Q3 的费用结构看，万兴当前仍在执行<strong>市场驱动 + 技术升级并行</strong>的策略：高销售费用维持用户获取和品牌曝光，高研发费用押注产品迭代与 AI 化升级。该策略若转化为更高 ARPU 和更低获客成本，利润将有弹性；否则将继续压制净利率。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="accounting" class="section">
+      <div class="section-header">
+        <div class="section-badge">05</div>
+        <div>
+          <h2>会计分析模块</h2>
+          <div class="section-desc">重点看研发资本化、应收质量与资产结构风险</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>会计质量判断</h3>
+          <p>万兴科技的报表结构整体仍符合软件公司的典型特征，应收账款体量不高、存货风险较低，但需要重点关注<strong>开发支出、商誉和现金流质量</strong>三项指标：</p>
+          <ul class="bullet-list">
+            <li><strong>开发支出：</strong>截至 2025Q3 为 4232 万元，约占总资产 2.56%，绝对值不算夸张，但在利润承压背景下，仍需跟踪资本化是否掩盖当期费用压力。</li>
+            <li><strong>应收账款：</strong>7569 万元，占 2025Q3 营收约 6.63%，应收占比不高，应收天数约 16.6 天，整体可控。</li>
+            <li><strong>商誉：</strong>2.21 亿元，占总资产约 13.35%，在利润波动阶段，需关注未来是否存在减值测试压力。</li>
+            <li><strong>现金流：</strong>经营现金流转负，意味着利润与现金脱节正在放大，这比单纯会计口径亏损更值得警惕。</li>
+          </ul>
+        </div>
+        <div class="table-card">
+          <h3>关键会计指标</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>项目</th>
+                <th>指标</th>
+                <th>判断</th>
+                <th>备注</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>开发支出 / 总资产</td>
+                <td>2.56%</td>
+                <td>中性偏谨慎</td>
+                <td>资本化占比不高，但在亏损阶段需持续跟踪是否上升</td>
+              </tr>
+              <tr>
+                <td>应收账款 / 营业收入</td>
+                <td>6.63%</td>
+                <td>较健康</td>
+                <td>应收占比不高，回款压力暂不突出</td>
+              </tr>
+              <tr>
+                <td>商誉 / 总资产</td>
+                <td>13.35%</td>
+                <td>需关注</td>
+                <td>若利润持续低迷，未来存在减值敏感性</td>
+              </tr>
+              <tr>
+                <td>货币资金 / 流动负债</td>
+                <td>1.32x</td>
+                <td>尚可</td>
+                <td>短期偿债能力尚可，但若持续烧钱会被侵蚀</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="financials" class="section">
+      <div class="section-header">
+        <div class="section-badge">06</div>
+        <div>
+          <h2>财务分析模块</h2>
+          <div class="section-desc">盈利、成长、营运效率与现金流质量拆解</div>
+        </div>
+      </div>
+      <div class="metric-grid">
+        <div class="metric-tile">
+          <div class="k">销售费用率</div>
+          <div class="v">58.3%</div>
+          <div class="small muted">66558 万 / 11.42 亿，依旧偏高</div>
+        </div>
+        <div class="metric-tile">
+          <div class="k">研发费用率</div>
+          <div class="v">27.8%</div>
+          <div class="small muted">31767 万 / 11.42 亿，研发投入强</div>
+        </div>
+        <div class="metric-tile">
+          <div class="k">管理费用率</div>
+          <div class="v">13.3%</div>
+          <div class="small muted">15244 万 / 11.42 亿</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="chart-card">
+          <h3>收入与归母净利润趋势</h3>
+          <div class="chart-box"><canvas id="trendChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>毛利率、ROE 与经营现金流/营收</h3>
+          <div class="chart-box"><canvas id="qualityTrendChart"></canvas></div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>盈利能力</h3>
+          <p>2025Q3 毛利率 91.8%，较 2024Q3 的 93.7% 小幅下滑，但仍维持在很高水平，说明产品层面的盈利能力并未失效。问题在于费用端：销售费用 6.66 亿元、研发费用 3.18 亿元、管理费用 1.52 亿元，三费总额与毛利总额基本相互抵消，经营杠杆没有体现出来。</p>
+          <p>ROE 由 2024Q3 的 -0.42% 降至 2025Q3 的 -5.6%，显示股东资本回报明显恶化。对管理层而言，下一步真正需要证明的不是“还能不能增长”，而是“增长是否能带来利润释放”。</p>
+        </div>
+        <div class="card">
+          <h3>成长能力与营运效率</h3>
+          <p>营收同比增长 8.5%，表明公司收入端仍处恢复通道；但净利润同比恶化显示增长质量不足。应收账款周转天数约 16.6 天，高于 2024Q3 的约 13.1 天，回款效率略有走弱但整体仍在可控范围。总资产周转率由 2024Q3 的 0.64 提升至 2025Q3 的 0.72，说明资产使用效率并非主要问题，核心仍是费用端过重。</p>
+          <p>对于软件公司而言，真正的经营效率指标应是<strong>获客成本、续费率、ARPU 和 AI 功能带来的价格提升</strong>。现有公开财报未完全披露这些微观经营指标，因此我们只能从费用率和利润表现倒推：2025Q3 的获客/投入效率尚未看到明显改善。</p>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>现金流分析</h3>
+          <p>2025Q3 经营现金流净额为 -3754 万元，2024Q3 为 +722 万元；经营现金流/营收由 +0.69% 转为 -3.29%。这意味着即便从现金维度看，增长也没有带来同步改善。投资现金流净额 -1.10 亿元，叠加融资现金流净额 +1.61 亿元，说明公司在维持经营和投资的同时，也在借助外部或资本结构调整维持资金平衡。</p>
+          <div class="alert warning"><strong>判断：</strong>短期流动性不构成迫切风险，但如果未来几个季度经营现金流仍难转正，市场会更关注“资金消耗速度”而非“收入增速”。</div>
+        </div>
+        <div class="card">
+          <h3>杜邦式拆解</h3>
+          <p>ROE 恶化主要来自两点：第一，净利率转负并进一步下探；第二，资产周转率虽有改善，但不足以对冲利润端恶化。资产负债率约 33.5%，财务杠杆并不高，因此 ROE 的弱化不是资本结构问题，而是经营利润率问题。</p>
+          <div class="alert purple"><strong>经营含义：</strong>只要高毛利不能转化为净利润，万兴的估值逻辑就更偏“未来可选项”；而不是“当前经营兑现”。这也是资本市场对其分歧的根源。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="outlook" class="section">
+      <div class="section-header">
+        <div class="section-badge">07</div>
+        <div>
+          <h2>前景分析模块</h2>
+          <div class="section-desc">风险扫描、未来 4 个季度判断与估值含义</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>未来 4 个季度经营判断</h3>
+          <p>基于 2024 年报至 2025Q3 的财务轨迹，万兴未来 4 个季度最关键的变量不是收入增速本身，而是费用率是否出现实质性拐点。若公司能在维持中个位数至低双位数收入增长的同时，让销售费用率和研发费用率至少合计下降 3-5 个百分点，利润端将具备明显修复弹性；反之，公司仍将长期处于“高毛利但低兑现”的尴尬区间。</p>
+          <ul class="bullet-list">
+            <li><strong>乐观情形：</strong>AI 功能提升付费转化与客单价，费用率回落，2026 年利润修复明显。</li>
+            <li><strong>中性情形：</strong>收入保持温和增长，但销售投放维持高位，利润仅小幅改善。</li>
+            <li><strong>谨慎情形：</strong>AI 投入未改善商业化，现金流持续承压，估值进一步收缩。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>估值与战略建议</h3>
+          <p>截至报告撰写时，公司总市值约 131.8 亿元。对于仍处亏损阶段的软件公司，市场更倾向用<strong>收入成长 + 商业化验证 + 现金流改善</strong>来决定估值中枢。万兴若要提升市场信心，需要从“AI 叙事”转向“AI 驱动付费效率”的可验证结果。</p>
+          <div class="alert green"><strong>建议一：</strong>把管理重心放在销售费用率与续费/ARPU 的联动优化，而不是单纯追求下载量或收入规模。</div>
+          <div class="alert warning"><strong>建议二：</strong>研发投入要更多聚焦能形成提价与转化闭环的 AI 功能，减少“只做故事、不做回报”的投入。</div>
+          <div class="alert danger"><strong>建议三：</strong>明确资本市场沟通口径，把利润修复路径和现金流目标说清楚，否则高毛利优势难以获得估值溢价。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="risks" class="section">
+      <div class="section-header">
+        <div class="section-badge">08</div>
+        <div>
+          <h2>风险与结论</h2>
+          <div class="section-desc">短期重点风险与最终投资/经营判断</div>
+        </div>
+      </div>
+      <div class="risk-wrap">
+        <div class="risk-card">
+          <div class="risk-color" style="background: var(--accent-red);"></div>
+          <div>
+            <strong>费用率长期高位，利润修复不及预期</strong>
+            <p>公司收入增长已不能自然带来利润改善，若销售与研发投入无法更高效地转化为付费收入和留存，亏损可能延续更长时间。</p>
+          </div>
+          <div class="risk-tag risk-high">高</div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-color" style="background: var(--accent-gold);"></div>
+          <div>
+            <strong>AI 投入存在回报不确定性</strong>
+            <p>AI 化升级是正确方向，但若只提升研发与市场支出，而不能提升客单价、续费率和获客效率，则经营压力反而上升。</p>
+          </div>
+          <div class="risk-tag risk-mid">中高</div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-color" style="background: var(--accent-gold);"></div>
+          <div>
+            <strong>经营现金流转负带来估值敏感性</strong>
+            <p>对于高毛利软件公司，资本市场通常允许短期利润波动，但更难容忍持续现金流承压。若现金端迟迟不改善，估值弹性会被压缩。</p>
+          </div>
+          <div class="risk-tag risk-mid">中</div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-color" style="background: var(--accent-teal);"></div>
+          <div>
+            <strong>产品力与全球化基础仍是长期支撑</strong>
+            <p>公司高毛利、全球渠道和创意软件能力仍在，只要后续能够把 AI 能力转成可验证的商业化结果，利润弹性仍有修复空间。</p>
+          </div>
+          <div class="risk-tag risk-low">支撑项</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>最终结论</h3>
+        <p class="lead"><strong>截至 2025Q3，万兴科技是一家“产品力仍强、增长未断，但盈利与现金流质量偏弱”的高毛利软件公司。</strong></p>
+        <p>如果从管理层视角看，下一阶段最重要的任务不是继续证明“公司还能增长”，而是证明<strong>增长可以带来利润与现金流</strong>；如果从资本市场视角看，万兴当前的估值锚已经从“题材与空间”切换到“费用率拐点与商业化兑现”。</p>
+        <p><strong>一句话落地：</strong>万兴科技的问题不是卖不出去，而是暂时赚不到钱；而真正决定下一轮重估的，不是故事大小，而是盈利修复速度。</p>
+      </div>
+    </section>
+
+    <section id="sources" class="section">
+      <div class="section-header">
+        <div class="section-badge">09</div>
+        <div>
+          <h2>数据来源</h2>
+          <div class="section-desc">本报告使用的主要数据与口径说明</div>
+        </div>
+      </div>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>来源类型</th>
+              <th>来源</th>
+              <th>用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Primary</td>
+              <td>东方财富 PC_HSF10 新财务分析接口（万兴科技及可比公司）</td>
+              <td>营业收入、归母净利润、毛利率、ROE、经营现金流、资产负债表与利润表拆解</td>
+            </tr>
+            <tr>
+              <td>Secondary</td>
+              <td>万兴科技官网（公司概况、全球化与用户基础），同花顺股票页（公司页面结构核验）</td>
+              <td>公司业务定位、全球布局概况与辅助交叉检查</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>口径说明</h3>
+        <ul class="bullet-list">
+          <li>本报告核心财务口径截至 <strong>2025Q3（2025-09-30）</strong>。</li>
+          <li>同行对比采用各公司最新已抓取披露口径，其中金山办公为 2025 年报，其余可比公司以 2025Q3 为主，存在口径不完全一致的情况，已在表格中明确标示。</li>
+          <li>由于公开网页结构限制，部分会计分析与战略判断基于财报数据、公司官网信息及经营逻辑推演，不构成投资建议。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    数据来源：东方财富财务分析接口、公司官网、公开网页信息交叉整理｜报告生成：财务万晓生
+  </footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+
+    const textColor = '#e6edf3';
+    const subColor = '#8b949e';
+    const gridColor = 'rgba(255,255,255,0.07)';
+    const baseLabelOptions = {
+      color: textColor,
+      font: { weight: '700', size: 11 },
+      clamp: true
+    };
+
+    const barCommon = {
+      maintainAspectRatio: false,
+      layout: { padding: { top: 26, right: 8, left: 4, bottom: 0 } },
+      scales: {
+        x: {
+          ticks: { color: subColor, maxRotation: 0 },
+          grid: { color: 'rgba(255,255,255,0.03)' }
+        },
+        y: {
+          ticks: { color: subColor },
+          grid: { color: gridColor },
+          grace: '14%'
+        }
+      },
+      plugins: {
+        legend: { labels: { color: textColor } },
+        datalabels: {
+          ...baseLabelOptions,
+          anchor: 'end',
+          align: 'top',
+          offset: 4,
+          formatter: (v) => v
+        },
+        tooltip: {
+          backgroundColor: '#111827',
+          titleColor: '#fff',
+          bodyColor: '#dbe7f3',
+          borderColor: 'rgba(255,255,255,.12)',
+          borderWidth: 1
+        }
+      }
+    };
+
+    new Chart(document.getElementById('businessModelChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['视频与创意工具', '文档/绘图效率', '全球线上分发', 'AI 功能增值'],
+        datasets: [{
+          data: [42, 18, 25, 15],
+          backgroundColor: ['#58a6ff', '#39d0c8', '#bc8cff', '#d29922'],
+          borderWidth: 0,
+          hoverOffset: 10,
+          spacing: 3,
+          cutout: '54%',
+          radius: '92%'
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        rotation: -110,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: textColor, padding: 16 } },
+          datalabels: {
+            ...baseLabelOptions,
+            formatter: (v) => v + '%'
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('peerScaleChart'), {
+      type: 'bar',
+      data: {
+        labels: ['万兴科技', '金山办公', '福昕软件', '昆仑万维', '彩讯股份'],
+        datasets: [
+          { label: '营收（亿元）', data: [11.42, 59.29, 6.76, 58.05, 13.41], backgroundColor: '#58a6ff' },
+          { label: '归母净利润（亿元）', data: [-0.62, 18.36, 0.01, -6.65, 1.96], backgroundColor: '#39d0c8' }
+        ]
+      },
+      options: {
+        ...barCommon,
+        plugins: {
+          ...barCommon.plugins,
+          datalabels: {
+            ...baseLabelOptions,
+            anchor: (ctx) => (ctx.dataset.data[ctx.dataIndex] >= 0 ? 'end' : 'start'),
+            align: (ctx) => (ctx.dataset.data[ctx.dataIndex] >= 0 ? 'top' : 'bottom'),
+            offset: 4,
+            clamp: true,
+            formatter: (v) => v.toFixed(2)
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('peerQualityChart'), {
+      type: 'bar',
+      data: {
+        labels: ['万兴科技', '金山办公', '福昕软件', '昆仑万维', '彩讯股份'],
+        datasets: [
+          { label: '毛利率（%）', data: [91.8, 85.9, 89.8, 69.9, 35.4], backgroundColor: '#d29922' },
+          { label: 'ROE（%）', data: [-5.6, 15.2, 0.06, -4.75, 6.98], backgroundColor: '#bc8cff' }
+        ]
+      },
+      options: {
+        ...barCommon,
+        plugins: {
+          ...barCommon.plugins,
+          datalabels: {
+            ...baseLabelOptions,
+            anchor: (ctx) => (ctx.dataset.data[ctx.dataIndex] >= 0 ? 'end' : 'start'),
+            align: (ctx) => (ctx.dataset.data[ctx.dataIndex] >= 0 ? 'top' : 'bottom'),
+            offset: 4,
+            clamp: true,
+            formatter: (v) => v.toFixed(2)
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('trendChart'), {
+      data: {
+        labels: ['2023年报', '2024一季报', '2024中报', '2024三季报', '2024年报', '2025一季报', '2025中报', '2025三季报'],
+        datasets: [
+          {
+            type: 'bar',
+            label: '营收（亿元）',
+            data: [14.81, 3.58, 7.05, 10.53, 14.40, 3.80, 7.60, 11.42],
+            backgroundColor: '#58a6ff'
+          },
+          {
+            type: 'line',
+            label: '归母净利润（亿元）',
+            data: [0.86, 0.26, 0.24, -0.05, -1.63, -0.33, -0.53, -0.62],
+            borderColor: '#39d0c8',
+            backgroundColor: '#39d0c8',
+            yAxisID: 'y1',
+            tension: 0.28,
+            pointRadius: 4,
+            pointHoverRadius: 5
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        layout: { padding: { top: 24 } },
+        scales: {
+          x: { ticks: { color: subColor }, grid: { color: 'rgba(255,255,255,0.03)' } },
+          y: {
+            ticks: { color: subColor },
+            grid: { color: gridColor },
+            grace: '14%',
+            title: { display: true, text: '营收（亿元）', color: subColor }
+          },
+          y1: {
+            position: 'right',
+            ticks: { color: subColor },
+            grid: { drawOnChartArea: false },
+            grace: '14%',
+            title: { display: true, text: '归母净利润（亿元）', color: subColor }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: textColor } },
+          datalabels: {
+            color: textColor,
+            font: { weight: '700', size: 10 },
+            formatter: (v, ctx) => ctx.dataset.type === 'line' ? v.toFixed(2) : v.toFixed(2),
+            anchor: 'end',
+            align: 'top',
+            offset: 4,
+            clamp: true
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('qualityTrendChart'), {
+      data: {
+        labels: ['2023三季报', '2024三季报', '2025三季报'],
+        datasets: [
+          {
+            type: 'bar',
+            label: '毛利率（%）',
+            data: [95.19, 93.72, 91.77],
+            backgroundColor: '#d29922'
+          },
+          {
+            type: 'line',
+            label: 'ROE（%）',
+            data: [6.16, -0.42, -5.60],
+            borderColor: '#bc8cff',
+            backgroundColor: '#bc8cff',
+            yAxisID: 'y1',
+            tension: 0.25,
+            pointRadius: 4
+          },
+          {
+            type: 'line',
+            label: '经营现金流/营收（%）',
+            data: [11.40, 0.69, -3.29],
+            borderColor: '#39d0c8',
+            backgroundColor: '#39d0c8',
+            yAxisID: 'y1',
+            tension: 0.25,
+            pointRadius: 4
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        layout: { padding: { top: 24 } },
+        scales: {
+          x: { ticks: { color: subColor }, grid: { color: 'rgba(255,255,255,0.03)' } },
+          y: {
+            ticks: { color: subColor },
+            grid: { color: gridColor },
+            grace: '12%',
+            title: { display: true, text: '毛利率（%）', color: subColor }
+          },
+          y1: {
+            position: 'right',
+            ticks: { color: subColor },
+            grid: { drawOnChartArea: false },
+            grace: '18%',
+            title: { display: true, text: 'ROE / OCF占营收（%）', color: subColor }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: textColor } },
+          datalabels: {
+            color: textColor,
+            font: { weight: '700', size: 10 },
+            anchor: 'end',
+            align: 'top',
+            offset: 4,
+            clamp: true,
+            formatter: (v) => v.toFixed(2)
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
