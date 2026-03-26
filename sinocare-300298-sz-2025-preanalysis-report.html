@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>三诺生物（300298.SZ）2025预分析财务报告</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top right, rgba(88,166,255,.12), transparent 22%), var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); }
+    .hero, .summary-strip, .nav-bar, .container, .footer {
+      width: min(1320px, calc(100% - 32px));
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero {
+      margin-top: 24px;
+      padding: 36px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #0f172a 0%, #111827 45%, #0d1117 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(88,166,255,.18), transparent 70%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: #bfd7ff;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.18;
+      letter-spacing: .2px;
+    }
+    .hero p {
+      margin: 14px 0 0;
+      max-width: 980px;
+      color: #c9d1d9;
+      font-size: 16px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap: 20px;
+      align-items: end;
+    }
+    .hero-side {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-side .metric-label { color: var(--text-secondary); font-size: 13px; }
+    .hero-side .metric-value { font-size: 28px; font-weight: 800; margin-top: 6px; }
+    .hero-side .metric-sub { font-size: 13px; color: #ffd699; }
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .summary-card, .section, .card, .chart-card, .table-card, .risk-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .summary-card {
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 118px;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: var(--card-accent, var(--accent));
+    }
+    .summary-card .label { color: var(--text-secondary); font-size: 13px; }
+    .summary-card .value { margin-top: 10px; font-size: 28px; font-weight: 800; }
+    .summary-card .sub { margin-top: 8px; color: var(--text-muted); font-size: 13px; }
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(13,17,23,.8);
+      padding: 12px 0;
+      margin-top: 18px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-links { display: flex; gap: 10px; overflow: auto; padding-bottom: 2px; }
+    .nav-links a {
+      white-space: nowrap;
+      color: var(--text-secondary);
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav-links a:hover { color: var(--text-primary); background: rgba(88,166,255,.14); }
+    .container { margin-top: 24px; margin-bottom: 48px; }
+    .section { padding: 24px; margin-bottom: 20px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .section-badge {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #58a6ff 0%, #1f6feb 100%);
+      color: white;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+    .section-header h2 { margin: 0; font-size: 24px; }
+    .section-desc { color: var(--text-secondary); font-size: 14px; margin-top: 2px; }
+    .grid-2, .grid-3, .grid-4 { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card, .chart-card, .table-card { padding: 18px; }
+    .card h3, .chart-card h3, .table-card h3 { margin: 0 0 10px; font-size: 18px; }
+    .muted { color: var(--text-secondary); }
+    .small { font-size: 13px; }
+    .lead {
+      font-size: 17px;
+      color: #dbe7f3;
+      margin-top: 0;
+    }
+    .bullet-list { margin: 0; padding-left: 18px; }
+    .bullet-list li { margin-bottom: 10px; }
+    .alert {
+      border-left: 4px solid var(--accent);
+      background: rgba(255,255,255,.03);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+    .alert.green { border-color: var(--accent-green); }
+    .alert.warning { border-color: var(--accent-gold); }
+    .alert.danger { border-color: var(--accent-red); }
+    .alert.purple { border-color: var(--accent-purple); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .chip {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      color: #c8d5e3;
+      border: 1px solid rgba(255,255,255,.06);
+      font-size: 13px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th {
+      color: #c4d2de;
+      font-size: 13px;
+      background: rgba(255,255,255,.03);
+    }
+    tbody tr:nth-child(odd) { background: rgba(255,255,255,.015); }
+    tbody tr:hover { background: rgba(88,166,255,.06); }
+    .chart-box { height: 330px; position: relative; }
+    .chart-box.tall { height: 380px; }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .metric-tile {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .metric-tile .k { color: var(--text-secondary); font-size: 13px; }
+    .metric-tile .v { margin-top: 8px; font-size: 22px; font-weight: 800; }
+    .risk-wrap { display: grid; gap: 14px; }
+    .risk-card {
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      gap: 16px;
+      padding: 18px;
+      align-items: start;
+    }
+    .risk-color { border-radius: 999px; min-height: 100%; }
+    .risk-tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      align-self: start;
+    }
+    .risk-high { background: rgba(248,81,73,.12); color: #ffb3ad; }
+    .risk-mid { background: rgba(210,153,34,.12); color: #ffd38a; }
+    .risk-low { background: rgba(63,185,80,.12); color: #9be9a8; }
+    .footer {
+      padding: 8px 0 48px;
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 13px;
+    }
+    @media (max-width: 1100px) {
+      .summary-strip, .grid-3, .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-2, .hero-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .summary-strip, .grid-3, .grid-4, .metric-grid { grid-template-columns: 1fr; }
+      .hero, .section, .card, .chart-card, .table-card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">📊 财务万晓生 · 预分析口径 · A股医疗器械</div>
+        <h1>三诺生物（300298.SZ）2025预分析财务报告</h1>
+        <p>核心结论：三诺生物 2025 年前三季度呈现“收入修复、利润承压、现金流改善”的组合。血糖监测主业仍有韧性，但利润端受毛利率下行、海外业务整合及费用结构拖累，若四季度未出现明显改善，全年利润大概率低于 2024 年。</p>
+      </div>
+      <div class="hero-side">
+        <div class="metric-label">报告口径说明</div>
+        <div class="metric-value">2025 预分析版</div>
+        <div class="metric-sub">基于 2025Q1-Q3 已披露数据 + 2024 年报历史口径；截至出稿时未检索到正式 2025 年年度报告</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="summary-card" style="--card-accent: var(--accent)">
+      <div class="label">2025Q1-Q3 营业收入</div>
+      <div class="value">34.53 亿元</div>
+      <div class="sub">较 2024Q1-Q3 同比增长约 8.52%</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-green)">
+      <div class="label">2025Q1-Q3 归母净利润</div>
+      <div class="value">1.53 亿元</div>
+      <div class="sub">利润弹性弱于收入修复</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-gold)">
+      <div class="label">毛利率</div>
+      <div class="value">48.91%</div>
+      <div class="sub">较上年同期明显回落</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-teal)">
+      <div class="label">经营现金流</div>
+      <div class="value">3.55 亿元</div>
+      <div class="sub">净利润现金含量约 254.61%</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-purple)">
+      <div class="label">ROE（加权）</div>
+      <div class="value">6.28%</div>
+      <div class="sub">股东回报较上年同期走弱</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-red)">
+      <div class="label">风险等级</div>
+      <div class="value">中高</div>
+      <div class="sub">利润承压 + 海外整合 + 竞争加剧</div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <div class="nav-links">
+      <a href="#summary">执行摘要</a>
+      <a href="#overview">公司概况</a>
+      <a href="#peers">同行业对比</a>
+      <a href="#strategy">战略分析</a>
+      <a href="#accounting">会计分析</a>
+      <a href="#financials">财务分析</a>
+      <a href="#outlook">前景分析</a>
+      <a href="#risks">风险与结论</a>
+      <a href="#sources">数据来源</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="summary" class="section">
+      <div class="section-header">
+        <div class="section-badge">01</div>
+        <div>
+          <h2>执行摘要</h2>
+          <div class="section-desc">结论前置，按管理层阅读方式压缩表达</div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="lead">三诺生物 2025 年前三季度最大的变化，不是收入不增长，而是<strong>利润没有跟上收入修复</strong>。公司营收已恢复正增长，但营业利润同比仍明显下滑，显示价格体系、产品结构、海外业务整合和费用刚性对利润端形成较强挤压。</p>
+        <div class="alert green"><strong>核心判断：</strong>主业需求仍在、收入修复已出现，但 2025 年的经营主线不是“高增长”，而是“修复中的利润再平衡”。</div>
+        <div class="alert warning"><strong>可持续性判断：</strong>如果 CGM/POCT 新品放量、美国子公司经营扰动收敛，则 2026 年利润率存在修复空间；但若仍依赖中低端血糖监测耗材出货，利润恢复节奏可能继续慢于收入。</div>
+        <div class="alert danger"><strong>首要风险：</strong>毛利率已降至 48.91%，若价格竞争继续加剧、海外业务费用率维持高位，则 2025 全年归母净利润或显著低于 2024 年。</div>
+        <div class="chip-row">
+          <div class="chip">收入修复：已确认</div>
+          <div class="chip">利润修复：未确认</div>
+          <div class="chip">现金流：明显改善</div>
+          <div class="chip">估值锚点：等待年报验证</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="section-header">
+        <div class="section-badge">02</div>
+        <div>
+          <h2>公司概况</h2>
+          <div class="section-desc">血糖监测龙头之一，逐步从 BGM 向 CGM/POCT 延展</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <p>三诺生物是国内家用血糖监测与糖尿病管理领域的重要企业，核心产品覆盖血糖仪、血糖试条、持续葡萄糖监测（CGM）及部分 POCT 相关业务，并通过海外平台拓展国际市场。公司经营特征决定了其财务表现高度受<strong>耗材出货、价格体系、渠道结构、海外整合效率</strong>影响。</p>
+          <p>从商业模式看，三诺生物本质上仍属于“设备切入 + 耗材复购”的慢变量消费型医疗器械公司，优点是现金流有改善空间，缺点是价格竞争与渠道费用会直接吞噬利润率。2025 年前三季度的表现，正体现出这一本质。</p>
+          <div class="metric-grid">
+            <div class="metric-tile"><div class="k">业务关键词</div><div class="v">BGM / CGM / POCT</div></div>
+            <div class="metric-tile"><div class="k">市场属性</div><div class="v">A股医疗器械</div></div>
+            <div class="metric-tile"><div class="k">经营阶段</div><div class="v">修复与再平衡期</div></div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>2025Q3 财务结构关注点</h3>
+          <div class="chart-box"><canvas id="focusMixChart"></canvas></div>
+          <div class="small muted">说明：该图不是收入拆分，而是当前经营关注重点权重示意，用于管理层阅读排序。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="peers" class="section">
+      <div class="section-header">
+        <div class="section-badge">03</div>
+        <div>
+          <h2>同行业对比</h2>
+          <div class="section-desc">按用户偏好，默认对比 3 家可比公司</div>
+        </div>
+      </div>
+      <div class="card">
+        <p>本报告选择<strong>鱼跃医疗（002223.SZ）</strong>、<strong>可孚医疗（301087.SZ）</strong>、<strong>乐普医疗（300003.SZ）</strong>作为可比组。虽然三者在产品谱系上并不完全一致，但都位于 A 股医疗器械赛道，且在家用医疗、慢病管理、渠道覆盖与费用投放效率上具有横向参照价值。</p>
+        <div class="alert green"><strong>行业位置结论：</strong>三诺生物当前不属于盈利质量最强的一组。与鱼跃、可孚相比，三诺的现金回款表现并不差，但毛利率与短期偿债安全边际偏弱；与乐普相比，三诺资产更轻、存货周转更快，但高毛利高壁垒不足，利润率修复难度更大。</div>
+      </div>
+      <div class="table-card" style="margin-top:16px;">
+        <h3>2025Q3 关键指标横向对比</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>公司</th>
+              <th>代码</th>
+              <th>毛利率</th>
+              <th>营业利润增速</th>
+              <th>存货周转率</th>
+              <th>净利润现金含量</th>
+              <th>流动比率</th>
+              <th>定位判断</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>三诺生物</td>
+              <td>300298.SZ</td>
+              <td>48.91%</td>
+              <td>-45.01%</td>
+              <td>2.51</td>
+              <td>254.61%</td>
+              <td>1.43</td>
+              <td>收入修复但利润承压，现金流改善优于利润表</td>
+            </tr>
+            <tr>
+              <td>鱼跃医疗</td>
+              <td>002223.SZ</td>
+              <td>50.35%</td>
+              <td>-3.89%</td>
+              <td>2.43</td>
+              <td>102.55%</td>
+              <td>3.69</td>
+              <td>盈利韧性与资产负债表安全边际更强</td>
+            </tr>
+            <tr>
+              <td>可孚医疗</td>
+              <td>301087.SZ</td>
+              <td>53.35%</td>
+              <td>2.39%</td>
+              <td>1.71</td>
+              <td>226.73%</td>
+              <td>2.38</td>
+              <td>利润端稳于三诺，但周转效率略慢</td>
+            </tr>
+            <tr>
+              <td>乐普医疗</td>
+              <td>300003.SZ</td>
+              <td>64.21%</td>
+              <td>—</td>
+              <td>0.86</td>
+              <td>103.12%</td>
+              <td>1.89</td>
+              <td>高毛利平台型公司，业务结构与三诺差异较大</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="chart-card">
+          <h3>同行毛利率对比</h3>
+          <div class="chart-box"><canvas id="peerMarginChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>同行现金含量与周转效率对比</h3>
+          <div class="chart-box"><canvas id="peerCashChart"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="strategy" class="section">
+      <div class="section-header">
+        <div class="section-badge">04</div>
+        <div>
+          <h2>战略分析模块</h2>
+          <div class="section-desc">行业、竞争格局与竞争策略</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>行业分析</h3>
+          <p>糖尿病管理需求具备长期刚性，血糖监测仍是高频耗材场景。行业竞争核心正在从“单纯卖设备”转向“设备 + 耗材 + 数据管理 + CGM 升级”。这意味着单纯依赖传统血糖试条放量，难以持续支撑估值与利润率。</p>
+        </div>
+        <div class="card">
+          <h3>竞争格局</h3>
+          <p>国内市场已从粗放扩张转向品牌、渠道和产品迭代的综合竞争。鱼跃在品牌与渠道上更稳，可孚在电商与家用医疗运营上更灵活，乐普依托更广的平台型器械能力享受更高毛利。三诺的护城河并非最宽，但在细分糖尿病管理上仍有较深客户基础。</p>
+        </div>
+        <div class="card">
+          <h3>竞争策略判断</h3>
+          <p>三诺当前更接近<strong>“市场驱动向产品驱动过渡”</strong>的阶段：一方面需要维持渠道与耗材出货，另一方面又要投入 CGM/海外平台建设。其经营含义是：短期利润容易被费用与结构切换稀释，中期取决于新品是否真正抬升单用户价值与毛利率。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="accounting" class="section">
+      <div class="section-header">
+        <div class="section-badge">05</div>
+        <div>
+          <h2>会计分析模块</h2>
+          <div class="section-desc">关注利润质量，而非只看报表表面增减</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <p>就预分析口径看，三诺生物 2025 年最值得关注的不是确认收入本身，而是<strong>利润质量与现金流质量出现背离</strong>。一方面，经营现金流显著改善，净利润现金含量达到 254.61%，说明回款端并未同步恶化；另一方面，营业利润同比大幅下滑，意味着盈利能力的侵蚀更可能来自毛利率和费用结构，而不是简单坏账风险。</p>
+          <p>这类报表组合通常有两层含义：其一，公司销售回款尚可、渠道未失控；其二，利润表承压更偏经营结构问题而非纯粹现金流问题。对于管理层而言，这反而意味着修复路径更明确——重点不在“保住收入”，而在“重建盈利结构”。</p>
+          <div class="alert purple"><strong>会计风险提示：</strong>正式年报尚未披露，研发资本化、海外资产减值、商誉及一次性项目仍需等 2025 年报落地后才能做最终判断。</div>
+        </div>
+        <div class="table-card">
+          <h3>会计视角重点判断</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>项目</th>
+                <th>当前判断</th>
+                <th>经营含义</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>收入确认质量</td>
+                <td>中性偏稳</td>
+                <td>现金含量改善，说明收入并未明显依赖激进确认</td>
+              </tr>
+              <tr>
+                <td>利润质量</td>
+                <td>偏弱</td>
+                <td>利润增速显著弱于收入增速，结构性承压较明显</td>
+              </tr>
+              <tr>
+                <td>研发资本化/减值</td>
+                <td>待年报确认</td>
+                <td>需重点看 CGM/海外相关资产科目变化</td>
+              </tr>
+              <tr>
+                <td>资产负债表压力</td>
+                <td>可控但不宽松</td>
+                <td>流动比率 1.43、速动比率 0.91，安全边际不算充裕</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="financials" class="section">
+      <div class="section-header">
+        <div class="section-badge">06</div>
+        <div>
+          <h2>财务分析模块</h2>
+          <div class="section-desc">看增长、盈利、效率与现金流是否同向</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="chart-card">
+          <h3>2025 累计收入与利润走势</h3>
+          <div class="chart-box"><canvas id="trendChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>核心财务质量指标</h3>
+          <div class="chart-box"><canvas id="qualityChart"></canvas></div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>盈利能力</h3>
+          <ul class="bullet-list">
+            <li>2025Q1-Q3 营收 34.53 亿元，同比增长约 8.52%，说明主业需求未失速。</li>
+            <li>但营业利润增速约为 -45.01%，利润表现远弱于收入，反映出毛利率和费用结构承压。</li>
+            <li>毛利率 48.91%，在医疗器械里不算差，但已明显低于高毛利平台型公司，也低于部分可比公司。</li>
+            <li>ROE（加权）6.28%，回报股东能力走弱，表明现阶段经营质量尚未恢复到高质量增长状态。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>营运效率与现金流</h3>
+          <ul class="bullet-list">
+            <li>存货周转率 2.51，高于乐普、略高于鱼跃，说明产品周转效率尚可。</li>
+            <li>资产负债率约 41.19%，并不失控，但高于鱼跃与乐普，杠杆舒适度一般。</li>
+            <li>经营现金流约 3.55 亿元，净利润现金含量达到 254.61%，现金回款质量明显强于利润表表现。</li>
+            <li>流动比率 1.43、速动比率 0.91，意味着短期偿债能力处于可控但不宽裕状态。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="table-card" style="margin-top:18px;">
+        <h3>关键指标拆解</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>指标</th>
+              <th>2025Q1-Q3</th>
+              <th>判断</th>
+              <th>经营含义</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>营业收入</td>
+              <td>34.53 亿元</td>
+              <td>修复</td>
+              <td>主业需求与渠道仍有韧性</td>
+            </tr>
+            <tr>
+              <td>归母净利润</td>
+              <td>1.53 亿元</td>
+              <td>承压</td>
+              <td>利润恢复速度显著慢于收入</td>
+            </tr>
+            <tr>
+              <td>毛利率</td>
+              <td>48.91%</td>
+              <td>走弱</td>
+              <td>产品结构与价格竞争压力显现</td>
+            </tr>
+            <tr>
+              <td>经营现金流/净利润</td>
+              <td>2.32x</td>
+              <td>较强</td>
+              <td>回款质量优于账面利润质量</td>
+            </tr>
+            <tr>
+              <td>存货周转率</td>
+              <td>2.51</td>
+              <td>尚可</td>
+              <td>库存管理未明显失控</td>
+            </tr>
+            <tr>
+              <td>流动比率 / 速动比率</td>
+              <td>1.43 / 0.91</td>
+              <td>中性偏弱</td>
+              <td>短债安全边际不高</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="outlook" class="section">
+      <div class="section-header">
+        <div class="section-badge">07</div>
+        <div>
+          <h2>前景分析模块</h2>
+          <div class="section-desc">不是给答案，而是给决策框架</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>2025 全年预判</h3>
+          <p>基于前三季度披露数据，三诺生物 2025 年全年更可能呈现“<strong>收入小幅增长、利润同比下行</strong>”格局。若四季度维持前三季度平均节奏，则全年营业收入大概率落在 <strong>45–46 亿元</strong> 区间，归母净利润大概率落在 <strong>2.0–2.3 亿元</strong> 区间，显著低于 2024 年利润水平的概率较高。</p>
+          <p>真正决定 2026 年斜率的，不是四季度单季收入，而是利润率能否企稳：如果新品占比提升、海外扰动收敛，利润率修复将带来估值重定价；如果价格竞争延续，则公司可能继续停留在“有收入、低利润”的阶段。</p>
+        </div>
+        <div class="card">
+          <h3>战略建议</h3>
+          <ul class="bullet-list">
+            <li><strong>经营层面：</strong>优先修复毛利率，而不是单纯追求收入扩张。</li>
+            <li><strong>产品层面：</strong>加快 CGM 与更高附加值产品对传统耗材业务的替代。</li>
+            <li><strong>海外层面：</strong>重点跟踪美国平台整合、一次性费用扰动与库存健康度。</li>
+            <li><strong>资本市场层面：</strong>2025 年估值更适合锚定“2026 利润修复预期”，而非 2025 静态利润。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="risks" class="section">
+      <div class="section-header">
+        <div class="section-badge">08</div>
+        <div>
+          <h2>风险与结论</h2>
+          <div class="section-desc">需要重点盯的不是营收，而是利润率与结构</div>
+        </div>
+      </div>
+      <div class="risk-wrap">
+        <div class="risk-card">
+          <div class="risk-color" style="background:#f85149;"></div>
+          <div>
+            <strong>毛利率继续下行</strong>
+            <p class="muted">若传统血糖监测业务价格竞争加剧，而新品无法快速提升结构，利润端会继续弱于收入端。</p>
+          </div>
+          <div class="risk-tag risk-high">高</div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-color" style="background:#d29922;"></div>
+          <div>
+            <strong>海外业务整合扰动</strong>
+            <p class="muted">美国平台及海外渠道若仍存在费用率、库存或合规扰动，将继续拖累合并报表利润。</p>
+          </div>
+          <div class="risk-tag risk-mid">中</div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-color" style="background:#39d0c8;"></div>
+          <div>
+            <strong>现金流与利润背离收敛失败</strong>
+            <p class="muted">当前现金流优于利润表是积极信号，但若后续不能转化为利润修复，则说明结构性问题更深。</p>
+          </div>
+          <div class="risk-tag risk-mid">中</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:18px;">
+        <h3>最终结论</h3>
+        <p>站在管理层视角，三诺生物 2025 年不宜简单定义为“业绩回暖”或“业绩恶化”，更准确的表述是：<strong>收入端已修复，但利润端仍在重建</strong>。公司并未失去经营基础，现金流也在改善，但高质量增长尚未重新建立。若你关注的是经营韧性，三诺仍具备观察价值；若你关注的是利润拐点，则需要等正式 2025 年报确认毛利率、海外整合与费用率是否见顶。</p>
+      </div>
+    </section>
+
+    <section id="sources" class="section">
+      <div class="section-header">
+        <div class="section-badge">09</div>
+        <div>
+          <h2>数据来源</h2>
+          <div class="section-desc">采用固定数据源少搜版流程</div>
+        </div>
+      </div>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>来源类型</th>
+              <th>来源</th>
+              <th>用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Primary</td>
+              <td>同花顺 F10 财务页（300298、002223、301087、300003）</td>
+              <td>提取 2025Q3 关键财务指标、诊断指标与多公司横向比较口径</td>
+            </tr>
+            <tr>
+              <td>Secondary</td>
+              <td>东方财富 PC_HSF10 财务分析页 + 巨潮资讯检索确认</td>
+              <td>交叉核验公司主体与报告披露状态；确认当前为“预分析”而非正式年报解读</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="alert warning" style="margin-top:16px;"><strong>口径说明：</strong>本报告不是对正式 2025 年年度报告的解读，而是基于截至出稿时已可验证的 2025Q1-Q3 数据所做的“全年预分析”。正式 2025 年报披露后，利润质量、研发资本化、资产减值及海外业务整合影响仍需二次校正。</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">财务万晓生 · 数据说话，逻辑服人 · 报告口径：2025 预分析版</footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+
+    const textColor = '#e6edf3';
+    const subText = '#8b949e';
+    const gridColor = 'rgba(255,255,255,0.06)';
+    const labelOpts = {
+      color: textColor,
+      font: { weight: '600', size: 11 },
+      clamp: true
+    };
+
+    new Chart(document.getElementById('focusMixChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['利润修复', '海外整合', '新品升级', '现金流质量'],
+        datasets: [{
+          data: [34, 24, 22, 20],
+          backgroundColor: ['#f85149', '#58a6ff', '#bc8cff', '#39d0c8'],
+          borderWidth: 0,
+          hoverOffset: 8,
+          spacing: 3,
+          cutout: '58%'
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: textColor } },
+          datalabels: { ...labelOpts, formatter: (v) => v + '%' }
+        }
+      }
+    });
+
+    const barCommon = {
+      maintainAspectRatio: false,
+      layout: { padding: { top: 28 } },
+      scales: {
+        x: { ticks: { color: subText }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        y: { ticks: { color: subText }, grid: { color: gridColor }, grace: '15%' }
+      },
+      plugins: {
+        legend: { labels: { color: textColor } },
+        datalabels: { ...labelOpts, anchor: 'end', align: 'top', offset: 4 }
+      }
+    };
+
+    new Chart(document.getElementById('peerMarginChart'), {
+      type: 'bar',
+      data: {
+        labels: ['三诺生物', '鱼跃医疗', '可孚医疗', '乐普医疗'],
+        datasets: [{
+          label: '毛利率（%）',
+          data: [48.91, 50.35, 53.35, 64.21],
+          backgroundColor: ['#58a6ff', '#39d0c8', '#bc8cff', '#d29922']
+        }]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('peerCashChart'), {
+      type: 'bar',
+      data: {
+        labels: ['三诺生物', '鱼跃医疗', '可孚医疗', '乐普医疗'],
+        datasets: [
+          {
+            label: '净利润现金含量（%）',
+            data: [254.61, 102.55, 226.73, 103.12],
+            backgroundColor: '#39d0c8'
+          },
+          {
+            label: '存货周转率',
+            data: [2.51, 2.43, 1.71, 0.86],
+            backgroundColor: '#bc8cff'
+          }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('trendChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2025Q1', '2025H1', '2025Q1-Q3'],
+        datasets: [
+          {
+            label: '累计营业收入（亿元）',
+            data: [10.42, 22.64, 34.53],
+            backgroundColor: '#58a6ff'
+          },
+          {
+            label: '累计归母净利润（亿元）',
+            data: [0.81, 1.82, 1.53],
+            backgroundColor: '#39d0c8'
+          }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('qualityChart'), {
+      type: 'bar',
+      data: {
+        labels: ['毛利率', 'ROE', '资产负债率', '流动比率', '速动比率'],
+        datasets: [{
+          label: '2025Q3 关键质量指标',
+          data: [48.91, 6.28, 41.19, 1.43, 0.91],
+          backgroundColor: ['#d29922', '#bc8cff', '#f85149', '#58a6ff', '#39d0c8']
+        }]
+      },
+      options: barCommon
+    });
+  </script>
+</body>
+</html>
