@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中联重科（000157.SZ）2025Q3财务分析报告</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0d1117; --bg-secondary: #161b22; --bg-card: #1c2128; --border: #30363d;
+      --text-primary: #e6edf3; --text-secondary: #8b949e; --text-muted: #6e7681;
+      --accent: #58a6ff; --accent-green: #3fb950; --accent-red: #f85149; --accent-gold: #d29922;
+      --accent-purple: #bc8cff; --accent-teal: #39d0c8; --shadow: 0 10px 30px rgba(0,0,0,0.28);
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:'Noto Sans SC',system-ui,sans-serif;background:linear-gradient(180deg,#0b0f14 0%,#0d1117 100%);color:var(--text-primary);line-height:1.7}
+    a{color:var(--accent);text-decoration:none}
+    .hero,.summary-strip,.nav-bar .nav-inner,.container,.footer{width:min(1280px,calc(100% - 32px));margin-left:auto;margin-right:auto}
+    .hero{margin-top:24px;padding:34px;border-radius:24px;background:radial-gradient(circle at top right,rgba(88,166,255,.22),transparent 26%),linear-gradient(135deg,#0f172a 0%,#0d1117 55%,#111827 100%);border:1px solid rgba(255,255,255,.06);box-shadow:var(--shadow)}
+    .eyebrow{display:inline-flex;padding:6px 12px;border-radius:999px;background:rgba(88,166,255,.12);color:#9ecbff;font-size:13px}
+    h1{margin:14px 0 10px;font-size:36px;line-height:1.2}.subtitle{margin:0;color:var(--text-secondary)}
+    .hero-meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}.pill{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.05);color:var(--text-secondary);font-size:13px;border:1px solid rgba(255,255,255,.06)}
+    .summary-strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin-top:18px}
+    .summary-card,.section,.card,.chart-card,.table-card,.risk-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:18px;box-shadow:var(--shadow)}
+    .summary-card{padding:16px;position:relative;overflow:hidden}.summary-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--card-accent,var(--accent))}
+    .summary-label{font-size:12px;color:var(--text-muted);margin-bottom:8px}.summary-value{font-size:26px;font-weight:700;margin-bottom:6px}.summary-change{font-size:12px;color:var(--text-secondary)}
+    .nav-bar{position:sticky;top:0;z-index:12;backdrop-filter:blur(12px);background:rgba(13,17,23,.76);margin-top:18px;border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-inner{display:flex;gap:10px;overflow:auto;padding:12px 0}.nav-link{white-space:nowrap;color:var(--text-secondary);padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.04)}
+    .nav-link:hover{color:var(--text-primary);background:rgba(88,166,255,.08)}
+    .container{margin-top:24px;margin-bottom:48px}.section{padding:24px;margin-bottom:20px;background:rgba(22,27,34,.76)}
+    .section-header{display:flex;gap:12px;align-items:center;margin-bottom:16px}.section-badge{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#58a6ff 0%,#1f6feb 100%);font-weight:700;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 6px 18px rgba(31,111,235,.25)}
+    .section-title{margin:0;font-size:24px}.section-desc{margin:4px 0 0;color:var(--text-secondary);font-size:14px}
+    .grid-2,.grid-3{display:grid;gap:18px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card,.chart-card,.table-card{padding:18px}.card h3,.chart-card h3,.table-card h3{margin:0 0 12px;font-size:18px}
+    .alert{border-left:4px solid var(--accent);background:rgba(255,255,255,.03);padding:14px 16px;border-radius:12px;margin:12px 0}.green{border-color:var(--accent-green)}.warning{border-color:var(--accent-gold)}.danger{border-color:var(--accent-red)}.purple{border-color:var(--accent-purple)}
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tag{padding:6px 10px;border-radius:999px;font-size:12px;background:rgba(88,166,255,.12);color:#a7d0ff;border:1px solid rgba(88,166,255,.22)}
+    .tag.green{background:rgba(63,185,80,.12);color:#8ddb9a;border-color:rgba(63,185,80,.22)} .tag.gold{background:rgba(210,153,34,.12);color:#f2cf7b;border-color:rgba(210,153,34,.22)} .tag.purple{background:rgba(188,140,255,.12);color:#d8b8ff;border-color:rgba(188,140,255,.22)} .tag.red{background:rgba(248,81,73,.12);color:#ffaba8;border-color:rgba(248,81,73,.22)}
+    .table-wrap{overflow:auto} table{width:100%;border-collapse:collapse;font-size:14px} th,td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;vertical-align:top} thead th{background:rgba(255,255,255,.03)} tbody tr:nth-child(odd){background:rgba(255,255,255,.015)} tbody tr:hover{background:rgba(88,166,255,.05)}
+    .chart-box{height:320px;position:relative}.risk-list{display:grid;gap:12px}.risk-card{display:grid;grid-template-columns:56px 1fr auto;gap:14px;padding:16px;align-items:start}.risk-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;background:rgba(88,166,255,.12)}
+    .footer{padding:12px 0 48px;color:var(--text-muted);text-align:center;font-size:13px}.muted{color:var(--text-secondary)}
+    @media (max-width:1080px){.summary-strip,.grid-3{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}}
+    @media (max-width:780px){.summary-strip,.grid-3{grid-template-columns:1fr}h1{font-size:28px}.risk-card{grid-template-columns:48px 1fr}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="eyebrow">📊 财务万晓生 · 管理层口径 · 截至2025三季报</div>
+    <h1>中联重科（000157.SZ）2025Q3 财务分析报告</h1>
+    <p class="subtitle">结论前置：公司已走出 2024 年的弱修复阶段，2025 年前三季度呈现“收入恢复增长、利润弹性释放、现金流改善”的复苏特征；但全年质量仍取决于四季度交付、回款与海外兑现节奏。</p>
+    <div class="hero-meta">
+      <span class="pill">行业：工程机械 / 农业机械 / 高空作业平台</span>
+      <span class="pill">市场：A股</span>
+      <span class="pill">口径：2025三季报</span>
+      <span class="pill">货币单位：人民币亿元</span>
+    </div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="summary-card" style="--card-accent: var(--accent)"><div class="summary-label">营业收入</div><div class="summary-value">371.56</div><div class="summary-change">同比 +8.06%</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-green)"><div class="summary-label">归母净利润</div><div class="summary-value">39.20</div><div class="summary-change">同比 +24.89%</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-gold)"><div class="summary-label">毛利率</div><div class="summary-value">28.10%</div><div class="summary-change">较2024Q3 +0.07pct</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-teal)"><div class="summary-label">经营现金流/营收</div><div class="summary-value">7.71%</div><div class="summary-change">较2024Q3 +4.20pct</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-purple)"><div class="summary-label">ROE</div><div class="summary-value">6.74%</div><div class="summary-change">较2024Q3 +1.24pct</div></div>
+    <div class="summary-card" style="--card-accent: var(--accent-red)"><div class="summary-label">风险等级</div><div class="summary-value">中等</div><div class="summary-change">关注回款、库存与周期波动</div></div>
+  </div>
+
+  <nav class="nav-bar"><div class="nav-inner">
+    <a class="nav-link" href="#summary">执行摘要</a><a class="nav-link" href="#overview">公司概况</a><a class="nav-link" href="#peer-comparison">同行业对比</a><a class="nav-link" href="#strategy">战略分析</a><a class="nav-link" href="#accounting">会计分析</a><a class="nav-link" href="#financials">财务分析</a><a class="nav-link" href="#outlook">前景分析</a><a class="nav-link" href="#risks">风险与结论</a><a class="nav-link" href="#sources">数据来源</a>
+  </div></nav>
+
+  <main class="container">
+    <section id="summary" class="section">
+      <div class="section-header"><div class="section-badge">01</div><div><h2 class="section-title">执行摘要</h2><p class="section-desc">核心不是“有没有增长”，而是“增长能否转化为利润和现金”。</p></div></div>
+      <div class="card">
+        <p>截至 2025 年三季报，中联重科实现营业收入 371.56 亿元，同比增长 8.06%；归母净利润 39.20 亿元，同比增长 24.89%，利润增速显著快于收入增速，显示公司当前盈利改善更多来自经营效率提升和业务结构优化，而不只是行业景气回升。毛利率 28.10% 基本保持稳定，但净利率提升至 11.05%，反映费用率、产品结构、海外占比或资产效率存在同步改善。更重要的是，经营现金流/营收由上年同期的 3.51% 提升至 7.71%，说明利润现金含量改善、销售质量提升。综合判断，中联重科已进入修复向兑现过渡阶段，但工程机械行业仍具周期属性，后续需要持续跟踪海外交付、应收回款和库存周转是否稳定兑现。</p>
+        <div class="alert green"><strong>核心判断：</strong>2025 年前三季度呈现“增长修复 + 利润率抬升 + 现金流改善”的组合，经营质量优于 2024 年。</div>
+        <div class="alert warning"><strong>可持续性判断：</strong>若海外业务与高毛利产品继续贡献增量，全年利润大概率优于 2024 年；但修复斜率会受行业需求和四季度回款节奏影响。</div>
+        <div class="alert danger"><strong>首要风险：</strong>应收账款和存货周转仍偏慢，若行业回暖不及预期或海外回款承压，利润质量可能打折。</div>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="section-header"><div class="section-badge">02</div><div><h2 class="section-title">公司概况</h2><p class="section-desc">先理解公司是什么，再判断财务修复的成色。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>公司定位</h3>
+          <p>中联重科创立于 1992 年，是国内工程机械龙头之一，也是业内首家 A+H 股上市公司。公司主要从事工程机械、矿山机械、农业机械等高端装备研发制造，产品覆盖 15 大类别、81 个产品系列、715 个型谱，拥有 26 个国内工业园区及 11 个海外研发制造基地。对管理层而言，这意味着公司不是单一周期品种，而是兼具国内基建、地产后周期、出口与装备升级逻辑的多元装备平台。</p>
+          <div class="tags"><span class="tag">工程机械</span><span class="tag green">农业机械</span><span class="tag purple">海外制造基地</span></div>
+        </div>
+        <div class="chart-card">
+          <h3>核心经营观察</h3>
+          <div class="table-wrap"><table><thead><tr><th>维度</th><th>观察</th><th>经营含义</th></tr></thead><tbody>
+            <tr><td>平台属性</td><td>多品类装备平台</td><td>抗单品类波动能力优于纯单一机械企业</td></tr>
+            <tr><td>增长驱动</td><td>国内修复 + 海外拓展 + 新品类</td><td>利润弹性不完全依赖地产链回暖</td></tr>
+            <tr><td>盈利特征</td><td>毛利率稳定、净利率抬升</td><td>说明费用与结构优化正在兑现</td></tr>
+            <tr><td>财务特征</td><td>周转偏慢但现金流改善</td><td>回款质量是后续验证重点</td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="peer-comparison" class="section">
+      <div class="section-header"><div class="section-badge">03</div><div><h2 class="section-title">同行业对比</h2><p class="section-desc">默认选取 3 家 A 股可比公司：三一重工、徐工机械、柳工。</p></div></div>
+      <div class="card">
+        <p>从 2025 年前三季度横向看，中联重科在收入规模上低于三一重工和徐工机械，高于柳工；在盈利能力上明显强于徐工和柳工，与三一接近；在现金流质量上则显著弱于三一、与徐工接近、优于柳工。换句话说，中联重科当前不是行业最大体量选手，但属于“利润率表现较优、现金流处于改善中、经营质量在修复”的第二梯队龙头。其优势在于毛利率和净利率稳定，短板在于应收和库存周转偏慢，导致现金转化效率尚未进入行业最优。</p>
+        <div class="alert green"><strong>同行结论：</strong>中联重科当前更接近“盈利质量较优、规模第二梯队、现金流修复中”的位置，若回款和库存继续改善，估值弹性仍有释放空间。</div>
+      </div>
+      <div class="table-card" style="margin-top:18px">
+        <h3>可比公司横向对比（2025前三季度）</h3>
+        <div class="table-wrap"><table><thead><tr><th>公司</th><th>代码</th><th>营收</th><th>归母净利润</th><th>毛利率</th><th>ROE</th><th>经营现金流/营收</th><th>定位判断</th></tr></thead><tbody>
+          <tr><td>中联重科</td><td>000157.SZ</td><td>371.56</td><td>39.20</td><td>28.10%</td><td>6.74%</td><td>7.71%</td><td>利润率优、现金流修复中</td></tr>
+          <tr><td>三一重工</td><td>600031.SH</td><td>661.04</td><td>71.36</td><td>27.62%</td><td>9.69%</td><td>22.13%</td><td>规模与现金流双领先</td></tr>
+          <tr><td>徐工机械</td><td>000425.SZ</td><td>781.57</td><td>59.77</td><td>22.33%</td><td>9.92%</td><td>7.28%</td><td>大体量、低毛利、杠杆更高</td></tr>
+          <tr><td>柳工</td><td>000528.SZ</td><td>257.60</td><td>14.58</td><td>22.25%</td><td>8.15%</td><td>2.50%</td><td>规模较小、利润率偏弱</td></tr>
+        </tbody></table></div>
+      </div>
+      <div class="grid-2" style="margin-top:18px">
+        <div class="chart-card"><h3>同行规模对比</h3><div class="chart-box"><canvas id="peerScaleChart"></canvas></div></div>
+        <div class="chart-card"><h3>同行经营质量对比</h3><div class="chart-box"><canvas id="peerQualityChart"></canvas></div></div>
+      </div>
+    </section>
+
+    <section id="strategy" class="section">
+      <div class="section-header"><div class="section-badge">04</div><div><h2 class="section-title">战略分析模块</h2><p class="section-desc">经营修复的背后，往往先有产品和市场结构的变化。</p></div></div>
+      <div class="grid-3">
+        <div class="card"><h3>行业分析</h3><p>工程机械行业本质上仍具周期性，但 2025 年市场逻辑已不只是“地产修复”，而是转向“国内更新需求 + 海外出口 + 细分新品类”。对于中联重科而言，国内弱复苏决定收入弹性底部，海外业务和新品类则决定利润率上限。</p></div>
+        <div class="card"><h3>竞争格局</h3><p>公司处于国内工程机械龙头阵营，在塔机、起重机械等传统优势品类具备品牌与渠道基础，同时在农业机械、高空作业平台等方向承担第二增长曲线任务。从体量看，三一和徐工更强；从利润率看，中联表现更均衡。</p></div>
+        <div class="card"><h3>竞争策略</h3><p>从毛利率稳定、净利率提升和现金流改善看，公司当前更像“结构优化型修复”而非单纯价格竞争。管理层策略重点应是继续提升海外收入占比、压缩低效率投放、优化回款纪律，而非盲目追求收入规模。</p></div>
+      </div>
+    </section>
+
+    <section id="accounting" class="section">
+      <div class="section-header"><div class="section-badge">05</div><div><h2 class="section-title">会计分析模块</h2><p class="section-desc">工程机械行业看利润，更要看回款、存货和现金转换效率。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>关键会计观察</h3>
+          <p>截至 2025 三季报，中联重科的会计质量总体中性偏正。积极信号是：经营现金流/营收从 2024Q3 的 3.51% 提升至 7.71%，意味着利润的现金兑现能力在改善。需要警惕的是：应收账款周转天数 190.95 天、存货周转天数 221.58 天，绝对值仍偏高，说明行业信用销售特征和库存管理压力尚未消失。因此，这份报表不是“完全无忧”，而是“利润质量在改善，但周转质量仍需继续验证”。</p>
+          <div class="alert purple"><strong>研发资本化：</strong>当前公开抓取口径未直接给出开发支出/总资产明细，本报告不做主观编造；后续如需要正式年报版，可补充原始年报口径。</div>
+          <div class="alert warning"><strong>收入确认质量：</strong>应收账款周转天数同比改善约 9.89 天，但仍处高位，说明回款管理改善了方向，尚未走到行业最佳状态。</div>
+        </div>
+        <div class="table-card">
+          <h3>会计风险检查表</h3>
+          <div class="table-wrap"><table><thead><tr><th>项目</th><th>指标</th><th>判断</th><th>备注</th></tr></thead><tbody>
+            <tr><td>开发支出/总资产</td><td>—</td><td>待补原始年报</td><td>三季报抓取口径未直接提供</td></tr>
+            <tr><td>应收账款周转天数</td><td>190.95 天</td><td>中性偏谨慎</td><td>较上年同期改善，但绝对值仍偏高</td></tr>
+            <tr><td>存货周转天数</td><td>221.58 天</td><td>中性偏谨慎</td><td>较上年同期改善 23.54 天，去库存在推进</td></tr>
+            <tr><td>经营现金流/净利润</td><td>62.76%</td><td>改善中</td><td>明显高于上年同期约 28.04%</td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="financials" class="section">
+      <div class="section-header"><div class="section-badge">06</div><div><h2 class="section-title">财务分析模块</h2><p class="section-desc">把盈利、成长、效率和现金流放在一起，才能看清经营质量。</p></div></div>
+      <div class="grid-2">
+        <div class="chart-card"><h3>收入与利润趋势</h3><div class="chart-box"><canvas id="revenueProfitTrendChart"></canvas></div></div>
+        <div class="chart-card"><h3>盈利能力指标</h3><div class="chart-box"><canvas id="marginChart"></canvas></div></div>
+      </div>
+      <div class="grid-2" style="margin-top:18px">
+        <div class="chart-card"><h3>周转与现金流指标</h3><div class="chart-box"><canvas id="efficiencyChart"></canvas></div></div>
+        <div class="table-card">
+          <h3>核心财务指标总览</h3>
+          <div class="table-wrap"><table><thead><tr><th>维度</th><th>指标</th><th>2025Q3</th><th>2024Q3</th><th>变化</th><th>解读</th></tr></thead><tbody>
+            <tr><td>盈利</td><td>毛利率</td><td>28.10%</td><td>28.03%</td><td>+0.07pct</td><td>价格体系总体稳定，未出现明显以价换量</td></tr>
+            <tr><td>成长</td><td>收入增速</td><td>+8.06%</td><td>-3.18%</td><td>+11.23pct</td><td>公司已由收缩转入恢复增长</td></tr>
+            <tr><td>盈利</td><td>净利润增速</td><td>+24.89%</td><td>+9.95%</td><td>+14.95pct</td><td>利润弹性显著高于收入，效率改善贡献更大</td></tr>
+            <tr><td>营运</td><td>应收账款周转天数</td><td>190.95</td><td>200.84</td><td>-9.89天</td><td>回款改善，但仍在高位运行</td></tr>
+            <tr><td>营运</td><td>存货周转天数</td><td>221.58</td><td>245.12</td><td>-23.54天</td><td>库存管理改善，是修复的重要支撑</td></tr>
+            <tr><td>现金流</td><td>经营现金流/营收</td><td>7.71%</td><td>3.51%</td><td>+4.20pct</td><td>利润现金含量改善，是本期亮点</td></tr>
+            <tr><td>偿债</td><td>流动比率</td><td>1.90</td><td>1.62</td><td>+0.28</td><td>短期偿债安全边际有所增强</td></tr>
+            <tr><td>偿债</td><td>速动比率</td><td>1.41</td><td>1.15</td><td>+0.26</td><td>流动性结构更稳</td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="outlook" class="section">
+      <div class="section-header"><div class="section-badge">07</div><div><h2 class="section-title">前景分析模块</h2><p class="section-desc">真正影响估值的，是未来 4 个季度修复能否延续。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>前景判断</h3>
+          <p>基于当前三季报口径，中联重科 2025 年全年利润大概率会高于 2024 年，核心逻辑不是毛利率大幅扩张，而是收入回到增长区间、费用效率提升、库存和回款有所改善。若四季度继续保持交付节奏，全年盈利质量将明显优于 2024 年。中期看，海外业务、新兴装备和国内更新周期，是公司利润中枢抬升的三条主线。</p>
+          <div class="tags"><span class="tag green">收入修复</span><span class="tag gold">利润弹性</span><span class="tag purple">现金流改善</span></div>
+        </div>
+        <div class="card">
+          <h3>估值与经营建议</h3>
+          <p>对管理层和投资判断而言，中联重科当前更适合被定义为“盈利质量改善中的装备龙头”，而不是单纯高贝塔周期股。若未来继续兑现海外高质量增长、现金流改善和周转压缩，公司估值锚可从纯周期折价逐步转向质量修复溢价。经营层面建议继续优先抓三件事：一是回款纪律；二是库存压降；三是高毛利和海外产品结构占比提升。</p>
+          <div class="alert green"><strong>战略建议：</strong>继续把资源投向高现金回收、高毛利品类与海外市场，避免用放松信用换规模。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="risks" class="section">
+      <div class="section-header"><div class="section-badge">08</div><div><h2 class="section-title">风险与结论</h2><p class="section-desc">风险不是有没有，而是是否会吞噬利润兑现。</p></div></div>
+      <div class="risk-list">
+        <div class="risk-card"><div class="risk-icon">🧾</div><div><h3 style="margin:0 0 6px">应收回款不及预期</h3><p class="muted" style="margin:0">工程机械行业信用销售属性较强，若海外或渠道回款放缓，将直接影响现金流质量和坏账风险判断。</p></div><div class="tag gold">中等</div></div>
+        <div class="risk-card"><div class="risk-icon">📦</div><div><h3 style="margin:0 0 6px">库存消化再度承压</h3><p class="muted" style="margin:0">当前存货周转已有改善，但绝对值仍高；若需求恢复弱于预期，库存可能重新占用现金。</p></div><div class="tag gold">中等</div></div>
+        <div class="risk-card"><div class="risk-icon">🌍</div><div><h3 style="margin:0 0 6px">海外业务波动</h3><p class="muted" style="margin:0">出口景气、汇率和国际贸易环境变化，都会影响收入兑现与利润率中枢。</p></div><div class="tag red">中高</div></div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h3>最终结论</h3>
+        <p>中联重科 2025 年前三季度财务表现可以概括为：<strong>规模回暖、利润加速、现金流改善、周转仍待验证</strong>。与 2024 年相比，公司已经从“弱修复”进入“质量兑现”的阶段，尤其是净利润增速显著快于收入增速，说明经营效率改善正在起作用。若四季度继续兑现回款与交付，全年报表质量有望进一步提升；但若行业需求、出口节奏或信用回收出现波动，当前的利润修复斜率也可能被压低。</p>
+      </div>
+    </section>
+
+    <section id="sources" class="section">
+      <div class="section-header"><div class="section-badge">09</div><div><h2 class="section-title">数据来源</h2><p class="section-desc">本报告采用固定来源交叉验证，避免无效泛搜索。</p></div></div>
+      <div class="table-card"><div class="table-wrap"><table><thead><tr><th>来源类型</th><th>来源</th><th>用途</th></tr></thead><tbody>
+        <tr><td>Primary</td><td>东方财富 PC_HSF10 财务分析接口（000157.SZ、600031.SH、000425.SZ、000528.SZ）</td><td>收入、归母净利润、毛利率、ROE、现金流、周转与同行对比</td></tr>
+        <tr><td>Secondary</td><td>中联重科官网“关于中联 / 中联简介”页面</td><td>公司定位、主营业务、工业园区与海外基地等概况信息</td></tr>
+      </tbody></table></div></div>
+    </section>
+  </main>
+
+  <footer class="footer">说明：本报告按“截至 2025 三季报”口径编制，不将未确认披露的 2025 年报数据主观前置。</footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+    const baseLabelOptions = { color: '#e6edf3', font: { weight: '600', size: 11 }, clamp: true };
+    const gridColor = 'rgba(255,255,255,0.06)';
+    const barCommon = {
+      maintainAspectRatio: false,
+      layout: { padding: { top: 24 } },
+      scales: {
+        x: { ticks: { color: '#8b949e' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        y: { ticks: { color: '#8b949e' }, grid: { color: gridColor }, grace: '12%' }
+      },
+      plugins: {
+        legend: { labels: { color: '#e6edf3' } },
+        datalabels: { ...baseLabelOptions, anchor: 'end', align: 'top', offset: 4, formatter: (v) => v }
+      }
+    };
+
+    new Chart(document.getElementById('peerScaleChart'), {
+      type: 'bar',
+      data: {
+        labels: ['中联重科', '三一重工', '徐工机械', '柳工'],
+        datasets: [
+          { label: '营收（亿元）', data: [371.56, 661.04, 781.57, 257.60], backgroundColor: '#58a6ff' },
+          { label: '归母净利润（亿元）', data: [39.20, 71.36, 59.77, 14.58], backgroundColor: '#39d0c8' }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('peerQualityChart'), {
+      type: 'bar',
+      data: {
+        labels: ['中联重科', '三一重工', '徐工机械', '柳工'],
+        datasets: [
+          { label: '毛利率（%）', data: [28.10, 27.62, 22.33, 22.25], backgroundColor: '#d29922' },
+          { label: 'ROE（%）', data: [6.74, 9.69, 9.92, 8.15], backgroundColor: '#bc8cff' }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('revenueProfitTrendChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2024H1', '2024Q3', '2024A', '2025H1', '2025Q3'],
+        datasets: [
+          { label: '营收（亿元）', data: [245.35, 343.86, 454.78, 248.55, 371.56], backgroundColor: '#58a6ff' },
+          { label: '归母净利润（亿元）', data: [22.88, 31.39, 35.20, 27.65, 39.20], backgroundColor: '#39d0c8' }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('marginChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2024Q3', '2025Q3'],
+        datasets: [
+          { label: '毛利率', data: [28.03, 28.10], backgroundColor: '#d29922' },
+          { label: '净利率', data: [10.16, 11.05], backgroundColor: '#bc8cff' },
+          { label: 'ROE', data: [5.50, 6.74], backgroundColor: '#f85149' }
+        ]
+      },
+      options: barCommon
+    });
+
+    new Chart(document.getElementById('efficiencyChart'), {
+      type: 'bar',
+      data: {
+        labels: ['应收周转天数', '存货周转天数', '经营现金流/营收(%)', '流动比率'],
+        datasets: [
+          { label: '2024Q3', data: [200.84, 245.12, 3.51, 1.62], backgroundColor: '#6e7681' },
+          { label: '2025Q3', data: [190.95, 221.58, 7.71, 1.90], backgroundColor: '#58a6ff' }
+        ]
+      },
+      options: barCommon
+    });
+  </script>
+</body>
+</html>
