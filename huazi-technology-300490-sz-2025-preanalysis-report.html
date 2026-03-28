@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>华自科技（300490.SZ）2025预分析财务报告</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 18px 42px rgba(0,0,0,.32);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top right, rgba(88,166,255,.12), transparent 22%), var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.72;
+    }
+    a { color: var(--accent); }
+    .hero, .summary-strip, .nav-bar, .container, .footer {
+      width: min(1320px, calc(100% - 32px));
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero {
+      margin-top: 24px;
+      padding: 36px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #0f172a 0%, #111827 50%, #0d1117 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -90px;
+      top: -90px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(88,166,255,.22), transparent 70%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      color: #bfd7ff;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.18;
+      letter-spacing: .2px;
+    }
+    .hero p {
+      margin: 14px 0 0;
+      max-width: 980px;
+      color: #c9d1d9;
+      font-size: 16px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.45fr .8fr;
+      gap: 20px;
+      align-items: end;
+    }
+    .hero-side {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-side .metric-label { color: var(--text-secondary); font-size: 13px; }
+    .hero-side .metric-value { font-size: 28px; font-weight: 800; margin-top: 6px; }
+    .hero-side .metric-sub { font-size: 13px; color: #ffd699; }
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .summary-card, .section, .card, .chart-card, .table-card, .risk-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .summary-card {
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 118px;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--card-accent, var(--accent));
+    }
+    .summary-card .label { color: var(--text-secondary); font-size: 13px; }
+    .summary-card .value { margin-top: 10px; font-size: 28px; font-weight: 800; }
+    .summary-card .sub { margin-top: 8px; color: var(--text-muted); font-size: 13px; }
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(13,17,23,.84);
+      padding: 12px 0;
+      margin-top: 18px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-links { display: flex; gap: 10px; overflow: auto; padding-bottom: 2px; }
+    .nav-links a {
+      white-space: nowrap;
+      color: var(--text-secondary);
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav-links a:hover { color: var(--text-primary); background: rgba(88,166,255,.14); }
+    .container { margin-top: 24px; margin-bottom: 48px; }
+    .section { padding: 24px; margin-bottom: 20px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .section-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #58a6ff 0%, #1f6feb 100%);
+      color: white;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+    .section-header h2 { margin: 0; font-size: 24px; }
+    .section-desc { color: var(--text-secondary); font-size: 14px; margin-top: 2px; }
+    .grid-2, .grid-3, .grid-4 { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card, .chart-card, .table-card { padding: 18px; }
+    .card h3, .chart-card h3, .table-card h3 { margin: 0 0 10px; font-size: 18px; }
+    .muted { color: var(--text-secondary); }
+    .small { font-size: 13px; }
+    .lead { font-size: 17px; color: #dbe7f3; margin-top: 0; }
+    .bullet-list { margin: 0; padding-left: 18px; }
+    .bullet-list li { margin-bottom: 10px; }
+    .alert {
+      border-left: 4px solid var(--accent);
+      background: rgba(255,255,255,.03);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+    .alert.green { border-color: var(--accent-green); }
+    .alert.warning { border-color: var(--accent-gold); }
+    .alert.danger { border-color: var(--accent-red); }
+    .alert.purple { border-color: var(--accent-purple); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .chip {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      color: #c8d5e3;
+      border: 1px solid rgba(255,255,255,.06);
+      font-size: 13px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th {
+      color: #c4d2de;
+      font-size: 13px;
+      background: rgba(255,255,255,.03);
+    }
+    tbody tr:nth-child(odd) { background: rgba(255,255,255,.015); }
+    tbody tr:hover { background: rgba(88,166,255,.06); }
+    .chart-box { height: 330px; position: relative; }
+    .chart-box.tall { height: 390px; }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .metric-tile {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .metric-tile .k { color: var(--text-secondary); font-size: 13px; }
+    .metric-tile .v { margin-top: 8px; font-size: 22px; font-weight: 800; }
+    .risk-wrap { display: grid; gap: 14px; }
+    .risk-card {
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      gap: 16px;
+      padding: 18px;
+      align-items: start;
+    }
+    .risk-color { border-radius: 999px; min-height: 100%; }
+    .risk-tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      align-self: start;
+    }
+    .risk-high { background: rgba(248,81,73,.12); color: #ffb3ad; }
+    .risk-mid { background: rgba(210,153,34,.12); color: #ffd38a; }
+    .risk-low { background: rgba(63,185,80,.12); color: #9be9a8; }
+    .footer {
+      padding: 0 0 36px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+    @media (max-width: 1100px) {
+      .summary-strip, .grid-4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .hero-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 780px) {
+      .summary-strip, .grid-4, .metric-grid { grid-template-columns: 1fr 1fr; }
+      .hero, .section, .card, .chart-card, .table-card { padding: 18px; }
+      .risk-card { grid-template-columns: 8px 1fr; }
+      .risk-tag { grid-column: 2; justify-self: start; }
+    }
+    @media (max-width: 560px) {
+      .summary-strip, .grid-4, .metric-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">📊 2025预分析版 · 截至2025-09-30 · A股</div>
+        <h1>华自科技（300490.SZ）2025预分析财务报告</h1>
+        <p>
+          结论前置：华自科技 2025 年截至三季报的核心特征是 <strong>“收入恢复、利润仍亏、杠杆抬升、周转偏慢”</strong>。
+          公司已经从 2024 年的大幅收缩中走出，营收同比转正，但毛利率、净利率和 ROE 仍处于行业后段，说明恢复更多来自规模回补，尚未进入高质量修复阶段。
+        </p>
+        <div class="chip-row">
+          <span class="chip">主营：自动化及信息化 / 新能源及智能装备 / 环保与水处理</span>
+          <span class="chip">申万行业：电力设备—其他电源设备Ⅱ</span>
+          <span class="chip">本报告口径：2025 三季报预分析，不冒充正式年报</span>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <div class="metric-label">一句话判断</div>
+        <div class="metric-value">弱修复，未反转</div>
+        <div class="metric-sub">收入回暖，但盈利质量和现金转换仍未过关</div>
+      </aside>
+    </div>
+  </header>
+
+  <section class="summary-strip">
+    <div class="summary-card" style="--card-accent: var(--accent);">
+      <div class="label">营业收入</div>
+      <div class="value">15.40亿</div>
+      <div class="sub">同比 +7.88%，结束 2024 同期下滑</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-red);">
+      <div class="label">归母净利润</div>
+      <div class="value">-2.05亿</div>
+      <div class="sub">亏损同比扩大 33.39%</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-gold);">
+      <div class="label">销售毛利率</div>
+      <div class="value">13.45%</div>
+      <div class="sub">去年同期 17.74%，盈利承压明显</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-purple);">
+      <div class="label">加权 ROE</div>
+      <div class="value">-8.24%</div>
+      <div class="sub">股东回报继续为负</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-teal);">
+      <div class="label">资产负债率</div>
+      <div class="value">68.57%</div>
+      <div class="sub">较 2024Q3 的 59.89% 明显抬升</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-green);">
+      <div class="label">总市值</div>
+      <div class="value">66.70亿</div>
+      <div class="sub">处于储能电力装备可比公司中的较低梯队</div>
+    </div>
+  </section>
+
+  <nav class="nav-bar">
+    <div class="nav-links">
+      <a href="#summary">执行摘要</a>
+      <a href="#company">公司概况</a>
+      <a href="#peer">同行对比</a>
+      <a href="#strategy">战略分析</a>
+      <a href="#accounting">会计分析</a>
+      <a href="#financial">财务分析</a>
+      <a href="#outlook">前景分析</a>
+      <a href="#risk">风险与结论</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="section" id="summary">
+      <div class="section-header">
+        <div class="section-badge">1</div>
+        <div>
+          <h2>执行摘要</h2>
+          <div class="section-desc">先说结论，再看支撑结论的数据。</div>
+        </div>
+      </div>
+      <p class="lead">
+        华自科技 2025 年截至三季度的经营状态，可以定义为“<strong>订单与收入修复、利润修复滞后、资产周转偏慢、财务安全边际走弱</strong>”。
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>核心判断</h3>
+          <ul class="bullet-list">
+            <li><strong>收入端</strong>：营业收入 15.40 亿元，同比增长 7.88%，较 2024 年同期明显修复，说明项目交付与设备确认收入节奏改善。</li>
+            <li><strong>利润端</strong>：归母净利润亏损 2.05 亿元，净利率 -13.29%，利润端没有跟上收入恢复，说明低毛利订单、费用与减值压力仍重。</li>
+            <li><strong>资产端</strong>：总资产 70.01 亿元，较去年底扩张；但应收账款 12.86 亿元、存货 20.88 亿元，占用资金仍重。</li>
+            <li><strong>资本结构</strong>：资产负债率升至 68.57%，在可比样本中偏高，权益缓冲较薄。</li>
+            <li><strong>行业位置</strong>：华自更像“收入恢复中的追赶者”，而非盈利修复中的领先者。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>管理层最该盯的 3 个问题</h3>
+          <div class="alert warning"><strong>第一：</strong>毛利率下台阶后，是否还能通过产品结构与项目筛选回到 18% 以上。</div>
+          <div class="alert danger"><strong>第二：</strong>应收与存货占用偏高，经营恢复是否建立在更大的营运资金压力之上。</div>
+          <div class="alert purple"><strong>第三：</strong>2025Q4 若无明显利润改善，全年仍将维持亏损，资本市场对“恢复”的容忍度会下降。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="company">
+      <div class="section-header">
+        <div class="section-badge">2</div>
+        <div>
+          <h2>公司概况</h2>
+          <div class="section-desc">从业务结构看华自科技到底在做什么，为什么它的财务表现波动较大。</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>业务画像</h3>
+          <p>
+            华自科技的主营业务包括 <strong>自动化及信息化产品与服务、新能源及智能装备、环保与水处理产品及服务</strong>。
+            从公开产品描述看，公司覆盖智慧光伏、智慧风电、智能配电、储能变流器、一体化储能系统、源网荷储一体化管控平台、水利数字孪生平台等，属于典型的
+            <strong>“电力自动化 + 储能装备 + 场景工程化交付”</strong> 型公司。
+          </p>
+          <div class="chip-row">
+            <span class="chip">智慧光伏 / 智慧风电</span>
+            <span class="chip">储能 PCS / 一体化储能系统</span>
+            <span class="chip">源网荷储管控平台</span>
+            <span class="chip">智慧水务 / 水利数字孪生</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>商业模式含义</h3>
+          <ul class="bullet-list">
+            <li>公司并非纯软件，也非标准化消费电子，更偏 <strong>项目制装备+系统集成</strong>。</li>
+            <li>这类模式天然特征是：<strong>收入确认有波动、回款周期偏长、应收与存货容易堆积</strong>。</li>
+            <li>因此判断华自科技，不能只看收入增长，必须同时看 <strong>毛利率、回款与现金流</strong> 是否同步改善。</li>
+            <li>从目前数据看，收入回来了，但利润质量和现金转换率没有同步好转，这就是核心矛盾。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="metric-grid">
+        <div class="metric-tile">
+          <div class="k">总资产</div>
+          <div class="v">70.01亿</div>
+        </div>
+        <div class="metric-tile">
+          <div class="k">总负债</div>
+          <div class="v">48.00亿</div>
+        </div>
+        <div class="metric-tile">
+          <div class="k">归母权益/净资产基础</div>
+          <div class="v">22.01亿</div>
+        </div>
+        <div class="metric-tile">
+          <div class="k">货币资金</div>
+          <div class="v">4.04亿</div>
+        </div>
+        <div class="metric-tile">
+          <div class="k">应收账款</div>
+          <div class="v">12.86亿</div>
+        </div>
+        <div class="metric-tile">
+          <div class="k">存货</div>
+          <div class="v">20.88亿</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="peer">
+      <div class="section-header">
+        <div class="section-badge">3</div>
+        <div>
+          <h2>同行业对比</h2>
+          <div class="section-desc">选取 3 家同属电力设备 / 储能电力电子赛道的 A 股公司作为可比样本。</div>
+        </div>
+      </div>
+      <div class="table-card">
+        <h3>横向对比表</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>公司</th>
+              <th>代码</th>
+              <th>2025最新口径</th>
+              <th>营收（亿元）</th>
+              <th>营收增速</th>
+              <th>净利率</th>
+              <th>毛利率</th>
+              <th>资产负债率</th>
+              <th>市值（亿元）</th>
+              <th>观察</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>华自科技</td>
+              <td>300490.SZ</td>
+              <td>三季报</td>
+              <td>15.40</td>
+              <td>+7.88%</td>
+              <td>-13.29%</td>
+              <td>13.45%</td>
+              <td>68.57%</td>
+              <td>66.70</td>
+              <td>收入修复，但盈利和资本结构明显落后</td>
+            </tr>
+            <tr>
+              <td>盛弘股份</td>
+              <td>300693.SZ</td>
+              <td>三季报</td>
+              <td>34.63</td>
+              <td>+5.78%</td>
+              <td>12.38%</td>
+              <td>39.92%</td>
+              <td>51.14%</td>
+              <td>137.91</td>
+              <td>高毛利、高盈利、现金流质量显著更强</td>
+            </tr>
+            <tr>
+              <td>科华数据</td>
+              <td>002335.SZ</td>
+              <td>三季报</td>
+              <td>57.06</td>
+              <td>+5.79%</td>
+              <td>6.17%</td>
+              <td>25.10%</td>
+              <td>54.39%</td>
+              <td>300.13</td>
+              <td>规模、盈利和资产结构均优于华自</td>
+            </tr>
+            <tr>
+              <td>科士达</td>
+              <td>002518.SZ</td>
+              <td>三季报</td>
+              <td>36.09</td>
+              <td>+23.93%</td>
+              <td>12.41%</td>
+              <td>28.57%</td>
+              <td>35.05%</td>
+              <td>269.51</td>
+              <td>高增长 + 高净利，体现标准化电力电子优势</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="muted small">注：可比样本优先选择同市场、同能源电力装备链条、商业模式相近公司；均采用公开最新披露口径。</p>
+      </div>
+      <div class="grid-2">
+        <div class="chart-card">
+          <h3>规模对比：营收 vs 市值</h3>
+          <div class="chart-box tall"><canvas id="peerScaleChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>盈利质量对比：毛利率 vs 净利率</h3>
+          <div class="chart-box tall"><canvas id="peerMarginChart"></canvas></div>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-top:18px;">
+        <h3>经营质量对比：资产负债率与应收周转</h3>
+        <div class="chart-box tall"><canvas id="peerQualityChart"></canvas></div>
+      </div>
+      <div class="alert warning">
+        <strong>行业位置结论：</strong>
+        华自科技在可比公司中并不缺题材和场景，但在资本市场更看重的三个指标——<strong>毛利率、净利率、资产负债率</strong>——均明显弱于同业。
+        当前行业位置更接近“<strong>恢复中的二线追赶者</strong>”，而不是“具备估值溢价的龙头型平台”。
+      </div>
+    </section>
+
+    <section class="section" id="strategy">
+      <div class="section-header">
+        <div class="section-badge">4</div>
+        <div>
+          <h2>战略分析</h2>
+          <div class="section-desc">解释收入为什么回来了，但利润没有同步修复。</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>行业与赛道判断</h3>
+          <ul class="bullet-list">
+            <li>公司所处的储能、电力自动化、源网荷储与智慧水务赛道，本质上都受益于 <strong>新型电力系统建设、能源数字化与新能源并网</strong>。</li>
+            <li>需求层面并不差，尤其在储能系统、调度侧管控、电站自动化等环节仍有场景增量。</li>
+            <li>但行业竞争已明显从“抢需求”转向“拼成本、拼交付、拼现金流”。</li>
+            <li>因此，收入恢复不能自动等于利润恢复；如果订单结构偏低毛利、回款条款偏弱，营收增长反而会放大资金占用。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>竞争策略推断</h3>
+          <p>
+            从业务覆盖面看，华自科技采取的是 <strong>“平台化能力 + 多场景项目获取”</strong> 策略：通过自动化、电力电子、系统平台与工程实施能力切入多类能源基础设施场景。
+            这种打法的优点是可覆盖更宽的订单池，缺点是 <strong>标准化程度不足、毛利率弹性弱、项目执行与回款要求高</strong>。
+          </p>
+          <div class="alert purple">
+            如果公司后续想真正走出亏损，关键不是继续扩品类，而是提高订单筛选标准：
+            <strong>优先保毛利、保回款、保现金，而不是单纯保规模。</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="accounting">
+      <div class="section-header">
+        <div class="section-badge">5</div>
+        <div>
+          <h2>会计分析</h2>
+          <div class="section-desc">在正式 2025 年报未披露前，先识别最关键的会计质量信号。</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>收入确认质量</h3>
+          <p>
+            截至 2025Q3，应收账款 12.86 亿元，应收账款周转率仅 1.23，说明公司收入确认之后的现金回收速度仍偏慢。
+            对项目制公司而言，这通常意味着：
+          </p>
+          <ul class="bullet-list">
+            <li>部分订单回款节点偏后；</li>
+            <li>工程验收和客户支付节奏不够顺畅；</li>
+            <li>收入增长对现金流的拉动不强。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>存货与减值关注</h3>
+          <p>
+            存货达到 20.88 亿元，明显高于应收账款规模。对于装备与系统集成企业，存货高企往往对应：
+          </p>
+          <ul class="bullet-list">
+            <li>在手项目与备货规模较大；</li>
+            <li>部分产品标准化不足，库存周转慢；</li>
+            <li>若行业价格继续内卷，未来存在进一步计提跌价或压缩毛利的风险。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>研发资本化提示</h3>
+          <p>
+            目前可获得的公开摘要页能确认公司仍保持技术与产品迭代导向，但尚无法仅凭摘要准确还原 2025 年末开发支出与资本化比例。
+            因此本预分析不武断下结论，但正式年报披露后应重点核查：
+          </p>
+          <ul class="bullet-list">
+            <li>开发支出 / 总资产是否异常抬升；</li>
+            <li>资本化是否与新产品商业化节奏匹配；</li>
+            <li>是否存在通过资本化平滑当期费用的迹象。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert danger">
+        <strong>会计风险提示：</strong>
+        华自科技当前最需要警惕的不是“收入做不出来”，而是 <strong>收入做出来之后，利润兑现与现金兑现不足</strong>。
+        这类风险在正式年报里通常会反映为应收账款减值、存货跌价、合同资产回收、项目毛利率重估等附注压力。
+      </div>
+    </section>
+
+    <section class="section" id="financial">
+      <div class="section-header">
+        <div class="section-badge">6</div>
+        <div>
+          <h2>财务分析</h2>
+          <div class="section-desc">从盈利、成长、效率、现金流四个角度看经营质量。</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="chart-card">
+          <h3>累计营收与净利润走势</h3>
+          <div class="chart-box"><canvas id="trendChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>毛利率、净利率、ROE 变化</h3>
+          <div class="chart-box"><canvas id="profitChart"></canvas></div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>盈利能力</h3>
+          <ul class="bullet-list">
+            <li>2025Q3 毛利率 13.45%，较 2024Q3 的 17.74% 下滑 4.29pct，说明当前收入修复并非高质量增长。</li>
+            <li>净利率 -13.29%，亏损状态没有根本扭转；相比之下，可比公司普遍保持正净利率。</li>
+            <li>加权 ROE -8.24%，表明股东资金仍在被亏损侵蚀，资本回报尚未重建。</li>
+            <li>若仅从杜邦视角看，华自的问题不是资产周转完全失灵，而是 <strong>低毛利 + 费用摊薄不足 + 杠杆上升</strong> 的组合。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>成长能力</h3>
+          <ul class="bullet-list">
+            <li>营收同比 +7.88%，说明公司至少从“继续下滑”切换为“恢复增长”。</li>
+            <li>但净利润同比仍为 -33.39%，代表增长没有转化为利润，经营质量恢复明显滞后。</li>
+            <li>累计营收从 Q1 的 3.34 亿元提升到 H1 的 9.56 亿元、Q3 的 15.40 亿元，交付节奏在推进。</li>
+            <li>若 2025Q4 能维持 Q2/Q3 的收入水平，全年收入大概率高于 2024 年；但若毛利率不修复，全年仍可能亏损。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>营运效率</h3>
+          <ul class="bullet-list">
+            <li>应收账款周转率 1.23，行业排名 25/32，回款效率偏弱。</li>
+            <li>存货周转率 0.78，行业排名 26/32，存货变现速度慢，库存占资问题突出。</li>
+            <li>总资产周转率 0.23，仅属中下水平，说明资产扩张对收入的传导效率不高。</li>
+            <li>从资产结构看，应收 + 存货合计约 33.74 亿元，占总资产接近一半，是经营质量的主要观察点。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>费用与现金流</h3>
+          <ul class="bullet-list">
+            <li>截至 Q3，销售费用 1.24 亿元、管理费用 1.46 亿元、财务费用 3433 万元，费用刚性仍在。</li>
+            <li>公司公开变动说明显示，2025H1 经营活动现金流净额为 -6714.70 万元，虽较上年同期改善 80.90%，但仍未转正。</li>
+            <li>这意味着现金流质量改善更多是“亏得少一点”，而不是已经进入稳定自我造血阶段。</li>
+            <li>销售现金比率仍为负值，验证了“收入恢复 ≠ 现金恢复”。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="table-card" style="margin-top:18px;">
+        <h3>阶段性经营数据拆解</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>口径</th>
+              <th>2024Q3</th>
+              <th>2024年报</th>
+              <th>2025Q1</th>
+              <th>2025H1</th>
+              <th>2025Q3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>累计营收（亿元）</td>
+              <td>14.28</td>
+              <td>19.09</td>
+              <td>3.34</td>
+              <td>9.56</td>
+              <td>15.40</td>
+            </tr>
+            <tr>
+              <td>累计净利润（亿元）</td>
+              <td>-1.61</td>
+              <td>-4.23</td>
+              <td>-0.75</td>
+              <td>-1.47</td>
+              <td>-2.05</td>
+            </tr>
+            <tr>
+              <td>累计营业成本（亿元）</td>
+              <td>11.89</td>
+              <td>16.06</td>
+              <td>2.97</td>
+              <td>8.52</td>
+              <td>13.33</td>
+            </tr>
+            <tr>
+              <td>销售费用（亿元）</td>
+              <td>1.09</td>
+              <td>1.53</td>
+              <td>0.37</td>
+              <td>0.77</td>
+              <td>1.24</td>
+            </tr>
+            <tr>
+              <td>管理费用（亿元）</td>
+              <td>1.53</td>
+              <td>2.08</td>
+              <td>0.46</td>
+              <td>0.95</td>
+              <td>1.46</td>
+            </tr>
+            <tr>
+              <td>资产负债率</td>
+              <td>59.89%</td>
+              <td>61.66%</td>
+              <td>65.26%</td>
+              <td>66.61%</td>
+              <td>68.57%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="outlook">
+      <div class="section-header">
+        <div class="section-badge">7</div>
+        <div>
+          <h2>前景分析</h2>
+          <div class="section-desc">对 2025 全年与后续一年的经营质量进行情景化判断。</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>2025 全年预判</h3>
+          <ul class="bullet-list">
+            <li>基于 Q1 / H1 / Q3 累计数据推算，2025Q4 若维持近两个季度的交付节奏，全年收入大概率落在 <strong>20.8–22.0 亿元</strong> 区间。</li>
+            <li>利润端仍取决于两件事：<strong>Q4 毛利率能否修复</strong>，以及 <strong>减值/项目结算压力是否进一步释放</strong>。</li>
+            <li>较保守估计下，全年归母净利润仍可能为 <strong>-2.5 至 -3.0 亿元</strong>；乐观情形下亏损也只是明显收窄，而非大概率转正。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>估值与资本市场含义</h3>
+          <ul class="bullet-list">
+            <li>当前市值 66.70 亿元，对一家具备储能、电力自动化概念的公司而言并不贵，但估值缺乏向上重估基础。</li>
+            <li>市场愿意给高估值的前提是：<strong>毛利率稳定、净利转正、现金流改善</strong>。华自目前三项都未完全满足。</li>
+            <li>因此短期估值锚更接近“困境修复”而非“高成长溢价”。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>SWOT 简表</h3>
+          <table>
+            <thead>
+              <tr><th>维度</th><th>判断</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Strengths</td><td>能源电力场景覆盖广，具备自动化 + 储能 + 数字化一体能力。</td></tr>
+              <tr><td>Weaknesses</td><td>毛利率低、净利持续为负、回款与库存占资高、资产负债率上行。</td></tr>
+              <tr><td>Opportunities</td><td>新型电力系统、储能建设、源网荷储管理平台仍有长期需求。</td></tr>
+              <tr><td>Threats</td><td>行业价格竞争、项目回款延后、减值压力与融资成本侵蚀利润。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>建议的经营动作</h3>
+          <div class="alert green"><strong>建议 1：</strong>订单考核从“签单额”切换为“签单毛利 + 回款条款 + 现金回收周期”。</div>
+          <div class="alert warning"><strong>建议 2：</strong>压低低周转库存，优先清理占资重、通用性差的项目与物料。</div>
+          <div class="alert purple"><strong>建议 3：</strong>以 Q4 和 2026H1 为窗口，观察储能与电力自动化核心产品的毛利修复能力。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="risk">
+      <div class="section-header">
+        <div class="section-badge">8</div>
+        <div>
+          <h2>风险与结论</h2>
+          <div class="section-desc">把最重要的风险压缩成可决策的结论。</div>
+        </div>
+      </div>
+      <div class="risk-wrap">
+        <div class="risk-card">
+          <div class="risk-color" style="background: var(--accent-red);"></div>
+          <div>
+            <h3>盈利修复不及预期</h3>
+            <p class="muted">如果 Q4 仍延续低毛利或项目结算不顺，全年亏损将继续维持，市场对“恢复”的信心会被削弱。</p>
+          </div>
+          <div class="risk-tag risk-high">高</div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-color" style="background: var(--accent-gold);"></div>
+          <div>
+            <h3>应收与存货继续占资</h3>
+            <p class="muted">应收和存货规模大，一旦客户验收、回款或价格体系进一步承压，后续现金流与减值风险会同步抬升。</p>
+          </div>
+          <div class="risk-tag risk-high">高</div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-color" style="background: var(--accent-purple);"></div>
+          <div>
+            <h3>杠杆继续上升</h3>
+            <p class="muted">资产负债率已升至 68.57%，若现金流未转正而继续依赖融资滚动，财务弹性会进一步下降。</p>
+          </div>
+          <div class="risk-tag risk-mid">中</div>
+        </div>
+      </div>
+      <div class="alert danger" style="margin-top:18px;">
+        <strong>最终结论：</strong>
+        华自科技 2025 年截至三季报体现的是 <strong>“营收修复、利润未修复”</strong>。若你站在管理层视角，这家公司当前最重要的目标不是再证明“能接单”，而是尽快证明
+        <strong>“订单能赚钱、项目能回款、现金能沉淀”</strong>。
+        在看到正式 2025 年年报之前，我对它的判断仍然是：<strong>谨慎乐观，但不宜过早认定经营反转已经成立。</strong>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>数据来源：华自科技 2025 年三季报相关公开披露入口、东方财富 F10、同花顺 F10、东方财富行情接口；同行比较采用公开最新披露口径。</p>
+    <p>特别说明：本报告为 <strong>2025 预分析版</strong>，核心依据为截至 2025-09-30 的公开财务数据，不替代正式 2025 年年度报告口径。</p>
+  </footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+    const commonOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 24, right: 16, left: 8, bottom: 8 } },
+      plugins: {
+        legend: {
+          labels: { color: '#c9d1d9', boxWidth: 12, usePointStyle: true, pointStyle: 'circle' }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(22,27,34,.95)',
+          titleColor: '#fff',
+          bodyColor: '#dbe7f3',
+          borderColor: 'rgba(255,255,255,.12)',
+          borderWidth: 1
+        },
+        datalabels: {
+          color: '#e6edf3',
+          anchor: 'end',
+          align: 'top',
+          offset: 4,
+          clamp: true,
+          font: { weight: '700', size: 11 }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8b949e' },
+          grid: { color: 'rgba(255,255,255,.06)' }
+        },
+        y: {
+          ticks: { color: '#8b949e' },
+          grid: { color: 'rgba(255,255,255,.06)' },
+          grace: '12%'
+        }
+      }
+    };
+
+    new Chart(document.getElementById('trendChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2024Q3', '2024FY', '2025Q1', '2025H1', '2025Q3'],
+        datasets: [
+          {
+            type: 'bar',
+            label: '累计营收（亿元）',
+            data: [14.28, 19.09, 3.34, 9.56, 15.40],
+            backgroundColor: 'rgba(88,166,255,.72)',
+            borderRadius: 8,
+            yAxisID: 'y'
+          },
+          {
+            type: 'line',
+            label: '累计净利润（亿元）',
+            data: [-1.61, -4.23, -0.75, -1.47, -2.05],
+            borderColor: '#f85149',
+            backgroundColor: '#f85149',
+            tension: .3,
+            pointRadius: 4,
+            yAxisID: 'y1',
+            datalabels: { align: 'top', anchor: 'end' }
+          }
+        ]
+      },
+      options: {
+        ...commonOptions,
+        scales: {
+          x: commonOptions.scales.x,
+          y: { ...commonOptions.scales.y, position: 'left', title: { display: true, text: '营收（亿元）', color: '#8b949e' } },
+          y1: {
+            ...commonOptions.scales.y,
+            position: 'right',
+            title: { display: true, text: '净利润（亿元）', color: '#8b949e' },
+            grid: { drawOnChartArea: false },
+            grace: '20%'
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('profitChart'), {
+      type: 'line',
+      data: {
+        labels: ['2024Q3', '2025Q3'],
+        datasets: [
+          { label: '毛利率', data: [17.74, 13.45], borderColor: '#d29922', backgroundColor: '#d29922', tension: .25 },
+          { label: '净利率', data: [-11.25, -13.29], borderColor: '#f85149', backgroundColor: '#f85149', tension: .25 },
+          { label: '加权ROE', data: [-5.11, -8.24], borderColor: '#bc8cff', backgroundColor: '#bc8cff', tension: .25 }
+        ]
+      },
+      options: {
+        ...commonOptions,
+        plugins: {
+          ...commonOptions.plugins,
+          datalabels: {
+            ...commonOptions.plugins.datalabels,
+            formatter: (v) => v.toFixed(2) + '%'
+          }
+        },
+        scales: {
+          x: commonOptions.scales.x,
+          y: {
+            ...commonOptions.scales.y,
+            title: { display: true, text: '百分比（%）', color: '#8b949e' },
+            grace: '18%'
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('peerScaleChart'), {
+      type: 'bar',
+      data: {
+        labels: ['华自科技', '盛弘股份', '科华数据', '科士达'],
+        datasets: [
+          { label: '营收（亿元）', data: [15.40, 34.63, 57.06, 36.09], backgroundColor: 'rgba(88,166,255,.72)', borderRadius: 8 },
+          { label: '市值（亿元）', data: [66.70, 137.91, 300.13, 269.51], backgroundColor: 'rgba(57,208,200,.60)', borderRadius: 8 }
+        ]
+      },
+      options: {
+        ...commonOptions,
+        plugins: {
+          ...commonOptions.plugins,
+          datalabels: { ...commonOptions.plugins.datalabels, formatter: (v) => v.toFixed(1) }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('peerMarginChart'), {
+      type: 'bar',
+      data: {
+        labels: ['华自科技', '盛弘股份', '科华数据', '科士达'],
+        datasets: [
+          { label: '毛利率（%）', data: [13.45, 39.92, 25.10, 28.57], backgroundColor: 'rgba(210,153,34,.72)', borderRadius: 8 },
+          { label: '净利率（%）', data: [-13.29, 12.38, 6.17, 12.41], backgroundColor: 'rgba(248,81,73,.72)', borderRadius: 8 }
+        ]
+      },
+      options: {
+        ...commonOptions,
+        plugins: {
+          ...commonOptions.plugins,
+          datalabels: { ...commonOptions.plugins.datalabels, formatter: (v) => v.toFixed(2) + '%' }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('peerQualityChart'), {
+      type: 'bar',
+      data: {
+        labels: ['华自科技', '盛弘股份', '科华数据', '科士达'],
+        datasets: [
+          {
+            label: '资产负债率（%）',
+            data: [68.57, 51.14, 54.39, 35.05],
+            backgroundColor: 'rgba(188,140,255,.68)',
+            borderRadius: 8,
+            yAxisID: 'y'
+          },
+          {
+            label: '应收账款周转率',
+            data: [1.23, 2.51, 1.63, 2.39],
+            type: 'line',
+            borderColor: '#39d0c8',
+            backgroundColor: '#39d0c8',
+            pointRadius: 4,
+            tension: .25,
+            yAxisID: 'y1'
+          }
+        ]
+      },
+      options: {
+        ...commonOptions,
+        scales: {
+          x: commonOptions.scales.x,
+          y: { ...commonOptions.scales.y, position: 'left', title: { display: true, text: '资产负债率（%）', color: '#8b949e' } },
+          y1: {
+            ...commonOptions.scales.y,
+            position: 'right',
+            title: { display: true, text: '应收周转率', color: '#8b949e' },
+            grid: { drawOnChartArea: false },
+            grace: '18%'
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
