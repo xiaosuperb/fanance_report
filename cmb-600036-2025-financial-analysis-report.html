@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>招商银行（600036）2025年度财务分析报告</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-gold: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-teal: #39d0c8;
+      --shadow: 0 18px 42px rgba(0, 0, 0, 0.30);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top right, rgba(88,166,255,.10), transparent 22%), var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.72;
+    }
+    a { color: var(--accent); }
+    .hero, .summary-strip, .nav-bar, .container, .footer {
+      width: min(1320px, calc(100% - 32px));
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero {
+      margin-top: 24px;
+      padding: 36px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #0f172a 0%, #111827 45%, #0d1117 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(88,166,255,.18), transparent 70%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: #bfd7ff;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.16;
+      letter-spacing: .2px;
+    }
+    .hero p {
+      margin: 14px 0 0;
+      max-width: 980px;
+      color: #c9d1d9;
+      font-size: 16px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap: 20px;
+      align-items: end;
+    }
+    .hero-side {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-side .metric-label { color: var(--text-secondary); font-size: 13px; }
+    .hero-side .metric-value { font-size: 28px; font-weight: 800; margin-top: 6px; }
+    .hero-side .metric-sub { font-size: 13px; color: #c9d1d9; }
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .summary-card, .section, .card, .chart-card, .table-card, .risk-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .summary-card {
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 116px;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: var(--card-accent, var(--accent));
+    }
+    .summary-card .label { color: var(--text-secondary); font-size: 13px; }
+    .summary-card .value { margin-top: 10px; font-size: 28px; font-weight: 800; }
+    .summary-card .sub { margin-top: 8px; color: var(--text-muted); font-size: 13px; }
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(13,17,23,.8);
+      padding: 12px 0;
+      margin-top: 18px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-links { display: flex; gap: 10px; overflow: auto; padding-bottom: 2px; }
+    .nav-links a {
+      white-space: nowrap;
+      color: var(--text-secondary);
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav-links a:hover { color: var(--text-primary); background: rgba(88,166,255,.14); }
+    .container { margin-top: 24px; margin-bottom: 48px; }
+    .section { padding: 24px; margin-bottom: 20px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .section-badge {
+      width: 40px; height: 40px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #58a6ff 0%, #1f6feb 100%);
+      color: white; font-weight: 800; flex: 0 0 auto;
+    }
+    .section-header h2 { margin: 0; font-size: 24px; }
+    .section-desc { color: var(--text-secondary); font-size: 14px; margin-top: 2px; }
+    .grid-2, .grid-3, .grid-4 { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card, .chart-card, .table-card { padding: 18px; }
+    .card h3, .chart-card h3, .table-card h3 { margin: 0 0 10px; font-size: 18px; }
+    .muted { color: var(--text-secondary); }
+    .small { font-size: 13px; }
+    .lead { font-size: 17px; color: #dbe7f3; margin-top: 0; }
+    .bullet-list { margin: 0; padding-left: 18px; }
+    .bullet-list li { margin-bottom: 10px; }
+    .alert {
+      border-left: 4px solid var(--accent);
+      background: rgba(255,255,255,.03);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+    .alert.green { border-color: var(--accent-green); }
+    .alert.warning { border-color: var(--accent-gold); }
+    .alert.danger { border-color: var(--accent-red); }
+    .alert.purple { border-color: var(--accent-purple); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .chip {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      color: #c8d5e3;
+      border: 1px solid rgba(255,255,255,.06);
+      font-size: 13px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th { color: #c4d2de; background: rgba(255,255,255,.02); }
+    tbody tr:hover { background: rgba(255,255,255,.02); }
+    .positive { color: var(--accent-green); }
+    .negative { color: var(--accent-red); }
+    .neutral { color: var(--accent-gold); }
+    .chart-wrap { position: relative; height: 340px; }
+    .chart-wrap.tall { height: 400px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .kpi {
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.05);
+    }
+    .kpi .k { color: var(--text-secondary); font-size: 13px; }
+    .kpi .v { font-size: 26px; font-weight: 800; margin-top: 8px; }
+    .footer {
+      margin-bottom: 36px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      padding-bottom: 20px;
+    }
+    @media (max-width: 1100px) {
+      .summary-strip, .grid-4, .grid-3, .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-grid, .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .summary-strip, .grid-4, .grid-3, .grid-2, .kpi-grid { grid-template-columns: 1fr; }
+      .hero { padding: 24px; }
+      .section { padding: 18px; }
+      .chart-wrap, .chart-wrap.tall { height: 280px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">📊 银行股管理层版 · 2025年度财务分析</div>
+        <h1>招商银行（600036）2025年度财务分析报告</h1>
+        <p>
+          结论前置：2025 年招商银行呈现出<strong>“收入基本持平、利润温和增长、资本回报略有回落但仍显著领先同业”</strong>的经营特征。
+          从全年口径看，营业总收入同比几乎持平，净利润同比提升约 1.0%，ROE/ROA 较 2024 年略有回落，说明在低利率、弱信贷需求与银行业息差承压背景下，招行仍维持了较强盈利韧性，但增长质量已从“高增速”切换为“高确定性”。
+        </p>
+      </div>
+      <div class="hero-side">
+        <div class="metric-label">核心判断</div>
+        <div class="metric-value">稳健经营，韧性优先</div>
+        <div class="metric-sub">2025 年更像“高质量守成”而非“高弹性扩张”</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-strip">
+    <div class="summary-card" style="--card-accent: var(--accent);">
+      <div class="label">2025 营业总收入</div>
+      <div class="value">3375.32 亿</div>
+      <div class="sub">同比 +0.01%</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-green);">
+      <div class="label">2025 净利润</div>
+      <div class="value">1511.26 亿</div>
+      <div class="sub">同比 +1.05%</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-gold);">
+      <div class="label">2025 ROE</div>
+      <div class="value">12.24%</div>
+      <div class="sub">较 2024 年 -0.47pct</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-purple);">
+      <div class="label">2025 ROA</div>
+      <div class="value">1.20%</div>
+      <div class="sub">较 2024 年 -0.09pct</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-teal);">
+      <div class="label">行业位置</div>
+      <div class="value">头部领先</div>
+      <div class="sub">盈利规模与回报率双优</div>
+    </div>
+    <div class="summary-card" style="--card-accent: var(--accent-red);">
+      <div class="label">管理层关注点</div>
+      <div class="value">息差与资产质量</div>
+      <div class="sub">重点关注后续修复斜率</div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <div class="nav-links">
+      <a href="#summary">执行摘要</a>
+      <a href="#overview">公司概况</a>
+      <a href="#peer">同行对比</a>
+      <a href="#strategy">战略分析</a>
+      <a href="#accounting">会计分析</a>
+      <a href="#financial">财务分析</a>
+      <a href="#outlook">前景分析</a>
+      <a href="#risk">风险与结论</a>
+      <a href="#sources">数据来源</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="section" id="summary">
+      <div class="section-header">
+        <div class="section-badge">1</div>
+        <div>
+          <h2>执行摘要</h2>
+          <div class="section-desc">适合管理层 3 分钟快速浏览</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>一句话结论</h3>
+          <p class="lead">招商银行 2025 年交出了一份“低增速、强韧性、仍领先”的成绩单。</p>
+          <ul class="bullet-list">
+            <li><strong>收入端：</strong>全年营业总收入 3375.32 亿元，同比仅 +0.01%，意味着行业息差压力基本抵消了规模扩张贡献。</li>
+            <li><strong>利润端：</strong>全年净利润 1511.26 亿元，同比 +1.05%，显示成本控制、资产结构优化及非息业务韧性仍在发挥作用。</li>
+            <li><strong>回报端：</strong>ROE 12.24%、ROA 1.20%，虽较 2024 年小幅回落，但仍显著高于多数股份行。</li>
+            <li><strong>经营含义：</strong>公司已经由“高速成长型优质银行”过渡为“高质量、低波动、高分红预期”的成熟型核心资产。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>管理层最该盯的 4 个点</h3>
+          <div class="alert green"><strong>1. 利润仍在增长：</strong>在行业景气偏弱背景下，净利润仍实现正增长，说明核心经营底盘稳。</div>
+          <div class="alert warning"><strong>2. 收入弹性不足：</strong>收入几乎零增长，后续估值重估要看息差企稳与零售修复。</div>
+          <div class="alert purple"><strong>3. 回报率仍领先：</strong>12%+ 的 ROE 在股份行中仍属高位，是估值锚。</div>
+          <div class="alert danger"><strong>4. 风险观察项：</strong>资产质量、拨备与资本约束仍是后续超预期/低预期的关键分水岭。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="section-header">
+        <div class="section-badge">2</div>
+        <div>
+          <h2>公司概况</h2>
+          <div class="section-desc">从商业模式看招商银行的核心护城河</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>经营定位</h3>
+          <p>
+            招商银行是国内最具代表性的零售银行与财富管理平台型银行之一，核心优势来自<strong>零售客户基础、AUM 经营能力、信用卡与支付生态、以及相对成熟的数字化运营能力</strong>。
+            与传统对公驱动型银行相比，招行的投资逻辑并不只是资产规模，而在于“更高质量客户结构 + 更优回报率 + 更强中收能力”。
+          </p>
+          <div class="chip-row">
+            <span class="chip">零售金融</span>
+            <span class="chip">财富管理</span>
+            <span class="chip">信用卡生态</span>
+            <span class="chip">数字化运营</span>
+            <span class="chip">高 ROE 银行标杆</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>2025 经营画像</h3>
+          <ul class="bullet-list">
+            <li>公司全年收入基本持平，说明<strong>增长来源更多是结构优化而非规模粗放扩张</strong>。</li>
+            <li>利润保持正增长，表明其<strong>经营弹性仍优于多数同业</strong>。</li>
+            <li>ROE/ROA 略有回落，意味着行业环境对银行股整体回报中枢的压制仍未完全消退。</li>
+            <li>对资本市场而言，招行的估值逻辑更偏向<strong>“确定性资产”</strong>，而不是高弹性顺周期交易。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="peer">
+      <div class="section-header">
+        <div class="section-badge">3</div>
+        <div>
+          <h2>同行业对比</h2>
+          <div class="section-desc">选取 3 家股份行对标：兴业银行、平安银行、中信银行</div>
+        </div>
+      </div>
+      <div class="table-card">
+        <h3>2025 年核心指标横向对比</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>公司</th>
+              <th>营业总收入（亿）</th>
+              <th>净利润（亿）</th>
+              <th>ROE</th>
+              <th>ROA</th>
+              <th>定位判断</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>招商银行</td>
+              <td>3375.32</td>
+              <td>1511.26</td>
+              <td class="positive">12.24%</td>
+              <td class="positive">1.20%</td>
+              <td>规模、盈利、回报三项全面领先</td>
+            </tr>
+            <tr>
+              <td>兴业银行</td>
+              <td>2127.41</td>
+              <td>778.54</td>
+              <td>8.74%</td>
+              <td>0.72%</td>
+              <td>对公与同业特色更强，回报率低于招行</td>
+            </tr>
+            <tr>
+              <td>平安银行</td>
+              <td>1314.42</td>
+              <td>426.33</td>
+              <td>7.85%</td>
+              <td>0.73%</td>
+              <td>零售属性较强，但盈利规模与回报弱于招行</td>
+            </tr>
+            <tr>
+              <td>中信银行</td>
+              <td>2124.75</td>
+              <td>714.90</td>
+              <td>8.72%</td>
+              <td>0.73%</td>
+              <td>规模尚可，但质量型溢价不及招行</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid-2">
+        <div class="chart-card">
+          <h3>规模对比：收入与利润</h3>
+          <div class="chart-wrap"><canvas id="peerScaleChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>盈利能力对比：ROE 与 ROA</h3>
+          <div class="chart-wrap"><canvas id="peerReturnChart"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 18px;">
+        <h3>结论</h3>
+        <p>
+          招商银行在可比股份行中呈现出典型的<strong>“大体量 + 高回报”</strong>特征。很多银行能做到大，但回报率不高；也有银行短期回报率尚可，但盈利体量与客户质量不具备可持续性。
+          招行的优势在于：一方面利润规模显著领先，另一方面 ROE、ROA 仍保持行业高位，这意味着它不是靠单纯加杠杆换利润，而是拥有更高质量的资产与客户经营体系。
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="strategy">
+      <div class="section-header">
+        <div class="section-badge">4</div>
+        <div>
+          <h2>战略分析</h2>
+          <div class="section-desc">增长放缓之后，招行靠什么保持领先</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>行业分析</h3>
+          <ul class="bullet-list">
+            <li>2025 年银行业整体处于<strong>低利率、弱融资需求、资产收益率下行</strong>阶段，行业收入普遍承压。</li>
+            <li>在此背景下，银行股的竞争重点从“谁扩张更快”转为“谁资产更稳、客户更优、资本占用更低”。</li>
+            <li>招商银行所处的赛道并不是传统高增长赛道，而是<strong>高质量零售金融与财富管理赛道</strong>。</li>
+            <li>因此，市场给予招行的核心溢价来自经营质量和回报持续性，而非短期高增速。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>竞争策略</h3>
+          <p>
+            招商银行的竞争策略可以概括为：<strong>以高价值客户经营为核心，以财富管理与零售场景做黏性，以数字化提升单位运营效率</strong>。
+            在行业整体下行时，这种模式的好处是：客户黏性更强、负债成本相对更优、中收韧性通常更好；弱点则在于，当资本市场和财富管理景气偏弱时，中收增长会明显放缓。
+          </p>
+          <div class="alert warning">这也是 2025 年收入几乎零增长但利润仍微增的根本原因：<strong>扩表不是主驱动，精细化经营才是主驱动</strong>。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="accounting">
+      <div class="section-header">
+        <div class="section-badge">5</div>
+        <div>
+          <h2>会计分析</h2>
+          <div class="section-desc">银行股应重点看拨备、资产质量、确认口径与资本约束</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>重点关注的会计口径</h3>
+          <ul class="bullet-list">
+            <li><strong>利息净收入确认：</strong>受贷款收益率、负债成本和息差变化显著影响，是银行收入波动的核心来源。</li>
+            <li><strong>减值计提与拨备：</strong>直接决定利润表平滑程度，是银行利润“质量”判断的关键。</li>
+            <li><strong>公允价值变动与投资收益：</strong>在利率波动期可能造成阶段性利润扰动。</li>
+            <li><strong>资本充足率约束：</strong>决定资产扩张速度与分红空间，是银行估值框架的重要前提。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>本次报告的会计审阅结论</h3>
+          <p>
+            基于已交叉验证的数据，招商银行 2025 年利润与收入走势整体匹配，没有出现明显“利润高增但收入失真”的异常特征。
+            但银行股不同于工业公司，<strong>最终判断盈利质量仍需结合年报正文中的不良率、拨备覆盖率、资本充足率、重组贷款与阶段迁徙情况综合判断</strong>。
+          </p>
+          <div class="alert purple">
+            当前报告优先锁定了<strong>已验证的收入、利润、ROE、ROA</strong>等核心财务口径；
+            对于资产质量与监管资本细项，建议后续补充年报正文专项摘录，形成完整版银行专题附录。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="financial">
+      <div class="section-header">
+        <div class="section-badge">6</div>
+        <div>
+          <h2>财务分析</h2>
+          <div class="section-desc">从趋势、盈利、效率与现金创造能力看经营质量</div>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi"><div class="k">2024 营收</div><div class="v">3374.88 亿</div></div>
+        <div class="kpi"><div class="k">2025 营收</div><div class="v">3375.32 亿</div></div>
+        <div class="kpi"><div class="k">2024 净利润</div><div class="v">1495.59 亿</div></div>
+        <div class="kpi"><div class="k">2025 净利润</div><div class="v">1511.26 亿</div></div>
+      </div>
+
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="chart-card">
+          <h3>2024 vs 2025：收入与利润</h3>
+          <div class="chart-wrap"><canvas id="annualTrendChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>2025 年内进度：Q1 / H1 / Q3 / 全年</h3>
+          <div class="chart-wrap"><canvas id="progressChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="chart-card">
+          <h3>资本回报趋势：ROE 与 ROA</h3>
+          <div class="chart-wrap"><canvas id="returnTrendChart"></canvas></div>
+        </div>
+        <div class="card">
+          <h3>财务要点拆解</h3>
+          <ul class="bullet-list">
+            <li><strong>盈利能力：</strong>2025 年净利润同比 +1.05%，显示公司在弱收入环境下仍守住利润增长底线。</li>
+            <li><strong>成长能力：</strong>收入几乎零增长，说明扩张逻辑明显弱化，更多依赖结构与效率改善。</li>
+            <li><strong>经营效率：</strong>从 2025 季度累计口径看，收入和利润曲线都较平滑，波动显著低于多数商业银行。</li>
+            <li><strong>资本回报：</strong>ROE 从 12.71% 回落至 12.24%，ROA 从 1.29% 回落至 1.20%，反映行业压力仍在，但招行仍高于主要可比股份行。</li>
+          </ul>
+          <div class="alert green"><strong>核心判断：</strong>招行的问题不是“盈利失速”，而是“增速下台阶”；这会影响估值上限，但不改其优质资产底色。</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>现金流与利润质量说明</h3>
+          <p>
+            银行业与制造业不同，“经营现金流 / 净利润”不适合作为唯一质量判断依据，因为银行吸收存款、发放贷款、同业往来和金融资产配置都会显著影响现金流结构。
+            对银行而言，利润质量更应关注：<strong>息差走势、拨备计提、资产质量稳定性、资本消耗与分红能力</strong>。
+          </p>
+          <p>
+            从目前已验证的数据看，招商银行 2025 年不存在“利润大幅跑赢收入”的失真式扩张，利润增长相对克制，这反而提高了报表可信度。
+          </p>
+        </div>
+        <div class="card">
+          <h3>销售与管理效率——银行口径替代解读</h3>
+          <p>
+            银行业不适合使用互联网/SaaS 常见的 CAC、LTV 指标做硬性套用。对招商银行更有意义的，是看：<strong>客户质量、财富管理转化率、零售AUM贡献、以及单位资本消耗带来的利润回报</strong>。
+          </p>
+          <ul class="bullet-list">
+            <li>如果未来财富管理与零售贷款修复，则中收与息差有望共振回升。</li>
+            <li>如果资产质量承压，则拨备与资本会优先吸收压力，利润释放斜率将变平。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="outlook">
+      <div class="section-header">
+        <div class="section-badge">7</div>
+        <div>
+          <h2>前景分析</h2>
+          <div class="section-desc">未来 4 个季度更应该看修复，而非追求高增</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>未来 4 个季度的观察框架</h3>
+          <ul class="bullet-list">
+            <li><strong>收入修复斜率：</strong>若息差止跌、零售贷款需求改善，收入有望重回温和增长。</li>
+            <li><strong>利润稳定性：</strong>若拨备压力可控，利润仍有望维持低个位数增长。</li>
+            <li><strong>中收与财富管理：</strong>资本市场活跃度回升将直接改善招行非息收入质量。</li>
+            <li><strong>估值弹性：</strong>银行股重估并不一定来自利润高增长，更多来自风险偏好改善与资产质量担忧缓释。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>情景判断</h3>
+          <div class="alert green"><strong>乐观情景：</strong>息差见底、财富管理回暖、信用成本平稳，ROE 有望稳定在 12% 左右，估值存在修复空间。</div>
+          <div class="alert warning"><strong>中性情景：</strong>收入仍低增长、利润温和增长，招行继续以分红与稳健回报支撑配置价值。</div>
+          <div class="alert danger"><strong>谨慎情景：</strong>若零售资产质量与地产相关风险暴露超预期，则拨备压力可能压制利润与估值。</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:18px;">
+        <h3>战略建议</h3>
+        <ul class="bullet-list">
+          <li><strong>对管理层：</strong>优先级应放在息差修复、优质零售客群经营、财富管理重启与资产质量稳控。</li>
+          <li><strong>对投资判断：</strong>招商银行更适合“中长期稳健配置”，而非纯高弹性博弈。</li>
+          <li><strong>对后续报告升级：</strong>建议补充年报正文中的不良率、拨备覆盖率、核心一级资本充足率等指标，完善银行专属风控模块。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="risk">
+      <div class="section-header">
+        <div class="section-badge">8</div>
+        <div>
+          <h2>风险与结论</h2>
+          <div class="section-desc">先识别风险，再给结论</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="risk-card" style="padding:18px;">
+          <h3>主要风险</h3>
+          <ul class="bullet-list">
+            <li>净息差继续下行，收入端长期承压。</li>
+            <li>零售贷款与信用卡资产质量波动超预期。</li>
+            <li>财富管理与中收恢复慢于预期。</li>
+            <li>资本充足率与分红平衡带来扩表约束。</li>
+            <li>宏观经济修复偏慢，优质银行也难以独善其身。</li>
+          </ul>
+        </div>
+        <div class="risk-card" style="padding:18px;">
+          <h3>最终结论</h3>
+          <p class="lead">招商银行 2025 年不是惊艳的一年，但仍然是优秀的一年。</p>
+          <p>
+            这份报表最重要的信息，不是收入增长几乎停滞，而是公司在这样的环境下仍能维持 1500 亿级利润规模与 12%+ 的 ROE。
+            这说明招商银行依然是国内银行体系中少数兼具<strong>规模、质量与回报率</strong>的核心资产。
+          </p>
+          <div class="alert green"><strong>结论标签：</strong>优质龙头、增速放缓、但长期配置价值仍在。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sources">
+      <div class="section-header">
+        <div class="section-badge">9</div>
+        <div>
+          <h2>数据来源与口径说明</h2>
+          <div class="section-desc">本报告优先使用已核验来源，避免泛搜索拼接</div>
+        </div>
+      </div>
+      <div class="card">
+        <ul class="bullet-list">
+          <li><strong>主数据源 1：</strong>同花顺 F10 财务页（招商银行 600036，含 2024/2025 年度及季度累计口径）。</li>
+          <li><strong>主数据源 2：</strong>东方财富 F10 / 新财务分析页（招商银行 600036）。</li>
+          <li><strong>年报原文定位：</strong>同花顺公告链接已确认存在《招商银行股份有限公司 2025 年度报告》PDF。</li>
+          <li><strong>同行对比来源：</strong>兴业银行（601166）、平安银行（000001）、中信银行（601998）同花顺 F10 财务页 2025 年口径。</li>
+          <li><strong>说明：</strong>由于当前环境对 PDF 正文结构化抽取存在限制，资产质量与资本充足率细项尚未完整自动提取；本报告已优先锁定经双源验证的收入、利润、ROE、ROA 等核心指标，后续可追加银行专项附录版。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>报告文件：cmb-600036-2025-financial-analysis-report.html</div>
+    <div>生成口径：中文管理层版 / 深色主题 / 以已验证财务核心指标为主</div>
+  </footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+
+    const labelStyle = {
+      color: '#e6edf3',
+      font: { weight: '700', size: 11 },
+      anchor: 'end',
+      align: 'top',
+      offset: 6,
+      clamp: true,
+      formatter: (v) => typeof v === 'number' ? v.toFixed(2) : v
+    };
+
+    const commonScales = {
+      x: {
+        ticks: { color: '#8b949e' },
+        grid: { color: 'rgba(255,255,255,.05)' }
+      },
+      y: {
+        ticks: { color: '#8b949e' },
+        grid: { color: 'rgba(255,255,255,.06)' },
+        grace: '12%'
+      }
+    };
+
+    new Chart(document.getElementById('peerScaleChart'), {
+      type: 'bar',
+      data: {
+        labels: ['招商银行', '兴业银行', '平安银行', '中信银行'],
+        datasets: [
+          {
+            label: '营业总收入（亿）',
+            data: [3375.32, 2127.41, 1314.42, 2124.75],
+            backgroundColor: 'rgba(88,166,255,.75)',
+            borderRadius: 8
+          },
+          {
+            label: '净利润（亿）',
+            data: [1511.26, 778.54, 426.33, 714.90],
+            backgroundColor: 'rgba(63,185,80,.75)',
+            borderRadius: 8
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#e6edf3' } },
+          datalabels: labelStyle,
+          tooltip: { mode: 'index', intersect: false }
+        },
+        layout: { padding: { top: 28 } },
+        scales: commonScales
+      }
+    });
+
+    new Chart(document.getElementById('peerReturnChart'), {
+      type: 'bar',
+      data: {
+        labels: ['招商银行', '兴业银行', '平安银行', '中信银行'],
+        datasets: [
+          {
+            label: 'ROE（%）',
+            data: [12.24, 8.74, 7.85, 8.72],
+            backgroundColor: 'rgba(210,153,34,.78)',
+            borderRadius: 8
+          },
+          {
+            label: 'ROA（%）',
+            data: [1.20, 0.72, 0.73, 0.73],
+            backgroundColor: 'rgba(57,208,200,.78)',
+            borderRadius: 8
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#e6edf3' } },
+          datalabels: labelStyle
+        },
+        layout: { padding: { top: 28 } },
+        scales: commonScales
+      }
+    });
+
+    new Chart(document.getElementById('annualTrendChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2025'],
+        datasets: [
+          {
+            label: '营业总收入（亿）',
+            data: [3374.88, 3375.32],
+            backgroundColor: 'rgba(88,166,255,.78)',
+            borderRadius: 8
+          },
+          {
+            label: '净利润（亿）',
+            data: [1495.59, 1511.26],
+            backgroundColor: 'rgba(63,185,80,.78)',
+            borderRadius: 8
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#e6edf3' } },
+          datalabels: labelStyle
+        },
+        layout: { padding: { top: 28 } },
+        scales: commonScales
+      }
+    });
+
+    new Chart(document.getElementById('progressChart'), {
+      type: 'line',
+      data: {
+        labels: ['2025Q1', '2025H1', '2025Q3', '2025FY'],
+        datasets: [
+          {
+            label: '营业总收入（亿）',
+            data: [837.51, 1699.69, 2514.20, 3375.32],
+            borderColor: '#58a6ff',
+            backgroundColor: 'rgba(88,166,255,.18)',
+            fill: true,
+            tension: .25,
+            pointRadius: 4,
+            pointBackgroundColor: '#58a6ff'
+          },
+          {
+            label: '净利润（亿）',
+            data: [375.13, 754.05, 1145.37, 1511.26],
+            borderColor: '#3fb950',
+            backgroundColor: 'rgba(63,185,80,.12)',
+            fill: true,
+            tension: .25,
+            pointRadius: 4,
+            pointBackgroundColor: '#3fb950'
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#e6edf3' } },
+          datalabels: labelStyle
+        },
+        layout: { padding: { top: 28 } },
+        scales: commonScales
+      }
+    });
+
+    new Chart(document.getElementById('returnTrendChart'), {
+      type: 'line',
+      data: {
+        labels: ['2024', '2025Q1', '2025H1', '2025Q3', '2025FY'],
+        datasets: [
+          {
+            label: 'ROE（%）',
+            data: [12.71, 3.00, 5.95, 9.13, 12.24],
+            borderColor: '#d29922',
+            backgroundColor: 'rgba(210,153,34,.12)',
+            fill: false,
+            tension: .28,
+            pointRadius: 4,
+            pointBackgroundColor: '#d29922'
+          },
+          {
+            label: 'ROA（%）',
+            data: [1.29, 0.30, 0.61, 0.92, 1.20],
+            borderColor: '#bc8cff',
+            backgroundColor: 'rgba(188,140,255,.12)',
+            fill: false,
+            tension: .28,
+            pointRadius: 4,
+            pointBackgroundColor: '#bc8cff'
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#e6edf3' } },
+          datalabels: labelStyle
+        },
+        layout: { padding: { top: 28 } },
+        scales: commonScales
+      }
+    });
+  </script>
+</body>
+</html>
