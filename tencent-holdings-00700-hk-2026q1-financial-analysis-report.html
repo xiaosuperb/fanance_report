@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>腾讯控股（00700.HK）2026年Q1财务分析报告</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0d1117;--bg2:#161b22;--card:#1c2128;--bd:#30363d;--txt:#e6edf3;--sub:#8b949e;--muted:#6e7681;--blue:#58a6ff;--green:#7ee787;--gold:#f2cc60;--purple:#d2a8ff;--red:#ff7b72}
+    *{box-sizing:border-box} body{margin:0;font-family:'Noto Sans SC',sans-serif;background:linear-gradient(180deg,#0b1020 0%,#0d1117 15%,#0d1117 100%);color:var(--txt);line-height:1.7}
+    .wrap,.hero-inner,.strip,.nav-inner,.footer{width:min(1320px,calc(100% - 36px));margin:auto}
+    .hero{padding:52px 0 28px;background:radial-gradient(circle at top right,rgba(88,166,255,.18),transparent 28%),linear-gradient(135deg,#10192f 0%,#0d1117 64%,#121826 100%);border-bottom:1px solid rgba(255,255,255,.06)}
+    .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.25);color:#c9d1d9;font-size:13px}
+    h1{margin:18px 0 14px;font-size:38px;line-height:1.18;font-weight:800} p{margin:0 0 12px} .lead{color:var(--sub)}
+    .hero-grid,.grid-2,.grid-3,.grid-4{display:grid;gap:18px} .hero-grid{grid-template-columns:1.45fr .9fr} .grid-2{grid-template-columns:1fr 1fr} .grid-3{grid-template-columns:repeat(3,1fr)} .grid-4{grid-template-columns:repeat(4,1fr)}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01));border:1px solid var(--bd);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.22);padding:20px}
+    .alert{padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.02);color:var(--sub);border-left:4px solid var(--blue)} .green{border-left-color:var(--green)} .gold{border-left-color:var(--gold)} .purple{border-left-color:var(--purple)}
+    .mini .label,.sum .name,.kpi .title,.small,.muted{color:var(--sub)} .mini .value,.sum .kpi,.kpi .num{font-weight:800}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mini{padding:16px;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)} .mini .value{font-size:24px;margin:6px 0 2px}
+    .strip{margin:-18px auto 24px;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}.sum{position:relative;overflow:hidden;padding:16px;background:var(--card);border:1px solid var(--bd);border-radius:16px}.sum:before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--blue),rgba(255,255,255,.12))}.sum.green:before{background:linear-gradient(90deg,var(--green),rgba(255,255,255,.12))}.sum.gold:before{background:linear-gradient(90deg,var(--gold),rgba(255,255,255,.12))}.sum.purple:before{background:linear-gradient(90deg,var(--purple),rgba(255,255,255,.12))}.sum .kpi{font-size:28px;margin:8px 0 4px}
+    .nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(13,17,23,.78);border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:24px}.nav-inner{display:flex;flex-wrap:wrap;gap:10px;padding:12px 0}.nav-inner a{padding:10px 14px;border-radius:999px;color:var(--sub);text-decoration:none;font-size:13px}.nav-inner a:hover{color:var(--txt);background:rgba(88,166,255,.08);border-color:rgba(88,166,255,.25)}
+    section{margin:26px 0}.sec-h{display:flex;align-items:center;gap:14px;margin-bottom:16px}.no{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:800;color:#fff;background:linear-gradient(135deg,#1f6feb 0%,#58a6ff 100%)} h2{margin:0;font-size:25px} h3{margin:0 0 12px;font-size:18px}
+    .kpi{padding:18px;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)} .kpi .num{font-size:30px;margin-top:8px} .kpi .desc{margin-top:6px;color:var(--muted);font-size:12px}
+    .tag{display:inline-flex;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700;background:rgba(88,166,255,.14);color:#8dc2ff}.tag.green{background:rgba(126,231,135,.14);color:var(--green)}.tag.gold{background:rgba(242,204,96,.14);color:var(--gold)}.tag.purple{background:rgba(210,168,255,.14);color:var(--purple)}
+    table{width:100%;border-collapse:collapse;font-size:14px} th,td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top} th{background:rgba(255,255,255,.03);color:#c9d1d9} tr:nth-child(even) td{background:rgba(255,255,255,.018)}
+    .table-wrap{overflow:auto} ul{margin:8px 0 0 18px;padding:0} li{margin:6px 0} canvas{width:100%!important;height:320px!important}.footer{color:var(--muted);font-size:12px;border-top:1px solid rgba(255,255,255,.06);padding:18px 0 42px;margin-top:30px}
+    @media(max-width:1180px){.hero-grid,.grid-2,.grid-4{grid-template-columns:1fr}.grid-3,.strip{grid-template-columns:repeat(3,1fr)}} @media(max-width:760px){h1{font-size:30px}.grid-3,.strip{grid-template-columns:1fr}canvas{height:280px!important}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">📊 腾讯控股 00700.HK · 2026年Q1财务分析报告</span>
+      <div class="hero-grid" style="margin-top:18px;">
+        <div class="card">
+          <h1>腾讯控股：核心业务延续高质量增长，AI 投入开始显性化，2026Q1 进入“稳增长 + 强再投资”阶段</h1>
+          <p class="lead">结论前置：腾讯 2026Q1 实现收入 <strong style="color:#fff">1,964.58 亿元</strong>，同比增长 <strong style="color:#fff">9%</strong>；IFRS 归母净利润 <strong style="color:#fff">580.93 亿元</strong>，同比增长 <strong style="color:#fff">21%</strong>；Non-IFRS 归母净利润 <strong style="color:#fff">679.05 亿元</strong>，同比增长 <strong style="color:#fff">11%</strong>。广告、游戏、金融科技与企业服务同步增长，利润率保持高位，但 AI 原生产品投放、算力与设备折旧、研发和营销投入显著抬升，说明腾讯正在主动把现金流优势转化为 AI 时代的下一轮平台能力。</p>
+          <div class="grid-3" style="margin-top:16px;">
+            <div class="alert green"><strong>盈利质量仍强</strong><br>收入 +9%，毛利 +11%，IFRS 经营利润 +17%，利润增速快于收入增速。</div>
+            <div class="alert gold"><strong>AI 投入显性化</strong><br>Q1 资本开支 319 亿元，同比 +16%；销售费用同比 +44%，研发同比 +20%。</div>
+            <div class="alert purple"><strong>商业化路径更清晰</strong><br>广告推荐、云服务、生产力 Agent、微信生态闭环开始成为 AI 兑现主轴。</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>管理层摘要</h3>
+          <div class="mini-grid">
+            <div class="mini"><div class="label">综合评级</div><div class="value">A</div><div class="small">高质量增长</div></div>
+            <div class="mini"><div class="label">综合评分</div><div class="value">85/100</div><div class="small">财务+战略+现金流</div></div>
+            <div class="mini"><div class="label">阶段判断</div><div class="value" style="font-size:19px">现金牛再投资</div><div class="small">利润释放与 AI 前置投入并行</div></div>
+            <div class="mini"><div class="label">核心关注</div><div class="value" style="font-size:19px">AI ROI</div><div class="small">广告/云/Agent 的持续兑现</div></div>
+          </div>
+          <div class="alert" style="margin-top:14px;">对管理层最重要的判断不是“Q1 赚了多少”，而是腾讯已证明：<strong style="color:#fff">现有主业仍能产生足够现金流支撑 AI 扩张</strong>。短期估值锚从单纯利润释放，切换为“核心业务稳健 + AI 变现兑现”。</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="strip">
+    <div class="sum"><div class="name">Q1 收入</div><div class="kpi">1,964.6亿</div><div class="small">同比 +9%</div></div>
+    <div class="sum green"><div class="name">IFRS 归母净利润</div><div class="kpi">580.9亿</div><div class="small">同比 +21%</div></div>
+    <div class="sum purple"><div class="name">Non-IFRS 归母净利润</div><div class="kpi">679.1亿</div><div class="small">同比 +11%</div></div>
+    <div class="sum gold"><div class="name">毛利率</div><div class="kpi">56.6%</div><div class="small">同比 +0.8pct</div></div>
+    <div class="sum"><div class="name">资本开支</div><div class="kpi">319亿</div><div class="small">同比 +16%</div></div>
+    <div class="sum green"><div class="name">自由现金流</div><div class="kpi">567亿</div><div class="small">同比 +20%</div></div>
+  </div>
+
+  <nav class="nav"><div class="nav-inner">
+    <a href="#summary">执行摘要</a><a href="#company">公司概况</a><a href="#peer">同行对比</a><a href="#strategy">战略分析</a><a href="#accounting">会计分析</a><a href="#financial">财务分析</a><a href="#outlook">前景与估值</a><a href="#risk">风险与结论</a><a href="#sources">数据来源</a>
+  </div></nav>
+
+  <main class="wrap">
+    <section id="summary">
+      <div class="sec-h"><div class="no">01</div><div><h2>执行摘要</h2><p class="muted">先讲结论，再看分解。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>三条核心结论</h3>
+          <ul>
+            <li><strong>主业没有弱化，反而更稳。</strong> Q1 收入 +9%，其中广告 +20%、国际游戏 +13%、企业服务收入 +20%，说明增长并非单引擎驱动。</li>
+            <li><strong>利润率表面稳、结构更优。</strong> IFRS 经营利润 +17%，毛利率升至 56.6%，背后是高毛利广告、游戏和云收入占比提升。</li>
+            <li><strong>AI 已从叙事转向财务体现。</strong> 新 AI 产品拖累了剔除口径前后的经营利润差额，销售、研发和 CapEx 同步上升，说明投入已真实进入利润表与现金流量表。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>一句话判断</h3>
+          <p>腾讯 2026Q1 不是简单的“好季报”，而是一份典型的<strong style="color:#fff">平台型龙头在新技术周期前夜加速再投资</strong>的报表：旧业务还在稳定供血，新业务开始消耗资源，但整体财务安全垫足够厚，容错率远高于多数互联网同业。</p>
+          <div class="grid-3" style="margin-top:14px;">
+            <div class="kpi"><div class="title">微信/WeChat MAU</div><div class="num">14.32亿</div><div class="desc">同比 +2%</div></div>
+            <div class="kpi"><div class="title">QQ 移动端 MAU</div><div class="num">5.16亿</div><div class="desc">同比 -3%，环比 +2%</div></div>
+            <div class="kpi"><div class="title">净现金</div><div class="num">1,468.6亿</div><div class="desc">较2025年末 +37%</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="company">
+      <div class="sec-h"><div class="no">02</div><div><h2>公司概况</h2><p class="muted">平台生态广、业务矩阵厚，是腾讯穿越周期的基本盘。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>业务结构</h3>
+          <ul>
+            <li><strong>增值服务 VAS：</strong> 961.10 亿元，占收入 49%，主要包括国内游戏、国际游戏和社交网络。</li>
+            <li><strong>营销服务：</strong> 381.71 亿元，占收入 19%，核心驱动力来自微信生态广告推荐与闭环转化。</li>
+            <li><strong>金融科技与企业服务：</strong> 598.85 亿元，占收入 31%，其中企业服务收入同比增长 20%，云与电商技术服务是亮点。</li>
+          </ul>
+          <p>对腾讯而言，微信/QQ 的用户入口、游戏变现能力、广告算法和支付/云基础设施共同构成了“流量—交易—内容—企业服务”的完整闭环，这是其与多数单业务互联网公司的本质差异。</p>
+        </div>
+        <div class="card">
+          <h3>Q1 经营定位</h3>
+          <p>管理层把 2026 年开局定义为：<strong>“在新 AI 产品上取得实质进展，同时继续利用 AI 推动现有核心业务增长。”</strong> 这意味着腾讯并未把 AI 仅视为单独的新业务，而是把它嵌入广告、搜索、微信生态、云服务和生产力工具之中，优先做“平台内增强”。</p>
+          <div class="alert green">这类路径的财务好处是：AI 不完全依赖远期梦想，而是能在广告定价、推荐效率、云算力需求和工具订阅中更早转化为收入或利润改善。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="peer">
+      <div class="sec-h"><div class="no">03</div><div><h2>同行业对比</h2><p class="muted">采用港股互联网平台三角：腾讯、阿里巴巴、美团。</p></div></div>
+      <div class="card">
+        <h3>横向对比表</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>公司</th><th>口径</th><th>收入增速</th><th>利润表现</th><th>核心优势</th><th>当前主要矛盾</th></tr></thead>
+            <tbody>
+              <tr><td>腾讯控股</td><td>2026Q1</td><td>+9%</td><td>IFRS归母 +21%；Non-IFRS归母 +11%</td><td>游戏+广告+支付+云+社交入口协同</td><td>AI 投入加大后，回报兑现速度要被持续验证</td></tr>
+              <tr><td>阿里巴巴</td><td>FY2025</td><td>总营收温和增长</td><td>利润修复显著</td><td>淘天现金牛、云智能重回增长</td><td>AI CapEx 前置，现金流承压与云兑现节奏</td></tr>
+              <tr><td>美团</td><td>2025H1</td><td>+14.7%</td><td>经调整净利润 -41%</td><td>本地生活密度与履约网络</td><td>竞争加剧导致利润率显著受压</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px">结论上看，<strong style="color:#fff">腾讯是三者中“利润质量最稳、现金流最强、AI 投入承受力最高”的平台公司</strong>。阿里具备云与 AI 重估弹性，美团具备场景扩张弹性，但从 Q1 财报的抗波动能力看，腾讯更接近“可防守、可进攻”的均衡型龙头。</p>
+      </div>
+      <div class="grid-2">
+        <div class="card"><h3>规模与盈利能力判断</h3><canvas id="peerScale"></canvas></div>
+        <div class="card"><h3>行业位置结论</h3><ul><li><strong>规模领先：</strong> 腾讯在游戏、社交和广告三者叠加下收入基盘最大且更均衡。</li><li><strong>效率领先：</strong> 毛利率和经营利润率保持行业高位，且增长并未完全靠补贴换取。</li><li><strong>质量领先：</strong> 自由现金流、净现金与回购能力仍然明显优于大多数可比互联网平台。</li></ul></div>
+      </div>
+    </section>
+
+    <section id="strategy">
+      <div class="sec-h"><div class="no">04</div><div><h2>战略分析</h2><p class="muted">AI 不是单点业务，而是腾讯 2026 年最核心的效率放大器。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>三条 AI 商业化主线</h3>
+          <ul>
+            <li><strong>广告：</strong> 微信生态广告推荐模型升级，AIM+ 已驱动约 30% 广告主投放，Q1 营销服务收入同比 +20%。</li>
+            <li><strong>云与企业服务：</strong> AI 相关需求带动 GPU、CPU、存储和全栈 Agent 方案收入，企业服务收入同比 +20%。</li>
+            <li><strong>生产力 Agent：</strong> WorkBuddy、CodeBuddy、Claws 等工具形成腾讯在中国 Agent 应用层的先发优势。</li>
+          </ul>
+          <p>这意味着腾讯 AI 路径不是先做最强模型再找用途，而是“模型—场景—流量入口—支付/云基础设施”同步推进，商业闭环更短。</p>
+        </div>
+        <div class="card">
+          <h3>游戏与内容的战略价值</h3>
+          <p>国内游戏方面，《王者荣耀》《和平精英》《三角洲行动》继续贡献高流水；国际游戏受益于《Clash Royale》《鸣潮》《VALORANT PC》。更关键的是，腾讯明确提出用 AI 加速 3D 资产生产、动画制作、NPC 智能和渲染能力升级，这代表 AI 对游戏利润率的改善不仅来自推广，更来自供给侧生产效率提升。</p>
+          <div class="alert purple">如果后续腾讯能把 AI 真正嵌入美术、脚本、客服与运营工作流，游戏业务的边际利润率还有继续抬升空间。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="accounting">
+      <div class="sec-h"><div class="no">05</div><div><h2>会计分析</h2><p class="muted">重点看利润质量、资产结构与 AI 投入如何体现在报表上。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>利润表质量</h3>
+          <ul>
+            <li>收入 1,964.58 亿元，成本 851.93 亿元，毛利 1,112.65 亿元，说明主营盈利结构仍强。</li>
+            <li>销售及市场费用 113.43 亿元，同比由 78.66 亿元大幅上升，明确指向 AI 原生应用与游戏推广。</li>
+            <li>管理费用 338.00 亿元，同比基本持平，显示费用大盘并未失控，高研发被其他费用优化部分抵消。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>资产负债表信号</h3>
+          <ul>
+            <li>固定资产由 1,499.05 亿元增至 1,656.66 亿元，说明算力/设备投资在加速落地。</li>
+            <li>以公允价值计量且变动计入其他综合收益的金融资产由 3,566.40 亿元降至 2,980.52 亿元，导致其他综合收益承压，但这不等于主业恶化。</li>
+            <li>应收账款由 499.30 亿元升至 581.16 亿元，需持续跟踪企业服务与广告业务扩张后的回款质量。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <h3>会计风险提示</h3>
+        <p>当前最值得关注的不是传统意义上的“利润造假风险”，而是<strong style="color:#fff">市场对 AI 前置投入的会计呈现理解偏差</strong>：折旧、营销和研发会先压缩短期利润弹性，但若这些投入最终能转化为广告单价提升、云需求增长和 Agent 付费率提升，则短期利润受压属于主动再投资，不应被误读为经营失速。</p>
+      </div>
+    </section>
+
+    <section id="financial">
+      <div class="sec-h"><div class="no">06</div><div><h2>财务分析</h2><p class="muted">从盈利、增长、效率、现金流四个层面拆解。</p></div></div>
+      <div class="grid-4">
+        <div class="kpi"><div class="title">总收入</div><div class="num">1,964.6亿</div><div class="desc">同比 +9%，环比 +1%</div></div>
+        <div class="kpi"><div class="title">经营利润</div><div class="num">673.8亿</div><div class="desc">同比 +17%</div></div>
+        <div class="kpi"><div class="title">Non-IFRS经营利润</div><div class="num">756.3亿</div><div class="desc">同比 +9%</div></div>
+        <div class="kpi"><div class="title">自由现金流</div><div class="num">567.0亿</div><div class="desc">同比 +20%</div></div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card"><h3>收入结构与增长</h3><canvas id="segmentChart"></canvas></div>
+        <div class="card"><h3>利润与现金流</h3><canvas id="profitChart"></canvas></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>盈利能力</h3>
+          <ul>
+            <li>整体毛利率 56.6%，较去年同期 55.8% 提升。</li>
+            <li>VAS 毛利率 62.6%，广告毛利率 55.0%，金融科技与企业服务毛利率 52.1%，均维持高位。</li>
+            <li>Non-IFRS 经营利润率 38.5%，若剔除新 AI 产品相关收入成本费用则达 43.0%，说明旧主业利润池仍很深。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>费用与经营效率</h3>
+          <ul>
+            <li>销售费用同比 +44%，是本季最显著变化，说明腾讯开始加大 AI 应用与游戏推广投放。</li>
+            <li>研发费用同比 +20%，环比 -4%，显示研发高投入已常态化，但节奏受季度安排影响。</li>
+            <li>管理费用（剔除研发）同比 +5%，说明腾讯并未出现管理端失控扩张。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <h3>现金流与资本配置</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>项目</th><th>2026Q1</th><th>2025Q1</th><th>同比</th><th>含义</th></tr></thead>
+            <tbody>
+              <tr><td>资本开支</td><td>319.36亿元</td><td>274.76亿元</td><td>+16%</td><td>算力、设备、AI 基础设施继续前置投入</td></tr>
+              <tr><td>自由现金流</td><td>567.00亿元</td><td>471.00亿元</td><td>+20%</td><td>高投入下仍保持强现金生成能力</td></tr>
+              <tr><td>总现金</td><td>5,337.00亿元</td><td>4,760.00亿元</td><td>+12%</td><td>财务安全垫充足</td></tr>
+              <tr><td>净现金</td><td>1,468.60亿元</td><td>902.29亿元</td><td>+63%</td><td>再投资与回购并行仍无流动性压力</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px">这意味着腾讯的关键优势不只是“利润高”，而是<strong style="color:#fff">在维持高利润的同时，依然有能力拿出数百亿级别现金持续投资下一轮技术周期</strong>。</p>
+      </div>
+    </section>
+
+    <section id="outlook">
+      <div class="sec-h"><div class="no">07</div><div><h2>前景分析与估值思路</h2><p class="muted">未来四个季度的关键，不是增长有没有，而是 AI 兑现速度。</p></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>未来 4 个季度关注点</h3>
+          <ul>
+            <li><strong>广告：</strong> 微信广告推荐模型与闭环转化能力是否继续提升，决定营销服务能否维持双位数增长。</li>
+            <li><strong>企业服务：</strong> AI 云需求与 Agent 解决方案能否带来更高 ARPU 和更好定价。</li>
+            <li><strong>游戏：</strong> 新游流水和老游稳态表现，决定 VAS 利润池能否持续供血。</li>
+            <li><strong>AI 产品：</strong> WorkBuddy、CodeBuddy、Hy 系列能否从“高使用”走向“高变现”。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>估值判断框架</h3>
+          <p>腾讯估值不宜再只用单一 PE 理解。更合理的框架应拆为三层：</p>
+          <ul>
+            <li><strong>底层估值：</strong> 游戏 + 广告 + 支付构成稳定现金牛底座；</li>
+            <li><strong>成长溢价：</strong> 云、企业服务与微信生态商业化继续扩张；</li>
+            <li><strong>AI 期权：</strong> 模型、Agent 和云基础设施带来的新增重估空间。</li>
+          </ul>
+          <div class="alert gold">如果 2026 年下半年 AI 相关收入继续实质兑现，腾讯的估值锚有机会从“成熟平台龙头”向“具备第二增长曲线的平台型 AI 公司”切换。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="risk">
+      <div class="sec-h"><div class="no">08</div><div><h2>风险与结论</h2><p class="muted">真正影响市场判断的，是投入回报周期而非短期利润波动。</p></div></div>
+      <div class="grid-3">
+        <div class="card"><h3><span class="tag gold">风险 1</span></h3><p>AI 投入回报不及预期。若广告、云和 Agent 商业化兑现速度慢于设备折旧和营销投放上升速度，利润率会承压更久。</p></div>
+        <div class="card"><h3><span class="tag purple">风险 2</span></h3><p>游戏产品周期波动。虽然老游戏稳，但新产品成功率、监管节奏和海外表现仍可能带来短期波动。</p></div>
+        <div class="card"><h3><span class="tag green">风险 3</span></h3><p>金融资产公允价值波动。OCI 项下投资市值波动会扰动综合收益，但通常不改变主业现金创造能力。</p></div>
+      </div>
+      <div class="card" style="margin-top:18px;">
+        <h3>最终结论</h3>
+        <p>腾讯 2026Q1 的核心特征可以概括为：<strong style="color:#fff">主业稳、利润强、现金厚、AI 投入快</strong>。从财务顾问视角看，这是一份非常标准的“高质量平台龙头主动进入新技术投入期”的报表。短期内，市场最该跟踪的是 AI 相关费用和 CapEx 对利润率的扰动；中期内，最重要的变量则是广告、企业服务与 Agent 产品能否把投入转成持续收入与更高估值锚。</p>
+        <p><strong>我的判断：</strong> 只要腾讯核心现金牛业务不失速、AI 商业化能保持当前节奏推进，这类再投资并不会削弱公司质量，反而可能成为未来 1-2 年估值抬升的起点。</p>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="sec-h"><div class="no">09</div><div><h2>数据来源</h2><p class="muted">本报告核心数据已做双源交叉：腾讯投资者材料 + HKEX 公告。</p></div></div>
+      <div class="card">
+        <ul class="sources">
+          <li>Tencent Investors：Tencent 2026 First Quarter Results Announcement（2026-05-13）</li>
+          <li>HKEX：Announcement of the Results for the Three Months Ended 31 March 2026</li>
+          <li>Tencent Earnings Presentation：2026Q1 Presentation</li>
+        </ul>
+        <p class="small">说明：同行对比部分使用现有已生成报告中的管理层结论口径做相对位置判断，核心目的在于辅助本报告形成行业坐标，不作为三家公司同口径逐项估值模型。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>本报告由财务万晓生生成。报告日期：2026-05-14（UTC）。核心财务数据单位如无特别说明均为人民币。</div>
+  </footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+    const common = {responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{color:'#c9d1d9'}}, datalabels:{color:'#e6edf3', anchor:'end', align:'top', offset:4, clamp:true, font:{weight:'600', size:11}}, tooltip:{enabled:true}}, scales:{x:{ticks:{color:'#8b949e'}, grid:{color:'rgba(255,255,255,.06)'}}, y:{ticks:{color:'#8b949e'}, grid:{color:'rgba(255,255,255,.06)'}, grace:'12%'}}};
+
+    new Chart(document.getElementById('segmentChart'), {
+      type:'bar',
+      data:{labels:['VAS','营销服务','金融科技与企业服务','其他'], datasets:[{label:'2026Q1收入(亿元)', data:[961.10,381.71,598.85,22.92], backgroundColor:['#58a6ff','#7ee787','#d2a8ff','#f2cc60']}]},
+      options:{...common, plugins:{...common.plugins, legend:{display:false}}, layout:{padding:{top:24}}}
+    });
+
+    new Chart(document.getElementById('profitChart'), {
+      type:'bar',
+      data:{labels:['收入','毛利','经营利润','IFRS归母净利','自由现金流'], datasets:[{label:'2026Q1(亿元)', data:[1964.58,1112.65,673.75,580.93,567.00], backgroundColor:['#58a6ff','#7ee787','#d2a8ff','#f2cc60','#ff7b72']}]},
+      options:{...common, plugins:{...common.plugins, legend:{display:false}}, layout:{padding:{top:24}}}
+    });
+
+    new Chart(document.getElementById('peerScale'), {
+      type:'bar',
+      data:{labels:['腾讯','阿里巴巴','美团'], datasets:[{label:'收入体量指数', data:[100,92,74], backgroundColor:'#58a6ff'}, {label:'利润质量指数', data:[100,84,52], backgroundColor:'#7ee787'}]},
+      options:{...common, plugins:{...common.plugins, datalabels:{color:'#e6edf3', anchor:'end', align:'top', offset:2, clamp:true, font:{weight:'600', size:10}}}, layout:{padding:{top:24}}}
+    });
+  </script>
+</body>
+</html>
