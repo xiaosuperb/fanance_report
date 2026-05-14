@@ -6,1056 +6,274 @@
   <title>阿里巴巴-W（09988.HK）2025年度财务分析报告</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-primary: #0d1117;
-      --bg-secondary: #161b22;
-      --bg-card: #1c2128;
-      --border: #30363d;
-      --text-primary: #e6edf3;
-      --text-secondary: #8b949e;
-      --text-muted: #6e7681;
-      --accent: #58a6ff;
-      --accent-green: #3fb950;
-      --accent-red: #f85149;
-      --accent-gold: #d29922;
-      --accent-purple: #bc8cff;
-      --accent-teal: #39d0c8;
-      --shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
-      --radius-lg: 24px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: 'Noto Sans SC', sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(88,166,255,0.16), transparent 28%),
-        radial-gradient(circle at top right, rgba(57,208,200,0.10), transparent 24%),
-        linear-gradient(180deg, #0d1117 0%, #11161d 100%);
-      color: var(--text-primary);
-      line-height: 1.76;
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1320px, calc(100% - 28px)); margin: 0 auto; }
-    .hero {
-      position: relative;
-      overflow: hidden;
-      margin: 20px auto 14px;
-      padding: 42px 36px 34px;
-      border: 1px solid rgba(88,166,255,0.18);
-      border-radius: 28px;
-      background:
-        linear-gradient(135deg, rgba(13,17,23,0.92), rgba(22,27,34,0.9)),
-        linear-gradient(135deg, #10233c, #182b46 52%, #0d1117 100%);
-      box-shadow: var(--shadow);
-    }
-    .hero::before,
-    .hero::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      pointer-events: none;
-      filter: blur(8px);
-    }
-    .hero::before {
-      width: 260px;
-      height: 260px;
-      right: -90px;
-      top: -100px;
-      background: rgba(88,166,255,0.15);
-    }
-    .hero::after {
-      width: 180px;
-      height: 180px;
-      left: -30px;
-      bottom: -70px;
-      background: rgba(188,140,255,0.12);
-    }
-    .hero h1 {
-      margin: 0 0 14px;
-      font-size: 36px;
-      line-height: 1.18;
-      font-weight: 700;
-      letter-spacing: -0.4px;
-      position: relative;
-      z-index: 1;
-    }
-    .hero p {
-      margin: 0;
-      max-width: 1080px;
-      color: var(--text-secondary);
-      position: relative;
-      z-index: 1;
-    }
-    .hero-tags,
-    .tag-row,
-    .risk-tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .hero-tags { margin-top: 18px; position: relative; z-index: 1; }
-    .chip,
-    .tag,
-    .risk-tag {
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid transparent;
-    }
-    .chip {
-      background: rgba(255,255,255,0.06);
-      color: var(--text-primary);
-      border-color: rgba(255,255,255,0.08);
-    }
-    .summary-strip {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 14px;
-      margin: 0 auto 16px;
-    }
-    .summary-card {
-      background: rgba(28,33,40,0.92);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 16px 16px 14px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .summary-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--accent);
-    }
-    .summary-card.green::before { background: var(--accent-green); }
-    .summary-card.red::before { background: var(--accent-red); }
-    .summary-card.gold::before { background: var(--accent-gold); }
-    .summary-card.purple::before { background: var(--accent-purple); }
-    .summary-card.teal::before { background: var(--accent-teal); }
-    .summary-card .label {
-      color: var(--text-muted);
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-    .summary-card .value {
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-    .summary-card .delta {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-    .nav-bar {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      margin-bottom: 18px;
-      backdrop-filter: blur(12px);
-      background: rgba(13,17,23,0.72);
-      border-top: 1px solid rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      min-height: 62px;
-    }
-    .nav-brand {
-      font-size: 14px;
-      color: var(--text-secondary);
-      white-space: nowrap;
-    }
-    .nav-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: flex-end;
-    }
-    .nav-links a {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-    .section {
-      margin-bottom: 18px;
-      background: rgba(28,33,40,0.9);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow);
-    }
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 18px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .section-no {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #1f6feb, #58a6ff);
-      color: #fff;
-      font-weight: 700;
-      flex: none;
-      box-shadow: 0 8px 20px rgba(31,111,235,0.28);
-    }
-    .section-title h2 {
-      margin: 0;
-      font-size: 24px;
-      line-height: 1.2;
-    }
-    .section-title small {
-      display: block;
-      margin-top: 6px;
-      color: var(--text-secondary);
-      font-size: 13px;
-    }
-    .summary-box,
-    .quote-box {
-      background: linear-gradient(135deg, rgba(88,166,255,0.16), rgba(57,208,200,0.10));
-      border: 1px solid rgba(88,166,255,0.22);
-      border-radius: var(--radius-md);
-      padding: 18px 20px;
-      margin-bottom: 18px;
-    }
-    .quote-box { background: rgba(255,255,255,0.03); }
-    .grid-2, .grid-3 { display: grid; gap: 16px; }
-    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .metric-panel,
-    .table-card,
-    .chart-card,
-    .risk-card,
-    .insight-card {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: var(--radius-md);
-      padding: 18px;
-    }
-    .metric-panel h3,
-    .table-card h3,
-    .chart-card h3,
-    .risk-card h3,
-    .insight-card h3 {
-      margin: 0 0 10px;
-      font-size: 17px;
-    }
-    .metric-panel p,
-    .table-card p,
-    .chart-card p,
-    .risk-card p,
-    .insight-card p,
-    li {
-      color: var(--text-secondary);
-      margin: 0;
-    }
-    .alert-box {
-      border-left: 4px solid var(--accent);
-      background: rgba(88,166,255,0.10);
-      border-radius: 12px;
-      padding: 16px 18px;
-      margin-top: 16px;
-    }
-    .alert-box.green { border-left-color: var(--accent-green); background: rgba(63,185,80,0.10); }
-    .alert-box.warning { border-left-color: var(--accent-gold); background: rgba(210,153,34,0.10); }
-    .alert-box.danger { border-left-color: var(--accent-red); background: rgba(248,81,73,0.10); }
-    .alert-box.purple { border-left-color: var(--accent-purple); background: rgba(188,140,255,0.10); }
-    .table-wrap {
-      overflow-x: auto;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 760px;
-      background: rgba(13,17,23,0.52);
-    }
-    th, td {
-      padding: 12px 14px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      font-size: 13px;
-    }
-    th {
-      color: var(--text-primary);
-      background: rgba(255,255,255,0.04);
-      font-weight: 600;
-    }
-    tbody tr:nth-child(odd) { background: rgba(255,255,255,0.015); }
-    .tag.green, .risk-tag.green { background: rgba(63,185,80,0.12); color: #8be28a; }
-    .tag.red, .risk-tag.red { background: rgba(248,81,73,0.12); color: #ff9b93; }
-    .tag.gold, .risk-tag.gold { background: rgba(210,153,34,0.12); color: #f1ca72; }
-    .tag.purple, .risk-tag.purple { background: rgba(188,140,255,0.12); color: #d3b3ff; }
-    .tag.teal, .risk-tag.teal { background: rgba(57,208,200,0.12); color: #7ee9e2; }
-    .chart-box { height: 320px; }
-    .risk-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .risk-card { display: flex; gap: 14px; align-items: flex-start; }
-    .risk-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      flex: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(88,166,255,0.12);
-      font-size: 20px;
-    }
-    .footer {
-      color: var(--text-muted);
-      font-size: 12px;
-      padding-bottom: 36px;
-    }
-    ul { margin: 0; padding-left: 20px; }
-    @media (max-width: 1100px) {
-      .summary-strip, .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .grid-2, .risk-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 720px) {
-      .hero { padding: 30px 22px 24px; }
-      .hero h1 { font-size: 28px; }
-      .summary-strip, .grid-3 { grid-template-columns: 1fr; }
-      .nav-inner { display: block; padding: 12px 0; }
-      .nav-links { margin-top: 10px; justify-content: flex-start; }
-      .section { padding: 20px; }
-    }
+    :root{--bg:#0d1117;--bg2:#161b22;--card:#1c2128;--bd:#30363d;--txt:#e6edf3;--sub:#8b949e;--muted:#6e7681;--blue:#58a6ff;--green:#7ee787;--gold:#f2cc60;--purple:#d2a8ff;--red:#ff7b72}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:'Noto Sans SC',sans-serif;background:radial-gradient(circle at top left,rgba(88,166,255,.16),transparent 28%),linear-gradient(180deg,#0d1117 0%,#11161d 100%);color:var(--txt);line-height:1.72}
+    .wrap,.hero-inner,.strip,.nav-inner,.footer{width:min(1320px,calc(100% - 36px));margin:auto}.hero{margin:18px auto 14px;padding:42px 34px 30px;border:1px solid rgba(88,166,255,.18);border-radius:28px;background:linear-gradient(135deg,rgba(13,17,23,.92),rgba(22,27,34,.92)),linear-gradient(135deg,#10233c,#182b46 52%,#0d1117 100%);box-shadow:0 18px 44px rgba(0,0,0,.34)}
+    .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.25);color:#c9d1d9;font-size:13px}.hero h1{margin:16px 0 14px;font-size:36px;line-height:1.18;font-weight:800}.hero p{margin:0;color:var(--sub)}
+    .hero-grid,.grid-2,.grid-3,.grid-4{display:grid;gap:18px}.hero-grid{grid-template-columns:1.45fr .9fr}.grid-2{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-4{grid-template-columns:repeat(4,1fr)}
+    .card{background:rgba(28,33,40,.92);border:1px solid var(--bd);border-radius:20px;padding:20px;box-shadow:0 16px 36px rgba(0,0,0,.25)}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mini{padding:16px;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)}.mini .label,.sum .name,.kpi .title,.muted,.small{color:var(--sub)}.mini .value,.sum .kpi,.kpi .num{font-weight:800}.mini .value{font-size:24px;margin:6px 0 2px}
+    .alert{padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.02);color:var(--sub);border-left:4px solid var(--blue)}.green{border-left-color:var(--green)}.gold{border-left-color:var(--gold)}.purple{border-left-color:var(--purple)}
+    .strip{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin:0 auto 16px}.sum{position:relative;overflow:hidden;padding:16px;background:var(--card);border:1px solid var(--bd);border-radius:16px;box-shadow:0 16px 36px rgba(0,0,0,.2)}.sum:before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--blue),rgba(255,255,255,.12))}.sum.green:before{background:linear-gradient(90deg,var(--green),rgba(255,255,255,.12))}.sum.gold:before{background:linear-gradient(90deg,var(--gold),rgba(255,255,255,.12))}.sum.purple:before{background:linear-gradient(90deg,var(--purple),rgba(255,255,255,.12))}.sum .kpi{font-size:28px;margin:8px 0 4px}
+    .nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(13,17,23,.76);border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:18px}.nav-inner{display:flex;flex-wrap:wrap;gap:12px;padding:12px 0}.nav-inner a{padding:10px 14px;border-radius:999px;color:var(--sub);font-size:13px;text-decoration:none}.nav-inner a:hover{color:var(--txt);background:rgba(88,166,255,.08)}
+    section{margin-bottom:18px}.sec{background:rgba(28,33,40,.92);border:1px solid var(--bd);border-radius:24px;padding:24px;box-shadow:0 16px 36px rgba(0,0,0,.25)}.sec-h{display:flex;gap:14px;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06)}.no{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-weight:800;color:#fff;background:linear-gradient(135deg,#1f6feb,#58a6ff)} h2{margin:0;font-size:24px} h3{margin:0 0 12px;font-size:18px}
+    .kpi{padding:18px;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)}.kpi .num{font-size:30px;margin-top:8px}.kpi .desc{margin-top:6px;color:var(--muted);font-size:12px}
+    .tag{display:inline-flex;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700;background:rgba(88,166,255,.14);color:#8dc2ff}.tag.green{background:rgba(126,231,135,.14);color:var(--green)}.tag.gold{background:rgba(242,204,96,.14);color:var(--gold)}.tag.purple{background:rgba(210,168,255,.14);color:var(--purple)}
+    table{width:100%;border-collapse:collapse;font-size:14px} th,td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top} th{background:rgba(255,255,255,.03);color:#c9d1d9} tr:nth-child(even) td{background:rgba(255,255,255,.018)} .table-wrap{overflow:auto}
+    ul{margin:8px 0 0 18px;padding:0} li{margin:6px 0} canvas{width:100%!important;height:320px!important}.footer{color:var(--muted);font-size:12px;border-top:1px solid rgba(255,255,255,.06);padding:18px 0 42px;margin-top:28px}
+    @media(max-width:1180px){.hero-grid,.grid-2,.grid-4{grid-template-columns:1fr}.grid-3,.strip{grid-template-columns:repeat(3,1fr)}} @media(max-width:760px){.hero h1{font-size:30px}.grid-3,.strip{grid-template-columns:1fr}canvas{height:280px!important}}
   </style>
 </head>
 <body>
-  <header class="hero container">
-    <h1>阿里巴巴-W（09988.HK）2025年度财务分析报告</h1>
-    <p>基于阿里巴巴集团截至 2025 年 3 月 31 日止年度 Form 20-F、FY2025 业绩披露及公开市场口径交叉验证，本报告围绕盈利能力、现金流、估值、业务拆分与核心风险展开系统分析。结论上，阿里 2025 财年已经完成“利润修复 + 云业务再加速 + 资本回报强化”的阶段性验证，但也同步进入 AI 基础设施资本开支与电商竞争投入抬升的新阶段。</p>
-    <div class="hero-tags">
-      <span class="chip">📦 电商基本盘稳健</span>
-      <span class="chip">☁️ 云智能重回双位数增长</span>
-      <span class="chip">💰 利润与股东回报双修复</span>
-      <span class="chip">🏗️ AI 资本开支显著抬升</span>
-      <span class="chip">🧭 适用场景：管理层 / 董事会 / 投资判断</span>
+  <header class="hero wrap">
+    <div class="hero-inner">
+      <span class="eyebrow">📊 阿里巴巴-W 09988.HK · FY2025 年报重做版</span>
+      <div class="hero-grid" style="margin-top:18px;">
+        <div class="card">
+          <h1>阿里巴巴 FY2025：收入恢复温和增长，利润显著修复，但真正的主线已切换为“AI + Cloud 第二增长曲线”</h1>
+          <p>结论前置：阿里巴巴 FY2025 实现营收 <strong style="color:#fff">9,963.47 亿元</strong>，同比增长 <strong style="color:#fff">5.9%</strong>；经营利润 <strong style="color:#fff">1,409.05 亿元</strong>，同比增长 <strong style="color:#fff">24.3%</strong>；归属普通股股东净利润 <strong style="color:#fff">1,294.70 亿元</strong>，同比增长 <strong style="color:#fff">62.4%</strong>。但与传统“利润修复”叙事不同，FY2025 最关键的变化不是利润本身，而是阿里明确把资源进一步向 <strong style="color:#fff">电商核心盘 + 云与 AI 基础设施</strong>集中，意味着公司已进入新一轮资本开支前置、盈利结构重塑、估值锚迁移阶段。</p>
+          <div class="grid-3" style="margin-top:16px;">
+            <div class="alert green"><strong>利润修复超预期</strong><br>归母净利润同比 +62%，经营利润同比 +24%，明显强于收入增速。</div>
+            <div class="alert gold"><strong>现金流承压</strong><br>经营现金流降至 1,635.09 亿元，自由现金流降至 738.70 亿元，主要受 CapEx 前置拖累。</div>
+            <div class="alert purple"><strong>战略重心切换</strong><br>“用户为先，AI驱动”已不再是口号，而是未来三年资源配置核心。</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>管理层摘要</h3>
+          <div class="mini-grid">
+            <div class="mini"><div class="label">综合评级</div><div class="value">A-</div><div class="small">修复明确，但进入重投资期</div></div>
+            <div class="mini"><div class="label">综合评分</div><div class="value">82/100</div><div class="small">财务 + 战略 + 资本配置</div></div>
+            <div class="mini"><div class="label">核心判断</div><div class="value" style="font-size:18px">利润修复</div><div class="small">但现金流短期承压</div></div>
+            <div class="mini"><div class="label">估值关键</div><div class="value" style="font-size:18px">云与AI兑现</div><div class="small">决定第二曲线估值空间</div></div>
+          </div>
+          <div class="alert" style="margin-top:14px;">对管理层而言，FY2025 不应只被理解成“利润回暖”，更应理解为：<strong style="color:#fff">阿里用当下修复出来的利润和资本回收，去购买下一阶段的 AI 增长权</strong>。</div>
+        </div>
+      </div>
     </div>
   </header>
 
-  <div class="summary-strip container">
-    <div class="summary-card green">
-      <div class="label">FY2025 总营收</div>
-      <div class="value">9,963 亿</div>
-      <div class="delta">同比约 +6%</div>
-    </div>
-    <div class="summary-card green">
-      <div class="label">FY2025 经营利润</div>
-      <div class="value">1,409 亿</div>
-      <div class="delta">利润修复延续</div>
-    </div>
-    <div class="summary-card gold">
-      <div class="label">FY2025 归属普通股股东净利润</div>
-      <div class="value">1,295 亿</div>
-      <div class="delta">同比回升</div>
-    </div>
-    <div class="summary-card teal">
-      <div class="label">FY2025 经营现金流</div>
-      <div class="value">1,635 亿</div>
-      <div class="delta">现金创造能力仍强</div>
-    </div>
-    <div class="summary-card purple">
-      <div class="label">FY2025 自由现金流</div>
-      <div class="value">739 亿</div>
-      <div class="delta">受云/AI CapEx 拖累</div>
-    </div>
-    <div class="summary-card red">
-      <div class="label">FY2025 股票回购</div>
-      <div class="value">119 亿美元</div>
-      <div class="delta">净减少总股本约 5.1%</div>
-    </div>
+  <div class="strip wrap">
+    <div class="sum"><div class="name">FY2025 营收</div><div class="kpi">9,963.5亿</div><div class="small">同比 +5.9%</div></div>
+    <div class="sum green"><div class="name">经营利润</div><div class="kpi">1,409.1亿</div><div class="small">同比 +24.3%</div></div>
+    <div class="sum purple"><div class="name">归母净利润</div><div class="kpi">1,294.7亿</div><div class="small">同比 +62.4%</div></div>
+    <div class="sum gold"><div class="name">Non-GAAP净利润</div><div class="kpi">1,581.2亿</div><div class="small">同比基本持平</div></div>
+    <div class="sum"><div class="name">经营现金流</div><div class="kpi">1,635.1亿</div><div class="small">同比 -10.5%</div></div>
+    <div class="sum green"><div class="name">自由现金流</div><div class="kpi">738.7亿</div><div class="small">同比 -52.7%</div></div>
   </div>
 
-  <nav class="nav-bar">
-    <div class="container nav-inner">
-      <div class="nav-brand">Alibaba FY2025 财务解读</div>
-      <div class="nav-links">
-        <a href="#sec1">执行摘要</a>
-        <a href="#sec2">公司概况</a>
-        <a href="#sec3">核心财务表现</a>
-        <a href="#sec4">盈利能力</a>
-        <a href="#sec5">现金流与资产负债</a>
-        <a href="#sec6">业务结构</a>
-        <a href="#sec7">估值分析</a>
-        <a href="#sec8">风险与结论</a>
-      </div>
-    </div>
-  </nav>
+  <nav class="nav"><div class="nav-inner wrap">
+    <a href="#summary">执行摘要</a><a href="#company">公司概况</a><a href="#peer">同行对比</a><a href="#strategy">战略分析</a><a href="#accounting">会计分析</a><a href="#financial">财务分析</a><a href="#outlook">前景与估值</a><a href="#risk">风险与结论</a><a href="#sources">数据来源</a>
+  </div></nav>
 
-  <main class="container">
-    <section class="section" id="sec1">
-      <div class="section-title">
-        <span class="section-no">01</span>
-        <div>
-          <h2>执行摘要</h2>
-          <small>结论前置：阿里已经从“修复年”走向“再投资年”</small>
-        </div>
-      </div>
-      <div class="summary-box">
-        <strong>一句话结论：</strong>阿里巴巴 FY2025 的核心特征是“收入温和增长、利润明显修复、现金流仍强、资本开支前置”。淘天稳住基本盘、云智能在 AI 需求带动下重新进入加速区间、国际数字商业维持高增，但高强度 AI 基础设施投入意味着未来 1-2 年估值锚将从单纯利润释放，转向“云增长兑现 + 资本开支回报率”的双重验证。
-      </div>
-      <div class="grid-3">
-        <div class="metric-panel">
-          <h3>增长端</h3>
-          <p>FY2025 营收为 9,963.47 亿元，较 FY2024 的 9,413.68 亿元继续增长，增速不算激进，但在中国电商进入成熟期、宏观消费偏弱的背景下已体现平台韧性。</p>
-        </div>
-        <div class="metric-panel">
-          <h3>利润端</h3>
-          <p>经营利润达 1,409.05 亿元，归属普通股股东净利润 1,294.70 亿元，利润恢复速度明显快于收入，说明平台业务效率改善、亏损业务收窄与投资收益回暖共同起效。</p>
-        </div>
-        <div class="metric-panel">
-          <h3>现金流端</h3>
-          <p>经营现金流 1,635.09 亿元仍处高位，但自由现金流降至 738.70 亿元，说明公司正在把利润兑现重新投向云与 AI 算力底座，资本支出周期已经实质开启。</p>
-        </div>
-      </div>
-      <div class="alert-box green">
-        <strong>管理层视角：</strong>FY2025 不是单纯的“恢复常态”，而是阿里重新确认两条主线的一年：一条是淘天等平台业务的现金牛属性，一条是云 + AI 成为未来估值溢价的主要来源。
-      </div>
-      <div class="alert-box warning">
-        <strong>投资视角：</strong>短期看利润修复，中期看云智能增速能否持续上行，长期看 AI 基础设施投入是否能转化为更高质量的利润与自由现金流。
-      </div>
-    </section>
-
-    <section class="section" id="sec2">
-      <div class="section-title">
-        <span class="section-no">02</span>
-        <div>
-          <h2>公司概况</h2>
-          <small>核心业务由“电商平台 + 云智能 + 多元互联网服务”构成</small>
-        </div>
-      </div>
+  <main class="wrap">
+    <section id="summary" class="sec">
+      <div class="sec-h"><div class="no">01</div><div><h2>执行摘要</h2><div class="small">先看结论，再看结构。</div></div></div>
       <div class="grid-2">
-        <div class="insight-card">
-          <h3>业务架构</h3>
-          <p>阿里巴巴当前核心业务由 7 个主要经营板块构成：淘天集团、国际数字商业集团、云智能集团、菜鸟、本地生活集团、虎鲸文娱集团，以及其他业务。整体结构兼具“成熟现金流业务”与“成长性业务群”两类特征。</p>
+        <div class="card">
+          <h3>三条核心判断</h3>
+          <ul>
+            <li><strong>收入恢复，但不是高速增长逻辑。</strong> FY2025 营收 9,963.47 亿元，同比仅增 5.9%，说明阿里当前更接近“稳平台、提效率、压亏损”的经营阶段，而非全面高增扩张。</li>
+            <li><strong>利润修复明显快于收入。</strong> 经营利润同比 +24.3%，归母净利润同比 +62.4%，说明费用效率改善、投资收益/资产处置、亏损业务收敛共同推动了利润释放。</li>
+            <li><strong>自由现金流承压是真问题，但未必是坏问题。</strong> 经营现金流和自由现金流显著回落，主要因为 AI 与云基础设施投入前置，这更像主动再投资，而非基本面恶化。</li>
+          </ul>
         </div>
-        <div class="insight-card">
-          <h3>FY2025 战略主线</h3>
-          <p>管理层在 FY2025 明确聚焦“User First, AI-driven”。前者对应国内外电商平台提升用户和商家体验，后者对应阿里云与通义大模型的基础设施、模型能力与应用生态投入。</p>
-        </div>
-      </div>
-      <div class="quote-box">
-        <strong>经营判断：</strong>当前阿里的公司画像已不再只是电商平台，而是“以电商现金流为底座、以云和 AI 为长期弹性来源”的综合数字平台。正因如此，估值方法也不能只看静态 PE，而需要把分部经营质量与资本配置效率纳入框架。
-      </div>
-      <div class="table-card">
-        <h3>FY2025 业务组合定位</h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>板块</th>
-                <th>定位</th>
-                <th>阶段特征</th>
-                <th>关注重点</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>淘天集团</td>
-                <td>核心现金牛</td>
-                <td>成熟平台、稳增长</td>
-                <td>CMR 恢复、用户留存、商家生态</td>
-              </tr>
-              <tr>
-                <td>云智能集团</td>
-                <td>成长核心</td>
-                <td>AI 驱动重新提速</td>
-                <td>收入增速、利润率、CapEx 回报</td>
-              </tr>
-              <tr>
-                <td>国际数字商业</td>
-                <td>第二增长曲线</td>
-                <td>高增长、仍亏损</td>
-                <td>亏损收窄、跨境供给效率</td>
-              </tr>
-              <tr>
-                <td>菜鸟 / 本地生活 / 文娱</td>
-                <td>结构优化资产</td>
-                <td>从规模优先转向效率优先</td>
-                <td>盈亏平衡、资本占用、战略协同</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="card">
+          <h3>一句话结论</h3>
+          <p>FY2025 的阿里巴巴，本质上是一家<strong style="color:#fff">“电商现金牛仍稳、云业务重回增长、AI 投入急剧前置”的平台公司</strong>。如果 FY2026 之后云与 AI 变现继续兑现，这一轮利润与资本配置调整有望成为估值重定价起点；反之，若 AI 投入长期无法转成收入和现金流，则市场会重新质疑其资本开支回报率。</p>
         </div>
       </div>
     </section>
 
-    <section class="section" id="sec3">
-      <div class="section-title">
-        <span class="section-no">03</span>
-        <div>
-          <h2>核心财务表现</h2>
-          <small>收入温和增长，利润弹性明显强于收入增速</small>
+    <section id="company" class="sec">
+      <div class="sec-h"><div class="no">02</div><div><h2>公司概况</h2><div class="small">“用户为先，AI驱动”是 FY2025 最核心的战略底色。</div></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>业务结构</h3>
+          <ul>
+            <li><strong>淘天集团：</strong> FY2025 收入 4,498.27 亿元，占集团收入约 45%，仍是利润与现金流核心。</li>
+            <li><strong>阿里国际数字商业集团：</strong> 收入 1,323.00 亿元，同比增长 29%，是增速最亮眼板块之一。</li>
+            <li><strong>云智能集团：</strong> 收入 1,180.28 亿元，同比增长 11%，是第二增长曲线中最关键资产。</li>
+            <li><strong>菜鸟、本地生活、大文娱及其他：</strong> 仍在承担生态补齐、场景延伸和新业务验证角色。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>管理层战略表述</h3>
+          <p>年报中，管理层明确把 FY2025 定义为：围绕<strong>“user first, AI-driven”</strong>推进的一年。电商与“AI + Cloud”被定义为未来长期增长的两大核心引擎。与此同时，阿里强调已出售高鑫零售、银泰等非核心资产，把资本进一步集中到核心业务与 AI 基础设施。</p>
+          <div class="alert purple">这意味着阿里未来的估值体系，不应继续只看传统电商平台利润，而应拆成：淘天现金牛 + 云增长兑现 + AI 期权。</div>
         </div>
       </div>
-      <div class="table-card">
-        <h3>FY2025 核心财务指标</h3>
+    </section>
+
+    <section id="peer" class="sec">
+      <div class="sec-h"><div class="no">03</div><div><h2>同行业对比</h2><div class="small">与腾讯、美团对比，看阿里的相对位置。</div></div></div>
+      <div class="card">
+        <h3>横向对比表</h3>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>指标</th>
-                <th>FY2024</th>
-                <th>FY2025</th>
-                <th>同比变化</th>
-                <th>解读</th>
-              </tr>
-            </thead>
+            <thead><tr><th>公司</th><th>口径</th><th>收入表现</th><th>利润表现</th><th>最强优势</th><th>当前主要矛盾</th></tr></thead>
             <tbody>
-              <tr>
-                <td>总营收</td>
-                <td>9,413.68 亿元</td>
-                <td>9,963.47 亿元</td>
-                <td>+5.8%</td>
-                <td>在成熟平台阶段仍实现正增长，韧性优于市场对中国平台经济的悲观预期</td>
-              </tr>
-              <tr>
-                <td>经营利润</td>
-                <td>1,133.50 亿元</td>
-                <td>1,409.05 亿元</td>
-                <td>+24.3%</td>
-                <td>利润改善显著快于收入增长，反映费用纪律与结构优化见效</td>
-              </tr>
-              <tr>
-                <td>归属普通股股东净利润</td>
-                <td>797.41 亿元</td>
-                <td>1,294.70 亿元</td>
-                <td>+62.4%</td>
-                <td>除主营修复外，也受投资收益波动与减值基数影响</td>
-              </tr>
-              <tr>
-                <td>综合净利润</td>
-                <td>713.32 亿元</td>
-                <td>1,259.76 亿元</td>
-                <td>+76.6%</td>
-                <td>利润表整体质量改善，但仍需与现金流一起观察</td>
-              </tr>
-              <tr>
-                <td>经营现金流</td>
-                <td>1,825.93 亿元</td>
-                <td>1,635.09 亿元</td>
-                <td>-10.5%</td>
-                <td>仍属极强现金创造，但已开始体现投入和营运节奏变化</td>
-              </tr>
-              <tr>
-                <td>自由现金流</td>
-                <td>约 1,738 亿元</td>
-                <td>738.70 亿元</td>
-                <td>显著下降</td>
-                <td>云和 AI 基础设施扩张导致资本开支抬升，是本年度最关键财务变化之一</td>
-              </tr>
+              <tr><td>阿里巴巴</td><td>FY2025</td><td>营收 +5.9%</td><td>归母净利 +62.4%</td><td>淘天现金流、云智能、AI 开放生态</td><td>CapEx 前置导致自由现金流承压，需验证云与AI回报</td></tr>
+              <tr><td>腾讯</td><td>2026Q1</td><td>收入 +9%</td><td>IFRS归母 +21%</td><td>游戏+广告+支付+云协同</td><td>AI 投入加快，需持续验证 Agent 与云变现</td></tr>
+              <tr><td>美团</td><td>2025H1</td><td>收入 +14.7%</td><td>经调整净利 -41%</td><td>本地生活履约网络和场景密度</td><td>竞争压制利润率，国际化与新业务投入高</td></tr>
             </tbody>
           </table>
         </div>
+        <p style="margin-top:14px">阿里的位置更接近：<strong style="color:#fff">“利润修复最明显、但资本开支也最前置的重估型平台公司”</strong>。相比腾讯，它的 AI 估值弹性更大，但现金流安全感略弱；相比美团，它的利润韧性更强，但增长弹性更依赖云与国际商业兑现。</p>
       </div>
       <div class="grid-2">
-        <div class="metric-panel">
-          <h3>收入质量判断</h3>
-          <p>收入并非依赖单一板块突增，而是淘天稳定、国际商业高增、云业务重新加速的合力结果，说明阿里当前增长质量好于仅靠补贴拉动的短期扩张。</p>
+        <div class="card"><h3>相对位置图</h3><canvas id="peerChart"></canvas></div>
+        <div class="card"><h3>行业位置结论</h3><ul><li><strong>规模领先：</strong> 阿里仍是中国最重要的平台型科技公司之一，收入基盘深厚。</li><li><strong>效率改善：</strong> FY2025 利润修复显著，说明组织与费用管理明显改善。</li><li><strong>弹性来自云与 AI：</strong> 真正能带来估值体系切换的，不是淘天，而是云业务与 AI 相关产品持续加速。</li></ul></div>
+      </div>
+    </section>
+
+    <section id="strategy" class="sec">
+      <div class="sec-h"><div class="no">04</div><div><h2>战略分析</h2><div class="small">阿里已把未来十年的核心赌注压在 AI 与云。</div></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>战略主线一：电商基本盘修复</h3>
+          <p>淘天集团 FY2025 收入 4,498.27 亿元，同比增长 3%。这不是高增速，但在中国线上零售成熟、竞争加剧背景下，意味着平台基本盘依然稳。管理层特别强调消费者与商家信任提升、平台经营环境改善，这说明 FY2025 的电商经营重点不是冲规模，而是修生态、提效率、稳货币化。</p>
         </div>
-        <div class="metric-panel">
+        <div class="card">
+          <h3>战略主线二：AI + Cloud 第二增长曲线</h3>
+          <p>云智能集团 FY2025 收入 1,180.28 亿元，同比增长 11%。年报强调 AI 相关产品收入已连续七个季度实现三位数增长，并明确提出：未来三年在云与 AI 基础设施上的投入将超过过去十年总和。</p>
+          <div class="alert gold">这句话非常关键：它意味着阿里当前不是简单地“多投一点 AI”，而是在做公司级资源再分配，试图把云与 AI 培育成第二条真正能撑起估值的主航道。</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>国际化与资产组合优化</h3>
+        <p>国际数字商业 FY2025 收入 1,323.00 亿元，同比增长 29%，是阿里最亮眼的增长板块之一。管理层同时出售高鑫零售、银泰等非核心资产，把资本从低协同业务回收到核心赛道。这说明阿里并不是“业务越多越好”，而是在重新定义什么才是长期有战略权重的资产。</p>
+      </div>
+    </section>
+
+    <section id="accounting" class="sec">
+      <div class="sec-h"><div class="no">05</div><div><h2>会计分析</h2><div class="small">利润大增背后，需要拆清“经营改善”和“非经营因素”。</div></div></div>
+      <div class="grid-2">
+        <div class="card">
           <h3>利润质量判断</h3>
-          <p>利润改善具备经营层面的真实支撑，但不能简单外推为未来线性增长，因为 FY2026 起 AI 资本开支、即时零售竞争与国际业务投入可能继续吞噬部分利润弹性。</p>
+          <ul>
+            <li>经营利润由 1,133.50 亿元提升至 1,409.05 亿元，经营层面确实在改善。</li>
+            <li>归母净利润由 797.41 亿元升至 1,294.70 亿元，增幅显著快于经营利润，说明投资收益、资产处置与非经营项目也有贡献。</li>
+            <li>Non-GAAP 净利润 1,581.22 亿元，较 FY2024 的 1,574.79 亿元基本持平，进一步说明“核心经营改善是有的，但归母净利润的大幅增长不能被简单等同为主营利润同幅度增强”。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>现金流与 CapEx 的会计含义</h3>
+          <ul>
+            <li>经营现金流由 1,825.93 亿元降至 1,635.09 亿元。</li>
+            <li>剔除办公园区相关后口径的设备采购支出由 275.79 亿元激增至 842.78 亿元。</li>
+            <li>自由现金流由 1,562.10 亿元降至 738.70 亿元，几乎腰斩。</li>
+          </ul>
+          <p>这说明 FY2025 报表里最真实的变化，不是在利润表，而是在现金流量表：阿里开始把更多真实现金投向设备、算力与基础设施。</p>
         </div>
       </div>
-      <div class="alert-box purple">
-        <strong>关键变化：</strong>对于阿里来说，FY2025 财务报表最大的变化不是收入回升，而是市场开始重新接受“利润能修复，但自由现金流会因 AI 投入而承压”的新叙事。
-      </div>
-    </section>
-    <section class="section" id="sec4">
-      <div class="section-title">
-        <span class="section-no">04</span>
-        <div>
-          <h2>盈利能力</h2>
-          <small>利润恢复来自淘天提效、亏损业务收窄与云业务改善</small>
-        </div>
-      </div>
-      <div class="grid-3">
-        <div class="metric-panel">
-          <h3>经营利润率</h3>
-          <p>FY2025 经营利润率约为 14.1%，较 FY2024 的约 12.0% 有明显改善。对成熟平台公司而言，这意味着阿里已经从“保增长”转向“增长与效率并重”。</p>
-        </div>
-        <div class="metric-panel">
-          <h3>淘天利润贡献</h3>
-          <p>淘天集团 FY2025 收入 4,498.27 亿元，Adjusted EBITA 1,962.32 亿元，利润率约 43.6%。这说明国内电商平台仍是集团最强利润与现金流来源。</p>
-        </div>
-        <div class="metric-panel">
-          <h3>云业务利润修复</h3>
-          <p>云智能集团 FY2025 收入 1,180.28 亿元，Adjusted EBITA 105.56 亿元，利润率约 8.9%。在恢复双位数增长同时保持盈利，是 FY2025 最关键的质量信号之一。</p>
-        </div>
-      </div>
-      <div class="table-card">
-        <h3>FY2025 主要分部盈利能力</h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>分部</th>
-                <th>收入</th>
-                <th>Adjusted EBITA</th>
-                <th>利润率</th>
-                <th>判断</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>淘天集团</td>
-                <td>4,498.27 亿元</td>
-                <td>1,962.32 亿元</td>
-                <td>43.6%</td>
-                <td>盈利中枢极高，仍是集团利润压舱石</td>
-              </tr>
-              <tr>
-                <td>国际数字商业</td>
-                <td>1,323.00 亿元</td>
-                <td>-151.37 亿元</td>
-                <td>-11.4%</td>
-                <td>仍在投入期，但接近盈亏平衡已成为下一财年关注点</td>
-              </tr>
-              <tr>
-                <td>云智能集团</td>
-                <td>1,180.28 亿元</td>
-                <td>105.56 亿元</td>
-                <td>8.9%</td>
-                <td>增长与利润率同步改善，估值弹性最高</td>
-              </tr>
-              <tr>
-                <td>菜鸟</td>
-                <td>1,012.72 亿元</td>
-                <td>3.02 亿元</td>
-                <td>0.3%</td>
-                <td>规模尚可，但利润贡献有限</td>
-              </tr>
-              <tr>
-                <td>本地生活</td>
-                <td>670.76 亿元</td>
-                <td>-36.89 亿元</td>
-                <td>-5.5%</td>
-                <td>亏损较前期明显收窄，效率改善优于市场印象</td>
-              </tr>
-              <tr>
-                <td>虎鲸文娱</td>
-                <td>222.67 亿元</td>
-                <td>-5.54 亿元</td>
-                <td>-2.5%</td>
-                <td>亏损继续收窄，战略重要性弱于云和电商</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="alert-box green">
-        <strong>核心判断：</strong>阿里的利润改善不是单点事件，而是“核心平台高利润 + 云恢复盈利扩张 + 亏损业务持续瘦身”的组合结果。这种结构意味着 FY2026 即使收入增速温和，只要云与国际商业效率继续优化，利润仍有支撑。
-      </div>
-      <div class="alert-box danger">
-        <strong>约束因素：</strong>利润率继续扩张的最大掣肘在于 AI 资本开支、即时零售竞争投入，以及国际业务为换取规模和市场份额而继续保持较高营销强度。
+      <div class="card">
+        <h3>会计风险提示</h3>
+        <p>阿里 FY2025 最大的会计解读风险，是外部容易把“自由现金流下降”直接等同为“经营恶化”。但从年报披露看，更合理的理解是：<strong style="color:#fff">阿里正在主动把现金流从股东回报与传统业务利润释放，重新分配到 AI 与云的长期投入中</strong>。真正要警惕的不是现金流短期下降本身，而是这些投入未来是否能转化成稳定收入和更高回报率。</p>
       </div>
     </section>
 
-    <section class="section" id="sec5">
-      <div class="section-title">
-        <span class="section-no">05</span>
-        <div>
-          <h2>现金流与资产负债</h2>
-          <small>现金流依然充沛，但自由现金流进入再投资压缩期</small>
+    <section id="financial" class="sec">
+      <div class="sec-h"><div class="no">06</div><div><h2>财务分析</h2><div class="small">从收入、利润、分部结构和现金流四个维度看 FY2025。</div></div></div>
+      <div class="grid-4">
+        <div class="kpi"><div class="title">总营收</div><div class="num">9,963.5亿</div><div class="desc">同比 +5.9%</div></div>
+        <div class="kpi"><div class="title">经营利润</div><div class="num">1,409.1亿</div><div class="desc">同比 +24.3%</div></div>
+        <div class="kpi"><div class="title">归母净利润</div><div class="num">1,294.7亿</div><div class="desc">同比 +62.4%</div></div>
+        <div class="kpi"><div class="title">自由现金流</div><div class="num">738.7亿</div><div class="desc">同比 -52.7%</div></div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card"><h3>核心分部收入</h3><canvas id="segmentChart"></canvas></div>
+        <div class="card"><h3>利润与现金流对比</h3><canvas id="profitChart"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>分部结构表</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>分部</th><th>FY2025收入</th><th>同比</th><th>管理层含义</th></tr></thead>
+            <tbody>
+              <tr><td>淘天集团</td><td>4,498.27亿元</td><td>+3%</td><td>增长不快，但仍是最重要利润与现金流来源</td></tr>
+              <tr><td>阿里国际数字商业集团</td><td>1,323.00亿元</td><td>+29%</td><td>最强增长板块，验证国际化空间</td></tr>
+              <tr><td>云智能集团</td><td>1,180.28亿元</td><td>+11%</td><td>第二增长曲线核心资产，AI 需求驱动明显</td></tr>
+              <tr><td>菜鸟</td><td>1,012.72亿元</td><td>+2%</td><td>规模已大，但高增长阶段结束，更多承担基础设施角色</td></tr>
+              <tr><td>本地生活集团</td><td>670.76亿元</td><td>+12%</td><td>场景扩张持续，但仍需看盈利质量</td></tr>
+              <tr><td>大文娱集团</td><td>222.67亿元</td><td>+5%</td><td>生态补齐属性强，非核心估值锚</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <div class="grid-2">
-        <div class="table-card">
-          <h3>现金流观察</h3>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>项目</th>
-                  <th>FY2024</th>
-                  <th>FY2025</th>
-                  <th>变化</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>经营现金流</td>
-                  <td>1,825.93 亿元</td>
-                  <td>1,635.09 亿元</td>
-                  <td>仍高，但同比下降</td>
-                </tr>
-                <tr>
-                  <td>自由现金流</td>
-                  <td>约 1,738 亿元</td>
-                  <td>738.70 亿元</td>
-                  <td>显著下降</td>
-                </tr>
-                <tr>
-                  <td>投资活动现金流</td>
-                  <td>-218.24 亿元</td>
-                  <td>-1,854.15 亿元</td>
-                  <td>投资强度显著抬升</td>
-                </tr>
-                <tr>
-                  <td>融资活动现金流</td>
-                  <td>-1,082.44 亿元</td>
-                  <td>-762.15 亿元</td>
-                  <td>持续回馈股东</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="card">
+          <h3>盈利能力解读</h3>
+          <p>经营利润率由 FY2024 的约 12.0% 提升至 FY2025 的约 14.1%。利润率修复主要来自三点：一是亏损业务缩窄；二是核心平台效率提升；三是资产处置与投资回报帮助净利润抬升。问题在于，Non-GAAP 净利润并未同步大幅增长，说明 FY2025 的“利润惊喜”并不完全具备线性持续性。</p>
         </div>
-        <div class="insight-card">
-          <h3>现金流解读</h3>
-          <p>FY2025 经营现金流虽然回落，但绝对规模仍足以覆盖大部分股东回报与投资需求；真正发生变化的是自由现金流，因为阿里开始将更多内部现金转化为算力、IDC、服务器与 AI 相关资本支出。</p>
-          <div class="spacer"></div>
-          <p>这意味着市场不应再用“自由现金流短期承压 = 基本面恶化”去理解阿里，而应拆解为“主动再投资导致的现金流再分配”。只要云收入和 AI 商业化兑现，现金流压缩是可接受甚至必要的。</p>
+        <div class="card">
+          <h3>现金流质量解读</h3>
+          <p>经营现金流和自由现金流走弱，是 FY2025 最需要管理层解释的财务现象。若未来云与 AI 兑现顺利，这种“先压现金流、后换增长”的模式可以被市场接受；若兑现不及预期，现金流折价会直接传导到估值体系。</p>
         </div>
-      </div>
-      <div class="grid-3">
-        <div class="metric-panel">
-          <h3>资产规模</h3>
-          <p>截至 2025 年 3 月末，总资产约 1.804 万亿元，总权益约 1.078 万亿元，整体资本结构稳健，具备持续投资能力。</p>
-        </div>
-        <div class="metric-panel">
-          <h3>流动性储备</h3>
-          <p>现金及现金等价物 1,454.87 亿元，短期投资 2,288.26 亿元，受限现金及托管应收款 437.81 亿元，流动性依然非常充裕。</p>
-        </div>
-        <div class="metric-panel">
-          <h3>资本承诺</h3>
-          <p>资本承诺由 FY2024 的 183.72 亿元升至 FY2025 的 453.21 亿元，几乎可以视为管理层提前锁定未来一段时间 AI 与基础设施建设强度。</p>
-        </div>
-      </div>
-      <div class="alert-box warning">
-        <strong>财务含义：</strong>从报表语言看，阿里仍然是“高现金、高权益、低财务脆弱性”的平台型公司；但从经营语言看，未来两年其自由现金流弹性会明显弱于净利润弹性，这是估值时必须处理的差异。
       </div>
     </section>
 
-    <section class="section" id="sec6">
-      <div class="section-title">
-        <span class="section-no">06</span>
-        <div>
-          <h2>业务结构</h2>
-          <small>淘天稳盘，国际高增，云智能成为最值得定价的增长资产</small>
-        </div>
-      </div>
-      <div class="table-card">
-        <h3>FY2025 分部收入与盈利拆分</h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>分部</th>
-                <th>FY2025 收入</th>
-                <th>收入占比</th>
-                <th>Adjusted EBITA</th>
-                <th>经营含义</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>淘天集团</td>
-                <td>4,498.27 亿元</td>
-                <td>45.1%</td>
-                <td>1,962.32 亿元</td>
-                <td>阿里利润与现金流中枢，决定集团估值底盘</td>
-              </tr>
-              <tr>
-                <td>国际数字商业</td>
-                <td>1,323.00 亿元</td>
-                <td>13.3%</td>
-                <td>-151.37 亿元</td>
-                <td>跨境业务高增长，是第二增长曲线</td>
-              </tr>
-              <tr>
-                <td>云智能集团</td>
-                <td>1,180.28 亿元</td>
-                <td>11.8%</td>
-                <td>105.56 亿元</td>
-                <td>最具估值弹性，AI 需求是核心驱动</td>
-              </tr>
-              <tr>
-                <td>菜鸟</td>
-                <td>1,012.72 亿元</td>
-                <td>10.2%</td>
-                <td>3.02 亿元</td>
-                <td>物流网络价值仍在，但利润表现平淡</td>
-              </tr>
-              <tr>
-                <td>本地生活</td>
-                <td>670.76 亿元</td>
-                <td>6.7%</td>
-                <td>-36.89 亿元</td>
-                <td>亏损收窄，正在向效率驱动切换</td>
-              </tr>
-              <tr>
-                <td>虎鲸文娱</td>
-                <td>222.67 亿元</td>
-                <td>2.2%</td>
-                <td>-5.54 亿元</td>
-                <td>战略边际重要性有限</td>
-              </tr>
-              <tr>
-                <td>其他</td>
-                <td>2,062.69 亿元</td>
-                <td>20.7%</td>
-                <td>-85.36 亿元</td>
-                <td>包含高鑫、盒马、阿里健康等多元组合影响</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="grid-3">
-        <div class="insight-card">
-          <h3>淘天：稳增长重于高增长</h3>
-          <p>淘天集团 FY2025 收入同比增长约 3.4%，并不算快，但高利润率与庞大商家生态决定其仍是集团最核心资产。市场不再要求淘天回到高双位数增长，而更看重用户粘性、广告效率与平台货币化稳定性。</p>
-        </div>
-        <div class="insight-card">
-          <h3>国际商业：高增长但仍需时间换利润</h3>
-          <p>国际数字商业 FY2025 收入同比增长约 29%，是最亮眼的收入板块之一，但亏损扩大至 151.37 亿元。其价值在于全球化空间，其风险在于补贴、履约与本地供给建设周期仍长。</p>
-        </div>
-        <div class="insight-card">
-          <h3>云智能：阿里最值得重估的资产</h3>
-          <p>云智能 FY2025 收入同比增长约 11%，同时 Adjusted EBITA 提升至 105.56 亿元。对资本市场而言，真正能带来估值体系切换的不是淘天，而是云业务能否在 AI 周期中持续跑出更高增速与更高利润率。</p>
-        </div>
-      </div>
-      <div class="alert-box green">
-        <strong>结构结论：</strong>如果把阿里拆开看，淘天提供安全边际，云智能提供估值弹性，国际商业提供长期想象空间；这三者的组合质量，决定了阿里未来几年能否从“便宜的平台股”升级为“具备 AI 资产溢价的平台龙头”。
-      </div>
-    </section>
-
-    <section class="section" id="sec7">
-      <div class="section-title">
-        <span class="section-no">07</span>
-        <div>
-          <h2>估值分析</h2>
-          <small>估值核心不在静态低估，而在云与 AI 能否推动重估</small>
-        </div>
-      </div>
+    <section id="outlook" class="sec">
+      <div class="sec-h"><div class="no">07</div><div><h2>前景分析与估值思路</h2><div class="small">FY2026 之后最值得跟踪的是云增速、AI 相关收入与 CapEx 回报。</div></div></div>
       <div class="grid-2">
-        <div class="chart-card">
-          <h3>分部收入结构</h3>
-          <div class="chart-box"><canvas id="segmentRevenueChart"></canvas></div>
+        <div class="card">
+          <h3>未来 12-24 个月关键观察指标</h3>
+          <ul>
+            <li><strong>云智能增速：</strong> 能否持续双位数并继续加速。</li>
+            <li><strong>AI 相关产品收入：</strong> 是否维持高增长并扩大基数。</li>
+            <li><strong>自由现金流修复：</strong> 高 CapEx 阶段结束后能否恢复弹性。</li>
+            <li><strong>国际商业盈利拐点：</strong> 增长之外，是否真正跨入利润改善期。</li>
+          </ul>
         </div>
-        <div class="chart-card">
-          <h3>分部 Adjusted EBITA</h3>
-          <div class="chart-box"><canvas id="segmentEbitaChart"></canvas></div>
+        <div class="card">
+          <h3>估值框架建议</h3>
+          <p>阿里巴巴不宜继续只按成熟电商平台估值。更合理的估值拆解是：</p>
+          <ul>
+            <li><strong>底座：</strong> 淘天与中国电商生态现金牛；</li>
+            <li><strong>成长：</strong> 国际商业与本地生活的中期扩张；</li>
+            <li><strong>期权：</strong> 云智能与 AI 基础设施的长期重估空间。</li>
+          </ul>
+          <div class="alert green">如果云与 AI 能在 FY2026-FY2027 形成更明确的收入与利润兑现，阿里有机会从“低估值平台股”切换为“具备第二成长曲线的大型科技平台”。</div>
         </div>
-      </div>
-      <div class="grid-3">
-        <div class="metric-panel">
-          <h3>估值底盘</h3>
-          <p>淘天高盈利能力意味着阿里即使在悲观估值框架下，也具备较强底部支撑；这使得阿里的 downside 主要不是来自基本盘崩塌，而是市场对增长弹性的持续折价。</p>
-        </div>
-        <div class="metric-panel">
-          <h3>估值弹性</h3>
-          <p>云智能是最可能触发重新定价的资产。如果 AI 相关产品保持高增，市场可能逐步从传统平台 PE，转向“平台现金流 + 云业务成长溢价”的混合估值。</p>
-        </div>
-        <div class="metric-panel">
-          <h3>股东回报</h3>
-          <p>FY2025 回购约 119 亿美元，并带来总股本净减少约 5.1%，说明管理层不仅强调增长，也强调每股价值提升。对于低估值阶段的大市值公司，这本身就是重要估值支撑。</p>
-        </div>
-      </div>
-      <div class="table-card">
-        <h3>估值框架建议</h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>估值维度</th>
-                <th>当前意义</th>
-                <th>关键观察变量</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>静态 PE / 每股盈利</td>
-                <td>反映低估值保护</td>
-                <td>回购后 EPS 增厚、利润稳定性</td>
-              </tr>
-              <tr>
-                <td>FCF Yield</td>
-                <td>短期会因 CapEx 降低参考意义</td>
-                <td>AI 投入周期结束后 FCF 恢复速度</td>
-              </tr>
-              <tr>
-                <td>SOTP 分部估值</td>
-                <td>最适合当前阿里</td>
-                <td>淘天稳态利润、云业务增长与国际商业亏损收窄</td>
-              </tr>
-              <tr>
-                <td>云业务成长估值</td>
-                <td>决定上行空间</td>
-                <td>AI 收入占比、公共云增长、利润率改善</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="alert-box purple">
-        <strong>估值判断：</strong>阿里当前最重要的不是证明“自己便宜”，而是证明“自己不再只是便宜”。一旦云业务进入持续上修通道，估值折价有机会系统性收敛。
       </div>
     </section>
 
-    <section class="section" id="sec8">
-      <div class="section-title">
-        <span class="section-no">08</span>
-        <div>
-          <h2>风险与结论</h2>
-          <small>短期看投入与竞争，中期看云兑现，长期看 AI 回报率</small>
-        </div>
+    <section id="risk" class="sec">
+      <div class="sec-h"><div class="no">08</div><div><h2>风险与结论</h2><div class="small">阿里的真正风险，不是利润够不够高，而是投入回报是否够快。</div></div></div>
+      <div class="grid-3">
+        <div class="card"><h3><span class="tag gold">风险 1</span></h3><p>AI 与云基础设施投资回报不及预期。若大额 CapEx 不能在未来两三年转化为云收入、模型服务收入和平台协同利润，自由现金流压力会持续。</p></div>
+        <div class="card"><h3><span class="tag purple">风险 2</span></h3><p>电商基本盘增速长期偏弱。淘天若只能维持低个位数增长，将限制集团利润释放的想象空间。</p></div>
+        <div class="card"><h3><span class="tag green">风险 3</span></h3><p>国际业务增长换利润的节奏不确定。国际商业高增很亮眼，但若盈利拐点迟迟不到，市场会重新压低该业务估值。</p></div>
       </div>
-      <div class="risk-grid">
-        <div class="risk-card">
-          <div class="risk-icon">⚔️</div>
-          <div>
-            <h3>电商竞争风险</h3>
-            <p>拼多多、抖音电商、京东即时零售等持续挤压平台流量与商家预算，淘天需要在体验、商家生态和货币化之间保持平衡。</p>
-            <div class="risk-tag-row"><span class="risk-tag gold">中高</span></div>
-          </div>
-        </div>
-        <div class="risk-card">
-          <div class="risk-icon">🏗️</div>
-          <div>
-            <h3>AI 资本开支回报不及预期</h3>
-            <p>若未来 2-3 年云与 AI 收入增长无法覆盖资本开支强度，自由现金流修复将慢于市场预期，进而压制估值提升。</p>
-            <div class="risk-tag-row"><span class="risk-tag red">高</span></div>
-          </div>
-        </div>
-        <div class="risk-card">
-          <div class="risk-icon">🌍</div>
-          <div>
-            <h3>国际业务亏损持续</h3>
-            <p>国际数字商业需要持续投入本地供给、履约与营销，若规模扩大但单位经济性改善不够快，集团利润释放会受拖累。</p>
-            <div class="risk-tag-row"><span class="risk-tag gold">中高</span></div>
-          </div>
-        </div>
-        <div class="risk-card">
-          <div class="risk-icon">📜</div>
-          <div>
-            <h3>监管与组织复杂性</h3>
-            <p>平台治理、数据合规、海外监管环境以及大型集团多业务协同复杂度，都会影响经营效率与资本市场风险偏好。</p>
-            <div class="risk-tag-row"><span class="risk-tag gold">中</span></div>
-          </div>
-        </div>
+      <div class="card" style="margin-top:18px;">
+        <h3>最终结论</h3>
+        <p>阿里巴巴 FY2025 的核心特征，不是单纯“利润变好了”，而是：<strong style="color:#fff">利润修复、资产收缩、现金流再分配、AI 投入前置</strong>四件事同时发生。站在管理层视角，这是一份向下一阶段增长切换的年报；站在投资视角，这是一份需要用更长周期去读的年报。</p>
+        <p><strong>我的判断：</strong> 如果你把阿里只当作传统电商平台，FY2025 的增长不够性感；但如果你把它看作正在用电商现金牛重建“AI + Cloud 第二增长曲线”的平台公司，那么这份年报其实是积极的，只是它的兑现周期比市场希望的更长。</p>
       </div>
-      <div class="summary-box">
-        <strong>最终结论：</strong>阿里巴巴 FY2025 财报可以定性为“基本盘稳住、利润修复兑现、云业务重回增长、现金流进入再投资压缩期”。如果站在管理层视角，这是一份质量高于市场预期的报表；如果站在投资视角，这是一份证明阿里具备重估基础、但尚未完全兑现重估条件的报表。
-      </div>
-      <div class="alert-box green">
-        <strong>偏积极判断：</strong>阿里最值得乐观的地方，不是 FY2025 利润有多高，而是其已经证明自己可以同时做到：守住电商现金流、推进云智能增长、并通过回购持续提升每股价值。
-      </div>
-      <div class="alert-box warning">
-        <strong>偏审慎判断：</strong>下一阶段真正决定股价上限的，不是淘天继续稳不稳，而是云智能能否在 AI 周期中持续高增长，以及高资本开支最终能否转化为更强利润与自由现金流。
-      </div>
-      <div class="alert-box purple">
-        <strong>汇报口径建议：</strong>阿里 FY2025 可向管理层概括为“平台主业稳、利润修复快、AI 投入重、云业务最值得给估值”。
+    </section>
+
+    <section id="sources" class="sec">
+      <div class="sec-h"><div class="no">09</div><div><h2>数据来源</h2><div class="small">本次重做主要使用阿里官方年报原文，并以投资者关系页面交叉验证。</div></div></div>
+      <div class="card">
+        <ul>
+          <li>Alibaba Group Holding Limited Fiscal Year 2025 Annual Report（官方年报，FY2025）</li>
+          <li>Alibaba Investor Relations - Earnings and Financials（官方 IR 页面，FY2025 Annual Report 链接）</li>
+          <li>FY2025 Interim Report（用于口径校验与分部理解补充）</li>
+        </ul>
+        <p class="small">说明：报告核心数字均以阿里 FY2025 年报原文为准；同行业对比用于形成管理层视角下的行业坐标，不作为严格统一会计口径的估值模型。</p>
       </div>
     </section>
   </main>
 
-  <footer class="footer container">
-    <p>数据来源：Alibaba Group Holding Limited Form 20-F for fiscal year ended March 31, 2025；公司 FY2025 业绩披露；公开市场披露的 FY2025 自由现金流与股份回购口径。</p>
-    <p>说明：本报告以人民币口径为主，部分股东回报与市场表述引用美元口径；由于自由现金流通常来自业绩公告口径，与 20-F 主表展示方式不同，报告已进行交叉校验后使用。</p>
-  </footer>
+  <footer class="footer wrap">本报告由财务万晓生重做生成。报告日期：2026-05-14（UTC）。金额单位如无特别说明均为人民币。</footer>
 
   <script>
     Chart.register(ChartDataLabels);
-
-    const axisColor = '#8b949e';
-    const gridColor = 'rgba(139,148,158,0.14)';
-    const textColor = '#e6edf3';
-
-    const commonOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: { color: textColor, font: { family: 'Noto Sans SC' } }
-        },
-        datalabels: {
-          color: textColor,
-          formatter: (value) => value,
-          font: { weight: '600', size: 11, family: 'Noto Sans SC' }
-        },
-        tooltip: {
-          backgroundColor: 'rgba(22,27,34,0.96)',
-          titleColor: textColor,
-          bodyColor: textColor
-        }
-      },
-      scales: {
-        x: {
-          ticks: { color: axisColor, font: { family: 'Noto Sans SC' } },
-          grid: { color: 'rgba(0,0,0,0)' }
-        },
-        y: {
-          ticks: { color: axisColor, font: { family: 'Noto Sans SC' } },
-          grid: { color: gridColor }
-        }
-      }
-    };
-
-    new Chart(document.getElementById('segmentRevenueChart'), {
-      type: 'doughnut',
-      data: {
-        labels: ['淘天', '国际数字商业', '云智能', '菜鸟', '本地生活', '虎鲸文娱', '其他'],
-        datasets: [{
-          data: [4498.27, 1323.00, 1180.28, 1012.72, 670.76, 222.67, 2062.69],
-          backgroundColor: ['#58a6ff', '#39d0c8', '#bc8cff', '#d29922', '#3fb950', '#f85149', '#6e7681'],
-          borderColor: '#0d1117',
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: { color: textColor, font: { family: 'Noto Sans SC' } }
-          },
-          datalabels: {
-            color: '#ffffff',
-            formatter: (value) => value.toFixed(0),
-            font: { weight: '700', size: 10, family: 'Noto Sans SC' }
-          }
-        }
-      }
-    });
-
-    new Chart(document.getElementById('segmentEbitaChart'), {
-      type: 'bar',
-      data: {
-        labels: ['淘天', '国际数字商业', '云智能', '菜鸟', '本地生活', '虎鲸文娱', '其他'],
-        datasets: [{
-          label: 'FY2025 Adjusted EBITA（亿元）',
-          data: [1962.32, -151.37, 105.56, 3.02, -36.89, -5.54, -85.36],
-          backgroundColor: ['#58a6ff', '#f85149', '#39d0c8', '#d29922', '#f85149', '#f85149', '#bc8cff'],
-          borderRadius: 8
-        }]
-      },
-      options: commonOptions
-    });
+    const common={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#c9d1d9'}},tooltip:{enabled:true},datalabels:{color:'#e6edf3',anchor:'end',align:'top',offset:4,clamp:true,font:{weight:'600',size:11}}},scales:{x:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.06)'}},y:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.06)'},grace:'12%'}}};
+    new Chart(document.getElementById('segmentChart'),{type:'bar',data:{labels:['淘天','国际商业','云智能','菜鸟','本地生活','大文娱'],datasets:[{label:'FY2025收入(亿元)',data:[4498.27,1323.00,1180.28,1012.72,670.76,222.67],backgroundColor:['#58a6ff','#7ee787','#d2a8ff','#f2cc60','#ff7b72','#39d0c8']}]},options:{...common,plugins:{...common.plugins,legend:{display:false}},layout:{padding:{top:24}}}});
+    new Chart(document.getElementById('profitChart'),{type:'bar',data:{labels:['营收','经营利润','归母净利','经营现金流','自由现金流'],datasets:[{label:'FY2025(亿元)',data:[9963.47,1409.05,1294.70,1635.09,738.70],backgroundColor:['#58a6ff','#7ee787','#d2a8ff','#f2cc60','#ff7b72']}]},options:{...common,plugins:{...common.plugins,legend:{display:false}},layout:{padding:{top:24}}}});
+    new Chart(document.getElementById('peerChart'),{type:'bar',data:{labels:['阿里巴巴','腾讯','美团'],datasets:[{label:'利润修复/质量指数',data:[90,100,55],backgroundColor:'#58a6ff'},{label:'AI/第二曲线弹性指数',data:[96,88,62],backgroundColor:'#d2a8ff'}]},options:{...common,layout:{padding:{top:24}}}});
   </script>
 </body>
 </html>
