@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>阿里巴巴-W（09988.HK）2026财年财务分析报告</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0d1117;--card:#1c2128;--bd:#30363d;--txt:#e6edf3;--sub:#8b949e;--muted:#6e7681;--blue:#58a6ff;--green:#7ee787;--gold:#f2cc60;--purple:#d2a8ff;--red:#ff7b72}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:'Noto Sans SC',sans-serif;background:radial-gradient(circle at top left,rgba(88,166,255,.16),transparent 28%),linear-gradient(180deg,#0d1117 0%,#11161d 100%);color:var(--txt);line-height:1.72}
+    .wrap,.hero-inner,.strip,.nav-inner,.footer{width:min(1320px,calc(100% - 36px));margin:auto}.hero{margin:18px auto 14px;padding:42px 34px 30px;border:1px solid rgba(88,166,255,.18);border-radius:28px;background:linear-gradient(135deg,rgba(13,17,23,.92),rgba(22,27,34,.92)),linear-gradient(135deg,#10233c,#182b46 52%,#0d1117 100%);box-shadow:0 18px 44px rgba(0,0,0,.34)}
+    .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.25);color:#c9d1d9;font-size:13px}.hero h1{margin:16px 0 14px;font-size:36px;line-height:1.18;font-weight:800}.hero p{margin:0;color:var(--sub)}
+    .hero-grid,.grid-2,.grid-3,.grid-4{display:grid;gap:18px}.hero-grid{grid-template-columns:1.45fr .9fr}.grid-2{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-4{grid-template-columns:repeat(4,1fr)}
+    .card{background:rgba(28,33,40,.92);border:1px solid var(--bd);border-radius:20px;padding:20px;box-shadow:0 16px 36px rgba(0,0,0,.25)}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mini{padding:16px;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)}.mini .label,.sum .name,.kpi .title,.muted,.small{color:var(--sub)}.mini .value,.sum .kpi,.kpi .num{font-weight:800}.mini .value{font-size:24px;margin:6px 0 2px}
+    .alert{padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.02);color:var(--sub);border-left:4px solid var(--blue)}.green{border-left-color:var(--green)}.gold{border-left-color:var(--gold)}.purple{border-left-color:var(--purple)}
+    .strip{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin:0 auto 16px}.sum{position:relative;overflow:hidden;padding:16px;background:var(--card);border:1px solid var(--bd);border-radius:16px;box-shadow:0 16px 36px rgba(0,0,0,.2)}.sum:before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--blue),rgba(255,255,255,.12))}.sum.green:before{background:linear-gradient(90deg,var(--green),rgba(255,255,255,.12))}.sum.gold:before{background:linear-gradient(90deg,var(--gold),rgba(255,255,255,.12))}.sum.purple:before{background:linear-gradient(90deg,var(--purple),rgba(255,255,255,.12))}.sum .kpi{font-size:28px;margin:8px 0 4px}
+    .nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(13,17,23,.76);border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:18px}.nav-inner{display:flex;flex-wrap:wrap;gap:12px;padding:12px 0}.nav-inner a{padding:10px 14px;border-radius:999px;color:var(--sub);font-size:13px;text-decoration:none}.nav-inner a:hover{color:var(--txt);background:rgba(88,166,255,.08)}
+    section{margin-bottom:18px}.sec{background:rgba(28,33,40,.92);border:1px solid var(--bd);border-radius:24px;padding:24px;box-shadow:0 16px 36px rgba(0,0,0,.25)}.sec-h{display:flex;gap:14px;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06)}.no{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-weight:800;color:#fff;background:linear-gradient(135deg,#1f6feb,#58a6ff)} h2{margin:0;font-size:24px} h3{margin:0 0 12px;font-size:18px}
+    .kpi{padding:18px;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)}.kpi .num{font-size:30px;margin-top:8px}.kpi .desc{margin-top:6px;color:var(--muted);font-size:12px}
+    .tag{display:inline-flex;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700;background:rgba(88,166,255,.14);color:#8dc2ff}.tag.green{background:rgba(126,231,135,.14);color:var(--green)}.tag.gold{background:rgba(242,204,96,.14);color:var(--gold)}.tag.purple{background:rgba(210,168,255,.14);color:var(--purple)}
+    table{width:100%;border-collapse:collapse;font-size:14px} th,td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top} th{background:rgba(255,255,255,.03);color:#c9d1d9} tr:nth-child(even) td{background:rgba(255,255,255,.018)} .table-wrap{overflow:auto}
+    ul{margin:8px 0 0 18px;padding:0} li{margin:6px 0} canvas{width:100%!important;height:320px!important}.footer{color:var(--muted);font-size:12px;border-top:1px solid rgba(255,255,255,.06);padding:18px 0 42px;margin-top:28px}
+    @media(max-width:1180px){.hero-grid,.grid-2,.grid-4{grid-template-columns:1fr}.grid-3,.strip{grid-template-columns:repeat(3,1fr)}} @media(max-width:760px){.hero h1{font-size:30px}.grid-3,.strip{grid-template-columns:1fr}canvas{height:280px!important}}
+  </style>
+</head>
+<body>
+  <header class="hero wrap">
+    <div class="hero-inner">
+      <span class="eyebrow">📊 阿里巴巴-W 09988.HK · FY2026 财报数据更新版</span>
+      <div class="hero-grid" style="margin-top:18px;">
+        <div class="card">
+          <h1>阿里巴巴 FY2026：收入仍增长，但利润与现金流被“AI + 云 + 即时零售”重投入显著压缩，进入高投入换长期份额阶段</h1>
+          <p>结论前置：阿里巴巴 FY2026 实现营收 <strong style="color:#fff">10,236.70 亿元</strong>，同比增长 <strong style="color:#fff">3%</strong>；若剔除高鑫零售和银泰等已处置业务收入，同口径增长约 <strong style="color:#fff">11%</strong>。但经营利润降至 <strong style="color:#fff">501.50 亿元</strong>，同比下降 <strong style="color:#fff">64%</strong>；归母净利润 <strong style="color:#fff">1,059.04 亿元</strong>，同比下降 <strong style="color:#fff">18%-19%</strong>；Non-GAAP 净利润降至 <strong style="color:#fff">606.58 亿元</strong>，同比下降 <strong style="color:#fff">62%</strong>。这说明 FY2026 的阿里已经从“利润修复期”切换到“战略投入期”，财务报表最核心的变化，是 AI、云基础设施和即时零售投入对利润表与现金流量表的同步挤压。</p>
+          <div class="grid-3" style="margin-top:16px;">
+            <div class="alert green"><strong>收入端未失速</strong><br>表观增速 3%，同口径增速约 11%，核心业务需求并不弱。</div>
+            <div class="alert gold"><strong>利润端显著受压</strong><br>经营利润 -64%，经调整 EBITA -56%，说明投入力度已大幅穿透财报。</div>
+            <div class="alert purple"><strong>AI 商业化已起量</strong><br>云外部商业化收入增速 40%，AI 相关收入占云收入比重约 30%。</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>管理层摘要</h3>
+          <div class="mini-grid">
+            <div class="mini"><div class="label">综合评级</div><div class="value">B+</div><div class="small">战略正确，短期利润承压</div></div>
+            <div class="mini"><div class="label">综合评分</div><div class="value">76/100</div><div class="small">收入韧性强，现金流明显走弱</div></div>
+            <div class="mini"><div class="label">关键变量</div><div class="value" style="font-size:18px">AI ROI</div><div class="small">投入回报周期进入验证区</div></div>
+            <div class="mini"><div class="label">当前阶段</div><div class="value" style="font-size:18px">重投入换增长</div><div class="small">利润不再是优先目标</div></div>
+          </div>
+          <div class="alert" style="margin-top:14px;">如果 FY2025 是阿里“准备切换到 AI + Cloud 第二曲线”的一年，那么 FY2026 就是<strong style="color:#fff">正式把利润和现金流拿出来换未来竞争位势</strong>的一年。</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="strip wrap">
+    <div class="sum"><div class="name">FY2026 营收</div><div class="kpi">10,236.7亿</div><div class="small">同比 +3%</div></div>
+    <div class="sum green"><div class="name">同口径营收增速</div><div class="kpi">+11%</div><div class="small">剔除已处置业务</div></div>
+    <div class="sum gold"><div class="name">经营利润</div><div class="kpi">501.5亿</div><div class="small">同比 -64%</div></div>
+    <div class="sum purple"><div class="name">归母净利润</div><div class="kpi">1,059.0亿</div><div class="small">同比约 -18%</div></div>
+    <div class="sum"><div class="name">经营现金流</div><div class="kpi">762.1亿</div><div class="small">同比 -53%</div></div>
+    <div class="sum green"><div class="name">自由现金流</div><div class="kpi">-466.1亿</div><div class="small">由正转负</div></div>
+  </div>
+
+  <nav class="nav"><div class="nav-inner wrap">
+    <a href="#summary">执行摘要</a><a href="#company">公司概况</a><a href="#peer">同行对比</a><a href="#strategy">战略分析</a><a href="#accounting">会计分析</a><a href="#financial">财务分析</a><a href="#outlook">前景与估值</a><a href="#risk">风险与结论</a><a href="#sources">数据来源</a>
+  </div></nav>
+
+  <main class="wrap">
+    <section id="summary" class="sec">
+      <div class="sec-h"><div class="no">01</div><div><h2>执行摘要</h2><div class="small">先看今年发生了什么，再看它意味着什么。</div></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>三条核心结论</h3>
+          <ul>
+            <li><strong>收入质量好于表观增速。</strong> FY2026 营收同比 +3%，但剔除已处置业务后同口径增速约 +11%，说明阿里核心业务本身并没有失去增长能力。</li>
+            <li><strong>利润主动让位于投入。</strong> 经营利润、经调整 EBITA 和 Non-GAAP 净利润同步大幅下滑，反映出公司明确选择将资源优先投向 AI、云和即时零售。</li>
+            <li><strong>AI 商业化开始真实体现到业务层。</strong> 云智能集团收入同比 +38%，外部商业化收入增速升至 40%，AI 相关收入占云收入约 30%，已经不是纯概念阶段。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>一句话判断</h3>
+          <p>FY2026 的阿里巴巴，本质上是一家<strong style="color:#fff">“愿意用当期利润和现金流换取 AI 与云长期优势”的平台型公司</strong>。这会让短期利润表变难看，但如果投入最终兑现为更高的云收入、更强的模型服务和更深的电商协同，估值逻辑反而可能更清晰。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="company" class="sec">
+      <div class="sec-h"><div class="no">02</div><div><h2>公司概况</h2><div class="small">FY2026 的关键词是：AI、云、即时零售、组织重构。</div></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>业务结构变化</h3>
+          <ul>
+            <li><strong>阿里中国电商集团：</strong> 在 FY2026 中已经把淘天、饿了么、飞猪等更紧密整合，突出“电商 + 即时零售”主线。</li>
+            <li><strong>云智能集团：</strong> 仍是第二增长曲线核心，且 FY2026 已进入加速兑现阶段。</li>
+            <li><strong>阿里国际数字商业集团：</strong> 亏损显著收窄，接近盈亏平衡，说明国际化扩张开始体现经营效率改善。</li>
+            <li><strong>已处置业务影响口径：</strong> 高鑫零售和银泰等已退出资产使表观收入增速被低估，因此需要更重视同口径视角。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>管理层最新表述</h3>
+          <p>管理层已明确指出：阿里全栈 AI 技术投入已经跨越初期培育阶段，进入<strong>“正向的规模商业化回报周期”</strong>。这比 FY2025 的“准备投入”更进一步，意味着 FY2026 不是单纯烧钱，而是开始要求投入看到业务回报。</p>
+          <div class="alert purple">财务含义很清楚：接下来市场不会只问“你投了多少”，而会开始追问“这些 AI 和云投入，到底带来了多少可验证收入和毛利”。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="peer" class="sec">
+      <div class="sec-h"><div class="no">03</div><div><h2>同行业对比</h2><div class="small">放到腾讯、美团对比框架下，FY2026 的阿里处于什么位置。</div></div></div>
+      <div class="card">
+        <h3>横向对比表</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>公司</th><th>口径</th><th>收入表现</th><th>利润表现</th><th>最强优势</th><th>当前矛盾</th></tr></thead>
+            <tbody>
+              <tr><td>阿里巴巴</td><td>FY2026</td><td>表观 +3%，同口径 +11%</td><td>经营利润 -64%，FCF 转负</td><td>云 + AI 加速兑现、平台生态深</td><td>高投入压利润，回报周期需验证</td></tr>
+              <tr><td>腾讯</td><td>2026Q1</td><td>收入 +9%</td><td>IFRS归母 +21%</td><td>游戏+广告+支付+云现金牛供血</td><td>AI 投入加快但财务承压较轻</td></tr>
+              <tr><td>美团</td><td>2025H1</td><td>收入 +14.7%</td><td>经调整净利 -41%</td><td>本地生活场景密度与履约网络</td><td>竞争导致利润率大幅受压</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px">如果说腾讯是“现金牛支持 AI 迭代”的代表，美团是“竞争换份额”的代表，那么阿里 FY2026 更像是<strong style="color:#fff">“资本开支与战略投入最激进、最需要看中长期兑现”的重估型平台”</strong>。</p>
+      </div>
+      <div class="grid-2">
+        <div class="card"><h3>相对位置图</h3><canvas id="peerChart"></canvas></div>
+        <div class="card"><h3>行业位置结论</h3><ul><li><strong>成长弹性强：</strong> 阿里是三者中最有机会因为云和 AI 兑现而发生估值体系切换的公司之一。</li><li><strong>财务波动大：</strong> 也是三者里近期利润与现金流被战略投入冲击最明显的一家。</li><li><strong>关键不在“能不能投”，而在“投完能否收回”。</strong></li></ul></div>
+      </div>
+    </section>
+
+    <section id="strategy" class="sec">
+      <div class="sec-h"><div class="no">04</div><div><h2>战略分析</h2><div class="small">FY2026 的主轴，是 AI 与云进入规模商业化验证期。</div></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>战略主线一：阿里中国电商集团继续保基本盘</h3>
+          <p>客户管理收入表观同比仅增 5%，但若剔除新营销发展计划带来的收入冲减影响，同口径增长约 7%。这说明中国电商业务并非增长消失，而是在通过补贴、商家政策和用户体验优化，换取更健康的平台生态与长期留存。</p>
+          <p>此外，即时零售单位经济效益改善、笔单价环比提升，也说明阿里在“电商 + 即时履约”这条路上开始优化结构，而不只是粗放扩张。</p>
+        </div>
+        <div class="card">
+          <h3>战略主线二：云智能集团成为最重要增长引擎</h3>
+          <p>FY2026 年 3 月季度，云智能集团收入达到 <strong style="color:#fff">416.26 亿元</strong>，同比增长 <strong style="color:#fff">38%</strong>，外部商业化收入增长 <strong style="color:#fff">40%</strong>。AI 相关产品收入达到 <strong style="color:#fff">89.71 亿元</strong>，连续第十一个季度实现三位数增长。</p>
+          <div class="alert gold">这一点非常关键：阿里的 AI 叙事终于开始出现“可量化的收入结果”，这也是 FY2026 最大的积极信号。</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>战略主线三：模型、应用、芯片三层同步推进</h3>
+        <ul>
+          <li><strong>模型：</strong> Qwen3.6-Plus 在编程、智能体编程、多模态和超长上下文能力上继续升级；</li>
+          <li><strong>应用：</strong> 千问 app 与淘宝天猫打通，AI 购物助手和商家智能体“悟空”开始嵌入真实商业流程；</li>
+          <li><strong>芯片：</strong> 平头哥真武 PPU 已经在阿里云和智能驾驶研发场景中形成规模应用。</li>
+        </ul>
+        <p>这意味着阿里不是只押注单点模型能力，而是在做从底层芯片、云基础设施到应用层的一体化投入。</p>
+      </div>
+    </section>
+
+    <section id="accounting" class="sec">
+      <div class="sec-h"><div class="no">05</div><div><h2>会计分析</h2><div class="small">FY2026 的报表要重点拆“收入韧性”和“利润压力”的来源。</div></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>利润表质量判断</h3>
+          <ul>
+            <li>收入增长不弱，但经营利润大幅下滑，说明利润端不是需求崩掉，而是管理层主动提高投入强度。</li>
+            <li>FY2026 净利润下降幅度显著小于经营利润下降幅度，意味着投资公允价值变动、处置投资收益等项目对净利润形成一定支撑。</li>
+            <li>Non-GAAP 净利润降幅更大，说明真正的“核心经营利润压力”比 GAAP 净利润看上去更重。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>现金流量表信号</h3>
+          <ul>
+            <li>经营现金流降至 762.13 亿元，同比下降 53%。</li>
+            <li>自由现金流由 FY2025 的 +738.70 亿元转为 FY2026 的 -466.09 亿元。</li>
+            <li>单季度自由现金流也已转负，主要因为即时零售投入、千问 app 用户获取成本和云基础设施支出增加。</li>
+          </ul>
+          <p>这说明 FY2026 最大的报表变化，不是利润波动，而是<strong style="color:#fff">真实现金开始大量流出到战略投入端</strong>。</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>会计风险提示</h3>
+        <p>现在外部最容易误读阿里报表的地方，是把“利润和自由现金流大幅下降”直接视为基本面转弱。更准确的理解是：<strong style="color:#fff">阿里 FY2026 的损益表正在被战略投入重写</strong>。真正风险不在当期下降本身，而在未来 1-3 年这些投入能否通过云、AI 应用和平台协同转化为可持续的高质量收入与现金回流。</p>
+      </div>
+    </section>
+
+    <section id="financial" class="sec">
+      <div class="sec-h"><div class="no">06</div><div><h2>财务分析</h2><div class="small">FY2026 的关键词：收入韧性、利润承压、现金流显著走弱。</div></div></div>
+      <div class="grid-4">
+        <div class="kpi"><div class="title">总营收</div><div class="num">10,236.7亿</div><div class="desc">同比 +3%，同口径 +11%</div></div>
+        <div class="kpi"><div class="title">经营利润</div><div class="num">501.5亿</div><div class="desc">同比 -64%</div></div>
+        <div class="kpi"><div class="title">归母净利润</div><div class="num">1,059.0亿</div><div class="desc">同比约 -18%</div></div>
+        <div class="kpi"><div class="title">Non-GAAP净利润</div><div class="num">606.6亿</div><div class="desc">同比 -62%</div></div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card"><h3>FY2026 关键财务指标</h3><canvas id="profitChart"></canvas></div>
+        <div class="card"><h3>2026年3月季度关键数据</h3><canvas id="quarterChart"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>重点财务解读</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>项目</th><th>FY2026</th><th>同比</th><th>含义</th></tr></thead>
+            <tbody>
+              <tr><td>营收</td><td>10,236.70亿元</td><td>+3%</td><td>核心需求仍在，但已处置业务压低表观增速</td></tr>
+              <tr><td>经营利润</td><td>501.50亿元</td><td>-64%</td><td>AI、即时零售、科技投入大幅抬升</td></tr>
+              <tr><td>经调整 EBITA</td><td>764.16亿元</td><td>-56%</td><td>核心经营利润也明显承压</td></tr>
+              <tr><td>归母净利润</td><td>1,059.04亿元</td><td>约 -18%</td><td>投资公允价值变动和处置收益部分对冲经营压力</td></tr>
+              <tr><td>经营现金流</td><td>762.13亿元</td><td>-53%</td><td>利润与营运资金质量显著弱于 FY2025</td></tr>
+              <tr><td>自由现金流</td><td>-466.09亿元</td><td>由正转负</td><td>战略投入已真正转化为现金流压力</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>云智能的财务意义</h3>
+          <p>云智能集团在 FY2026 的财务地位已经显著上升。38% 的季度收入增速和 40% 的外部商业化增速，证明阿里在 AI 云市场已不只是“有能力”，而是开始“有结果”。对于阿里估值而言，云不再只是未来故事，而开始具备现实的业绩支撑。</p>
+        </div>
+        <div class="card">
+          <h3>即时零售与用户体验投入的财务代价</h3>
+          <p>从报表看，即时零售和千问 app 用户获取投入，对 FY2026 的利润和自由现金流形成了最直接拖累。这类投入短期会降低利润率，但如果最终提高用户时长、订单结构、会员留存和平台协同，长期可能形成更强竞争壁垒。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="outlook" class="sec">
+      <div class="sec-h"><div class="no">07</div><div><h2>前景分析与估值思路</h2><div class="small">FY2027 以后，市场最关心的将不是“阿里有没有投 AI”，而是“AI 带来的利润什么时候回来”。</div></div></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>未来 12-24 个月核心观察项</h3>
+          <ul>
+            <li><strong>云收入增速是否保持高位：</strong> 特别是外部商业化收入是否能继续快于整体云收入。</li>
+            <li><strong>AI 相关收入占比：</strong> 是否从当前约 30% 继续抬升。</li>
+            <li><strong>自由现金流修复路径：</strong> 何时从大幅净流出回到稳定正值。</li>
+            <li><strong>即时零售单位经济模型：</strong> 是否能继续改善并最终带来利润贡献。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>估值框架建议</h3>
+          <p>FY2026 后的阿里，建议按三层估值逻辑理解：</p>
+          <ul>
+            <li><strong>底座：</strong> 中国电商核心盘与会员生态；</li>
+            <li><strong>成长：</strong> 国际商业与云外部商业化；</li>
+            <li><strong>期权：</strong> AI 模型、MaaS、企业智能体与芯片协同。</li>
+          </ul>
+          <div class="alert green">如果 FY2027 能看到利润率与自由现金流开始恢复，而云和 AI 收入继续高增，阿里的估值弹性会显著优于当前静态利润所反映的水平。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="risk" class="sec">
+      <div class="sec-h"><div class="no">08</div><div><h2>风险与结论</h2><div class="small">真正的挑战，不是投入太大，而是兑现太慢。</div></div></div>
+      <div class="grid-3">
+        <div class="card"><h3><span class="tag gold">风险 1</span></h3><p>AI 与云投入回报周期长于预期。若收入增长无法覆盖投入，利润率和现金流可能继续承压。</p></div>
+        <div class="card"><h3><span class="tag purple">风险 2</span></h3><p>即时零售竞争仍激烈。即便单位经济效益改善，如果平台补贴与用户获取成本维持高位，利润修复会延后。</p></div>
+        <div class="card"><h3><span class="tag green">风险 3</span></h3><p>云与 AI 收入高增长若未能持续，市场可能重新下调对第二增长曲线的估值溢价。</p></div>
+      </div>
+      <div class="card" style="margin-top:18px;">
+        <h3>最终结论</h3>
+        <p>阿里巴巴 FY2026 的核心特征是：<strong style="color:#fff">收入韧性尚在，但利润和现金流主动让位于战略投入</strong>。从管理层视角，这是非常明确的资源重配；从投资者视角，这是一次典型的“短期报表承压，长期价值待验证”的切换。</p>
+        <p><strong>我的判断：</strong> FY2026 的阿里不是“变差了”，而是“更激进了”。如果云与 AI 的商业化兑现继续加速，这种激进会在未来变成估值红利；如果兑现速度不够快，FY2026 这份财报就会被市场视为利润牺牲过大的信号。</p>
+      </div>
+    </section>
+
+    <section id="sources" class="sec">
+      <div class="sec-h"><div class="no">09</div><div><h2>数据来源</h2><div class="small">本版为 FY2026 数据更新版，核心数据以阿里官方 2026 年 5 月 13 日披露为准。</div></div></div>
+      <div class="card">
+        <ul>
+          <li>阿里巴巴集团公布2026年3月份季度及2026财年业绩（官方中文新闻稿，2026-05-13）</li>
+          <li>Alibaba Group Announces March Quarter 2026 and Fiscal Year 2026 Results（官方英文页面/PDF）</li>
+          <li>Alibaba Investor Relations - Earnings and Financials（官方 IR 页面）</li>
+        </ul>
+        <p class="small">说明：本次用户要求为“更新一版 FY2026 财报数据”，因此本报告重点放在最新数据更新与管理层含义提炼；若你要，我下一步可以继续补完整的 FY2026 深度 HTML 经营分析长报告。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer wrap">本报告由财务万晓生生成。报告日期：2026-05-14（UTC）。金额单位如无特别说明均为人民币。</footer>
+
+  <script>
+    Chart.register(ChartDataLabels);
+    const common={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#c9d1d9'}},tooltip:{enabled:true},datalabels:{color:'#e6edf3',anchor:'end',align:'top',offset:4,clamp:true,font:{weight:'600',size:11}}},scales:{x:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.06)'}},y:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.06)'},grace:'12%'}}};
+    new Chart(document.getElementById('profitChart'),{type:'bar',data:{labels:['营收','经营利润','归母净利','经营现金流','自由现金流'],datasets:[{label:'FY2026(亿元)',data:[10236.70,501.50,1059.04,762.13,-466.09],backgroundColor:['#58a6ff','#f2cc60','#d2a8ff','#7ee787','#ff7b72']}]},options:{...common,plugins:{...common.plugins,legend:{display:false}},layout:{padding:{top:24}}}});
+    new Chart(document.getElementById('quarterChart'),{type:'bar',data:{labels:['Q4收入','Q4经营亏损/利润','Q4归母净利','Q4经营现金流','Q4自由现金流'],datasets:[{label:'2026年3月季度(亿元)',data:[2433.80,-8.48,254.76,94.10,-173.00],backgroundColor:['#58a6ff','#ff7b72','#d2a8ff','#7ee787','#f2cc60']}]},options:{...common,plugins:{...common.plugins,legend:{display:false}},layout:{padding:{top:24}}}});
+    new Chart(document.getElementById('peerChart'),{type:'bar',data:{labels:['阿里巴巴','腾讯','美团'],datasets:[{label:'AI/第二曲线弹性指数',data:[98,88,62],backgroundColor:'#58a6ff'},{label:'短期财务压力指数',data:[95,55,82],backgroundColor:'#ff7b72'}]},options:{...common,layout:{padding:{top:24}}}});
+  </script>
+</body>
+</html>
