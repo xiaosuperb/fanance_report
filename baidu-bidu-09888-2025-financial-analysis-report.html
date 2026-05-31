@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>百度（09888.HK）2025年度财务分析报告</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0d1117; --bg-secondary: #161b22; --bg-card: #1c2128; --border: #30363d;
+      --text-primary: #e6edf3; --text-secondary: #8b949e; --text-muted: #6e7681;
+      --accent: #58a6ff; --accent-green: #3fb950; --accent-red: #f85149; --accent-gold: #d29922;
+      --accent-purple: #bc8cff; --accent-teal: #39d0c8; --shadow: 0 10px 30px rgba(0,0,0,0.28);
+    }
+    *{box-sizing:border-box} body{margin:0;font-family:'Noto Sans SC',system-ui,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.65}
+    .hero,.summary-strip,.nav-bar,.container,.footer{width:min(1280px,calc(100% - 32px));margin-left:auto;margin-right:auto}
+    .hero{margin-top:24px;padding:32px;border-radius:24px;background:linear-gradient(135deg,#0f172a 0%,#0d1117 55%,#111827 100%);border:1px solid rgba(255,255,255,.06)}
+    .summary-strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin-top:18px}
+    .summary-card,.section,.card,.chart-card,.table-card,.risk-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:18px}
+    .summary-card{padding:16px;position:relative}.summary-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--card-accent,var(--accent))}
+    .nav-bar{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:rgba(13,17,23,.75);padding:12px 0;margin-top:18px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-links{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}.nav-links a{white-space:nowrap;color:var(--text-secondary);padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.04);text-decoration:none;font-size:14px}
+    .nav-links a:hover{background:rgba(88,166,255,.15);color:var(--accent)}
+    .container{margin-top:24px;margin-bottom:48px}.section{padding:24px;margin-bottom:20px}.section-header{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+    .section-badge{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#58a6ff 0%,#1f6feb 100%);font-weight:700;flex-shrink:0}
+    .grid-2,.grid-3{display:grid;gap:18px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card,.chart-card,.table-card{padding:18px}
+    .alert{border-left:4px solid var(--accent);background:rgba(255,255,255,.03);padding:14px 16px;border-radius:12px;margin:12px 0}
+    .alert.danger{border-color:var(--accent-red)} .alert.warning{border-color:var(--accent-gold)} .alert.green{border-color:var(--accent-green)} .alert.purple{border-color:var(--accent-purple)}
+    table{width:100%;border-collapse:collapse;font-size:14px} th,td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left}
+    thead th{color:var(--text-muted);font-weight:500;font-size:13px} tbody tr:nth-child(odd){background:rgba(255,255,255,.015)} tbody tr:hover{background:rgba(255,255,255,.04)}
+    .chart-box{height:320px;position:relative;width:100%} .chart-box-md{height:280px;position:relative;width:100%}
+    .kpi-value{font-size:26px;font-weight:700;margin:6px 0}.kpi-label{font-size:13px;color:var(--text-muted)}.kpi-change{font-size:14px;margin-top:2px}.up{color:var(--accent-green)}.down{color:var(--accent-red)}
+    .risk-card{padding:16px;border-left:4px solid;display:flex;gap:14px;align-items:flex-start}.risk-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+    .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500}.badge-red{background:rgba(248,81,73,.15);color:var(--accent-red)}.badge-gold{background:rgba(210,153,34,.15);color:var(--accent-gold)}.badge-green{background:rgba(63,185,80,.15);color:var(--accent-green)}
+    .footer{padding:12px 0 48px;color:var(--text-muted);text-align:center;font-size:13px}
+    @media (max-width:1080px){.summary-strip,.grid-3{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}}
+    @media (max-width:780px){.summary-strip,.grid-3{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div style="font-size:14px;color:var(--text-muted);margin-bottom:8px">📊 财务万晓生 · 管理层深度报告</div>
+    <h1 style="font-size:32px;margin:0 0 6px">百度集团（09888.HK / BIDU）2025年度财务分析报告</h1>
+    <p style="color:var(--text-secondary);font-size:15px;max-width:720px">AI投入重压利润，经营现金流首次转负。百度正在经历"以利润换未来"的战略阵痛期。</p>
+    <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+      <span class="badge badge-red">⚠ 利润骤降</span>
+      <span class="badge badge-red">⚠ 现金流转负</span>
+      <span class="badge badge-gold">⚡ AI投入激增</span>
+      <span class="badge badge-green">📈 Q1改善</span>
+    </div>
+  </header>
+  <div class="summary-strip">
+    <div class="summary-card" style="--card-accent:var(--accent)"><div class="kpi-label">营业收入</div><div class="kpi-value">1,290.8亿</div><div class="kpi-change down">▼ -3.0% 同比</div></div>
+    <div class="summary-card" style="--card-accent:var(--accent-green)"><div class="kpi-label">净利润</div><div class="kpi-value">55.9亿</div><div class="kpi-change down">▼ -76.5% 同比</div></div>
+    <div class="summary-card" style="--card-accent:var(--accent-gold)"><div class="kpi-label">毛利率</div><div class="kpi-value">43.9%</div><div class="kpi-change down">▼ -6.4ppt 同比</div></div>
+    <div class="summary-card" style="--card-accent:var(--accent-red)"><div class="kpi-label">经营现金流</div><div class="kpi-value">-30.1亿</div><div class="kpi-change down">转负·首次</div></div>
+    <div class="summary-card" style="--card-accent:var(--accent-purple)"><div class="kpi-label">自由现金流</div><div class="kpi-value">-164.3亿</div><div class="kpi-change down">深度负值</div></div>
+    <div class="summary-card" style="--card-accent:var(--accent-teal)"><div class="kpi-label">资本开支</div><div class="kpi-value">134.2亿</div><div class="kpi-change up">▲ +62.5% AI驱动</div></div>
+  </div>
+  <nav class="nav-bar"><div class="nav-links">
+    <a href="#exec">执行摘要</a><a href="#company">公司概况</a><a href="#peer">行业对比</a><a href="#strategy">战略分析</a><a href="#accounting">会计分析</a>
+    <a href="#finance">财务分析</a><a href="#outlook">前景展望</a><a href="#risk">风险与结论</a>
+  </div></nav>
+  <main class="container">
+
+    <section class="section" id="exec">
+      <div class="section-header"><div class="section-badge">1</div><h2>执行摘要</h2></div>
+      <p>百度集团2025年年报与2026年Q1季报呈现了鲜明的"冰火两重天"：年度数据全面恶化——营收同比下降3.0%至1,290.8亿元，净利润暴跌76.5%至55.9亿元，经营现金流自上市以来首次转负（-30.1亿）。利润崩塌的核心原因有三：一是AI基础设施投入使资本开支飙升62.5%至134.2亿元；二是核心搜索广告收入受宏观经济与AI搜索竞争双重挤压；三是爱奇艺及非核心业务持续承压。</p>
+      <p>2026年Q1已出现边际改善信号：经营现金流回暖至26.7亿元（去年同期为-60.0亿），自由现金流也回归正值。这说明AI投入高峰期可能已过最大现金消耗阶段，但营收增长仍未现拐点（Q1同比-1.2%）。</p>
+      <p><strong>核心判断：百度正处于"以利润换未来"的战略阵痛期，盈利拐点取决于AI收入能否在2026-2027年规模化兑现。当前估值中已部分反映AI期权价值，但利润下行仍在继续，建议保持观察。</strong></p>
+    </section>
+
+    <section class="section" id="company">
+      <div class="section-header"><div class="section-badge">2</div><h2>公司概况</h2></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-top:0">基本信息</h3>
+          <table>
+            <tr><td style="width:120px;color:var(--text-secondary)">公司名称</td><td>百度集团股份有限公司</td></tr>
+            <tr><td style="color:var(--text-secondary)">股票代码</td><td>09888.HK / BIDU.US</td></tr>
+            <tr><td style="color:var(--text-secondary)">上市地</td><td>港股（双重主要上市）/ 美股</td></tr>
+            <tr><td style="color:var(--text-secondary)">总资产</td><td>4,491.6亿元（2025末）</td></tr>
+            <tr><td style="color:var(--text-secondary)">股东权益</td><td>2,663.3亿元</td></tr>
+            <tr><td style="color:var(--text-secondary)">员工总数</td><td>约40,000人</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">业务结构</h3>
+          <div style="margin-bottom:8px;color:var(--text-secondary)">收入来源（2025年估算）</div>
+          <div style="margin-bottom:6px"><span style="color:var(--accent)">◆</span> 在线营销（搜索广告）：~58%</div>
+          <div style="margin-bottom:6px"><span style="color:var(--accent-green)">◆</span> 云智能（AI+Cloud）：~22%</div>
+          <div style="margin-bottom:6px"><span style="color:var(--accent-gold)">◆</span> 爱奇艺：~15%</div>
+          <div style="margin-bottom:6px"><span style="color:var(--accent-purple)">◆</span> 智能驾驶/其他：~5%</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="peer">
+      <div class="section-header"><div class="section-badge">3</div><h2>同行业对比</h2></div>
+      <div class="alert warning" style="margin-bottom:16px">⚠ 口径说明：百度FY2025、阿里FY2026、腾讯FY2025，均为最新完整年度数据。</div>
+      <div class="table-card" style="padding:0;overflow-x:auto">
+        <table>
+          <thead><tr><th>指标</th><th>百度(09888.HK)</th><th>阿里(09988.HK)</th><th>腾讯(00700.HK)</th></tr></thead>
+          <tbody>
+            <tr><td>营收(亿元)</td><td>1,291</td><td>10,237</td><td>6,723</td></tr>
+            <tr><td>营收增速</td><td style="color:var(--accent-red)">-3.0%</td><td style="color:var(--accent-green)">+7.8%</td><td style="color:var(--accent-green)">+11.0%</td></tr>
+            <tr><td>净利润(亿元)</td><td style="color:var(--accent-red)">55.9</td><td>1,059</td><td>1,921</td></tr>
+            <tr><td>净利润率</td><td style="color:var(--accent-red)">4.3%</td><td>10.3%</td><td style="color:var(--accent-green)">28.6%</td></tr>
+            <tr><td>经营现金流(亿元)</td><td style="color:var(--accent-red)">-30.1</td><td>762</td><td>2,083</td></tr>
+            <tr><td>自由现金流(亿元)</td><td style="color:var(--accent-red)">-164</td><td style="color:var(--accent-red)">-466</td><td>1,630</td></tr>
+            <tr><td>资本开支(亿元)</td><td style="color:var(--accent-gold)">134</td><td>1,228</td><td>453</td></tr>
+            <tr><td>毛利率</td><td>43.9%</td><td>39.2%</td><td>48.7%</td></tr>
+            <tr><td>总资产(亿元)</td><td>4,492</td><td>24,498</td><td>17,048</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:14px;color:var(--text-secondary);font-size:14px">
+        <p><strong>结论：</strong>百度在营收规模和利润能力上已被阿里、腾讯拉开两个量级。最大的差距不在毛利率（43.9%高于阿里的39.2%），而在于规模效应——百度1,291亿营收不足以支撑134亿AI资本开支，而腾讯6,723亿营收分摊453亿CapEx相对从容。百度面临的不是"能不能做AI"，而是"现金流能否撑到AI变现"。</p>
+      </div>
+    </section>
+
+    <section class="section" id="strategy">
+      <div class="section-header"><div class="section-badge">4</div><h2>战略分析</h2></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-top:0">行业分析：AI竞赛白热化</h3>
+          <p>中国AI大模型市场2025年进入"基础设施建设竞赛"阶段，百度文心一言起步最早，但模型能力上已面临来自字节豆包、阿里通义千问、智谱ChatGLM的激烈竞争。百度选择"搜索+AI+云"三位一体战略，核心逻辑是在AI时代的搜索入口和云基础设施两端同时建立壁垒。</p>
+          <p style="margin-bottom:0"><strong>定位：</strong>技术驱动型，以深度学习起家，强调全栈AI能力（芯片→框架→模型→应用），与市场驱动型的字节跳动、战略投资型的阿里形成差异化。</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">竞争策略：投入换增长</h3>
+          <p>百度2025年资本开支同比+62.5%至134亿元，占营收10.4%。对比：腾讯CapEx占营收6.7%（有游戏+社交利润池支撑），阿里CapEx占营收12.0%（有电商+云利润池支撑）。百度只有搜索广告单一现金牛。</p>
+          <p style="margin-bottom:0"><strong>判断：</strong>"收入基础薄、竞争战线长、转型时间紧"。2026-2027年AI业务能否贡献可量化收入增量，是评估战略成败的关键时间窗口。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="accounting">
+      <div class="section-header"><div class="section-badge">5</div><h2>会计分析</h2></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-top:0">研发资本化</h3>
+          <p>百度GAAP研发费用率维持17-20%区间。需关注研发支出资本化比率的变化——若大幅提升资本化率，可能虚增当期利润。</p>
+          <div class="alert warning" style="margin-top:10px">⚠ 2025年净利润仅55.9亿，资本化比率调整对利润敏感度很高。</div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">收入确认质量</h3>
+          <p>搜索广告以预充值模式为主（百度推广预存款），递延收入余额变化是判断广告主业健康度的先行指标。应收账款/营收比约19%，有所恶化但幅度可控。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="finance">
+      <div class="section-header"><div class="section-badge">6</div><h2>财务分析</h2></div>
+      <div class="grid-2" style="margin-bottom:18px">
+        <div class="chart-card">
+          <h3 style="margin-top:0">营收与净利润趋势（亿元）</h3>
+          <div class="chart-box-md"><canvas id="chartRevenueProfit"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3 style="margin-top:0">毛利率与净利率趋势</h3>
+          <div class="chart-box-md"><canvas id="chartMargins"></canvas></div>
+        </div>
+      </div>
+      <div class="alert" style="margin-bottom:18px">
+        <strong>洞察：</strong>毛利率从2023年51.7%一路降至43.9%，2026Q1进一步降至38.9%。毛利率下行反映：低毛利AI云占比提升+高毛利搜索收入占比下降。净利率从15.1%悬崖式下跌至4.3%，主因AI资本开支折旧和研发费用高企。
+      </div>
+      <div class="grid-2" style="margin-bottom:18px">
+        <div class="chart-card">
+          <h3 style="margin-top:0">经营现金流与自由现金流（亿元）</h3>
+          <div class="chart-box-md"><canvas id="chartCashFlow"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3 style="margin-top:0">资本开支与自由现金流（亿元）</h3>
+          <div class="chart-box-md"><canvas id="chartCapExFCF"></canvas></div>
+        </div>
+      </div>
+      <div class="alert danger" style="margin-bottom:18px">
+        <strong>严重关注：</strong>经营现金流2025年首次为负（-30.1亿），自由现金流深跌至-164.3亿。2026Q1已回归正值（26.7亿），但年度能否持续为正仍需观察。
+      </div>
+      <div class="chart-card" style="margin-bottom:18px">
+        <h3 style="margin-top:0">2025Q1-2026Q1 季度营收与经营利润趋势（亿元）</h3>
+        <div class="chart-box"><canvas id="chartQuarterly"></canvas></div>
+      </div>
+      <div class="table-card" style="padding:0;overflow-x:auto;margin-bottom:18px">
+        <table>
+          <thead><tr><th>指标</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
+          <tbody>
+            <tr><td>营收(亿元)</td><td>1,236.8</td><td>1,346.0</td><td>1,331.3</td><td style="color:var(--accent-red)">1,290.8</td></tr>
+            <tr><td>营收增速</td><td>-0.7%</td><td>+8.8%</td><td>-0.9%</td><td style="color:var(--accent-red)">-3.0%</td></tr>
+            <tr><td>毛利润(亿元)</td><td>597.4</td><td>695.7</td><td>670.2</td><td style="color:var(--accent-red)">566.4</td></tr>
+            <tr><td>毛利率</td><td>48.3%</td><td>51.7%</td><td>50.3%</td><td style="color:var(--accent-red)">43.9%</td></tr>
+            <tr><td>经营利润(亿元)</td><td>159.1</td><td>218.6</td><td>212.7</td><td style="color:var(--accent-red)">103.7</td></tr>
+            <tr><td>净利润(亿元)</td><td>75.6</td><td>203.2</td><td>237.6</td><td style="color:var(--accent-red)">55.9</td></tr>
+            <tr><td>净利率</td><td>6.1%</td><td>15.1%</td><td>17.8%</td><td style="color:var(--accent-red)">4.3%</td></tr>
+            <tr><td>经营现金流(亿元)</td><td>261.7</td><td>366.2</td><td>212.3</td><td style="color:var(--accent-red)">-30.1</td></tr>
+            <tr><td>自由现金流(亿元)</td><td>177.8</td><td>253.2</td><td>129.8</td><td style="color:var(--accent-red)">-164.3</td></tr>
+            <tr><td>资本开支(亿元)</td><td>83.9</td><td>113.0</td><td>82.6</td><td style="color:var(--accent-gold)">134.2</td></tr>
+            <tr><td>总资产(亿元)</td><td>3,910</td><td>4,068</td><td>4,278</td><td>4,492</td></tr>
+            <tr><td>股东权益(亿元)</td><td>2,235</td><td>2,436</td><td>2,636</td><td>2,663</td></tr>
+            <tr><td>现金及等价物(亿元)</td><td>531.6</td><td>252.3</td><td>248.3</td><td>246.1</td></tr>
+            <tr><td>资产负债率</td><td>42.8%</td><td>40.1%</td><td>38.4%</td><td>40.7%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert purple">
+        <strong>杜邦视角：</strong>ROE从2024年约9.0%降至2025年约2.1%，净利率崩溃是主因（-13.5ppt）。资产周转率持平（~0.29x），权益乘数微升（1.69x）。问题不在杠杆和周转，在盈利能力根本性恶化。
+      </div>
+    </section>
+
+    <section class="section" id="outlook">
+      <div class="section-header"><div class="section-badge">7</div><h2>前景展望</h2></div>
+      <div class="grid-3">
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--accent-teal)">正面因素</h3>
+          <ul style="padding-left:16px;margin-bottom:0">
+            <li style="margin-bottom:8px"><strong>AI云增长最快</strong>：云智能持续20%+增长，AI相关收入已开始贡献增量</li>
+            <li style="margin-bottom:8px"><strong>Q1现金流改善</strong>：2026Q1 OCF重回27亿正值，CapEx高峰可能已过</li>
+            <li style="margin-bottom:8px"><strong>现金储备充足</strong>：246亿现金+2,663亿净资产</li>
+            <li><strong>搜索壁垒依然</strong>：中文搜索市占率仍超60%</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--accent-gold)">中性因素</h3>
+          <ul style="padding-left:16px;margin-bottom:0">
+            <li style="margin-bottom:8px"><strong>AI变现路径未明</strong>：文心一言货币化程度远低于预期</li>
+            <li style="margin-bottom:8px"><strong>搜索广告承压</strong>：字节搜索和AI搜索分流不可逆</li>
+            <li><strong>智能驾驶变现慢</strong>：Apollo RT6落地加速但收入贡献有限</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--accent-red)">负面因素</h3>
+          <ul style="padding-left:16px;margin-bottom:0">
+            <li style="margin-bottom:8px"><strong>利润下行未见底</strong>：净利润从237.6亿骤降至55.9亿</li>
+            <li style="margin-bottom:8px"><strong>营收连降两年</strong>：2024-2025连续负增长</li>
+            <li><strong>竞争格局恶化</strong>：AI赛道大量玩家涌入</li>
+          </ul>
+        </div>
+      </div>
+      <div class="table-card" style="margin-top:18px;padding:0;overflow-x:auto">
+        <table>
+          <thead><tr><th>预测指标</th><th>2025A</th><th>2026E</th><th>2027E</th><th>核心假设</th></tr></thead>
+          <tbody>
+            <tr><td>营收(亿元)</td><td>1,291</td><td>1,310-1,350</td><td>1,380-1,460</td><td>AI云拉动，广告企稳</td></tr>
+            <tr><td>营收增速</td><td>-3.0%</td><td>+1.5% to +4.5%</td><td>+2.5% to +8.0%</td><td>底部企稳，AI贡献渐显</td></tr>
+            <tr><td>净利润(亿元)</td><td>55.9</td><td>80-120</td><td>130-180</td><td>AI折旧高峰趋缓，利润率修复</td></tr>
+            <tr><td>经营现金流(亿元)</td><td>-30.1</td><td>80-150</td><td>150-220</td><td>CapEx下降，经营改善</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:12px 14px;color:var(--text-muted);font-size:13px">来源：财报+预测模型。预测高度不确定，核心变量为AI收入变现速度。</div>
+      </div>
+    </section>
+
+    <section class="section" id="risk">
+      <div class="section-header"><div class="section-badge">8</div><h2>风险与结论</h2></div>
+      <div class="grid-2" style="margin-bottom:18px">
+        <div class="risk-card" style="border-color:var(--accent-red)">
+          <div class="risk-icon" style="background:rgba(248,81,73,.12)">🔴</div>
+          <div><strong>现金流断裂风险</strong><span class="badge badge-red" style="margin-left:8px">高</span>
+          <div style="color:var(--text-secondary);font-size:14px;margin-top:4px">OCF首次转负，FCF-164亿。虽Q1改善，但若亏损持续，1-2年内可能面临外部融资压力。</div></div>
+        </div>
+        <div class="risk-card" style="border-color:var(--accent-gold)">
+          <div class="risk-icon" style="background:rgba(210,153,34,.12)">🟡</div>
+          <div><strong>主营业务萎缩</strong><span class="badge badge-gold" style="margin-left:8px">中高</span>
+          <div style="color:var(--text-secondary);font-size:14px;margin-top:4px">营收连续两年下滑，搜索广告受AI+短视频搜索分流，趋势短期难以逆转。</div></div>
+        </div>
+        <div class="risk-card" style="border-color:var(--accent-gold)">
+          <div class="risk-icon" style="background:rgba(210,153,34,.12)">🟡</div>
+          <div><strong>AI变现不确定</strong><span class="badge badge-gold" style="margin-left:8px">中</span>
+          <div style="color:var(--text-secondary);font-size:14px;margin-top:4px">文心一言+云AI增速快但基数小，距弥补广告下滑缺口尚有距离。</div></div>
+        </div>
+      </div>
+      <div class="alert danger">
+        <strong>最终结论：</strong>百度2025年年报显示典型的"阵痛期"特征——利润受损、现金流转负、主营停滞，但Q1已有边际改善。当前PE约25-30x已隐含部分AI复苏预期。建议密切跟踪2026年H1经营现金流能否持续为正及AI云收入增速能否超过20%，这是判断"战略能否跑通"的关键观测窗口。
+      </div>
+    </section>
+
+  </main>
+  <footer class="footer">
+    <p>📊 财务万晓生 · AI 财务顾问 · 本报告仅供管理层决策参考</p>
+    <p style="font-size:12px">数据来源：百度2025年年报、2026Q1季报、东方财富、Yahoo Finance | 2026年5月31日</p>
+  </footer>
+  <script>
+    Chart.register(ChartDataLabels);
+    new Chart(document.getElementById('chartRevenueProfit'), {
+      type:'bar', data:{
+        labels:['2022','2023','2024','2025'],
+        datasets:[
+          {label:'营收(亿)', data:[1237,1346,1331,1291], backgroundColor:'#58a6ff', borderRadius:4},
+          {label:'净利润(亿)', data:[76,203,238,56], backgroundColor:'#3fb950', borderRadius:4}
+        ]
+      },
+      options:{responsive:true, maintainAspectRatio:false, layout:{padding:{top:22}},
+        plugins:{legend:{labels:{color:'#8b949e',font:{size:12}}}, datalabels:{anchor:'end',align:'top',offset:2,clamp:true,color:'#e6edf3',font:{size:11}}},
+        scales:{x:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'},beginAtZero:true,grace:'10%'}}
+      }
+    });
+    new Chart(document.getElementById('chartMargins'), {
+      type:'line', data:{
+        labels:['2022','2023','2024','2025'],
+        datasets:[
+          {label:'毛利率', data:[48.3,51.7,50.3,43.9], borderColor:'#39d0c8', backgroundColor:'rgba(57,208,200,.1)', fill:true, tension:.3, pointRadius:5},
+          {label:'净利率', data:[6.1,15.1,17.8,4.3], borderColor:'#f85149', backgroundColor:'rgba(248,81,73,.1)', fill:true, tension:.3, pointRadius:5}
+        ]
+      },
+      options:{responsive:true, maintainAspectRatio:false, layout:{padding:{top:22}},
+        plugins:{legend:{labels:{color:'#8b949e',font:{size:12}}}, datalabels:{anchor:'end',align:'top',offset:2,clamp:true,color:'#e6edf3',font:{size:11},formatter:v=>v+'%'}},
+        scales:{x:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'},beginAtZero:true,grace:'10%'}}
+      }
+    });
+    new Chart(document.getElementById('chartCashFlow'), {
+      type:'bar', data:{
+        labels:['2022','2023','2024','2025'],
+        datasets:[
+          {label:'经营现金流(亿)', data:[262,366,212,-30], backgroundColor:'#bc8cff', borderRadius:4},
+          {label:'自由现金流(亿)', data:[178,253,130,-164], backgroundColor:'#d29922', borderRadius:4}
+        ]
+      },
+      options:{responsive:true, maintainAspectRatio:false, layout:{padding:{top:22}},
+        plugins:{legend:{labels:{color:'#8b949e',font:{size:12}}}, datalabels:{anchor:'end',align:'top',offset:2,clamp:true,color:'#e6edf3',font:{size:11}}},
+        scales:{x:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'},beginAtZero:true,grace:'15%'}}
+      }
+    });
+    new Chart(document.getElementById('chartCapExFCF'), {
+      type:'bar', data:{
+        labels:['2022','2023','2024','2025'],
+        datasets:[
+          {label:'资本开支(亿)', data:[84,113,83,134], backgroundColor:'#58a6ff', borderRadius:4},
+          {label:'自由现金流(亿)', data:[178,253,130,-164], backgroundColor:'#f85149', borderRadius:4}
+        ]
+      },
+      options:{responsive:true, maintainAspectRatio:false, layout:{padding:{top:22}},
+        plugins:{legend:{labels:{color:'#8b949e',font:{size:12}}}, datalabels:{anchor:'end',align:'top',offset:2,clamp:true,color:'#e6edf3',font:{size:11}}},
+        scales:{x:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'},beginAtZero:true,grace:'15%'}}
+      }
+    });
+    new Chart(document.getElementById('chartQuarterly'), {
+      type:'bar', data:{
+        labels:['2025Q1','2025Q2','2025Q3','2025Q4','2026Q1'],
+        datasets:[
+          {label:'营收(亿)', data:[324.5,327.1,311.7,327.4,320.8], backgroundColor:'#58a6ff', borderRadius:4},
+          {label:'经营利润(亿)', data:[45.1,32.8,11.0,14.8,31.9], backgroundColor:'#3fb950', borderRadius:4}
+        ]
+      },
+      options:{responsive:true, maintainAspectRatio:false, layout:{padding:{top:22}},
+        plugins:{legend:{labels:{color:'#8b949e',font:{size:12}}}, datalabels:{anchor:'end',align:'top',offset:2,clamp:true,color:'#e6edf3',font:{size:10}}},
+        scales:{x:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#8b949e'},grid:{color:'rgba(255,255,255,.04)'},beginAtZero:true,grace:'10%'}}
+      }
+    });
+  </script>
+</body>
+</html>
